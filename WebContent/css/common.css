@@ -3,20 +3,20 @@
 /* common elements */
 	input[type="button"], input[type="submit"], button {padding : 0 15px; border-radius: 15px; font-size: 1.5rem; line-height: 30px; font-weight: 500; transition: 0.5s;}
 	.btn-full {width:100%; border-radius:0; font-size:1.4rem; padding:5px 15px;}
-	.btn01 {background-color:transparent; border:1px solid #001e91; color: #001e91;}
-	.btn01-ghost{background-color:#e1e6ff; color:#001e91;}
-	.btn01-reverse{background-color:#001e91; color: #fff;}
-	.btn01:hover {background-color:#001e91; color: #fff; transition: 0.3s;}
-	.highlight01 {color:#001e91; font-weight:500;}
+	.btn01 {background-color:transparent; border:1px solid #4d55b2; color: #4d55b2;}
+	.btn01-ghost{background-color:#e1e6ff; color:#4d55b2;}
+	.btn01-reverse{background-color:#4d55b2; color: #fff;}
+	.btn01:hover {background-color:#4d55b2; color: #fff; transition: 0.3s;}
+	.highlight01 {color:#4d55b2; font-weight:500;}
 	.cf:after {content:''; display: block; clear:both;}
 	input[type="text"],input[type="password"], input[type="email"],input[type="date"], input[type="file"], select {width:100%; height:32px; font-size:1.4rem; line-height:2rem; padding:5px 10px;  transition: 0.5s;}
 	textarea {width:100%;  font-size:1.4rem; line-height:2rem; padding:5px 10px;}
-	input:focus, select:focus {border:1px solid #001e91; color:#001e91;}
+	input:focus, select:focus {border:1px solid #4d55b2; color:#4d55b2;}
 	select {background-image:url(/jspProject/images/ic_arrow.png); background-repeat:no-repeat; background-size:16px; background-position: right 5px center;}
 	/* table */
 	table.tbl, .tbl tr, .tbl td, .tbl th {   border-collapse : collapse; font-size:1.4rem;}
-	table.tbl {width:100%; border-top: 2px solid #001e91;}
-	.tbl th {padding:10px; color : #001e91; background-color:#f1f4ff; vertical-align:middle;}
+	table.tbl {width:100%; border-top: 2px solid #4d55b2;}
+	.tbl th {padding:10px; color : #4d55b2; background-color:#f1f4ff; vertical-align:middle;}
 	.tbl tr {background-color:white; border-bottom:1px solid #d2d2d2; vertical-align:middle; text-align:center; transition: 0.3s;}
 	.tbl tr:hover {background-color:#f1f4ff; cursor:pointer;}
 	.tbl td {padding:10px; vertical-align:middle;}
@@ -27,7 +27,7 @@
 	.tbl-reg input {max-width:500px;}
 	.tbl-reg textarea {max-width:500px;}
 	.tbl-reg select{max-width:500px;}
-	.tbl-tit {font-size:1.8rem; font-weight:500; color:#001e91; margin-bottom:10px;}
+	.tbl-tit {font-size:1.8rem; font-weight:500; color:#4d55b2; margin-bottom:10px;}
 	/* etc */
 	.float-r {float: right;}
 	.float-l {float:left;}
@@ -40,7 +40,7 @@
 
 /* common sections */
 	/* header */
-	.header {position:fixed; width:100%; height:60px; padding:0 20px; background-color:#001e91; z-index:999;} /* #6450ff 쨍한 보라 */
+	.header {position:fixed; width:100%; height:60px; padding:0 20px; background-color:#4d55b2; z-index:999;} /* #2b441e 국방색 */
 	.header .logo {float:left; height:calc(100% - 20px); margin:10px 0; cursor:pointer;}
 	.header .logo img {height:100%;}
 	.header .main-menu {width:420px; height:100%; margin:0 auto;}
@@ -53,14 +53,18 @@
 
 
 
+/* intro */
+
+
 /* main */
 .main {height:calc(100% - 60px);}
 .main .map {width:100%; height:100%; margin-top:60px;}
 .main .search-group {position:fixed; top:80px; left:20px; width:300px; background-color:#fff; border:1px solid #ddd; box-shadow: 0 2px 10px rgba(170, 173, 181, .2);}
 .main .search-group .search-tab {}
 .main .search-group .search-tab li {float:left; width:50%; max-height:50px; padding:15px; background-color:#f5f5f5; text-align:center; font-size:1.4rem;}
-.main .search-group .search-tab li.on {border-top:4px solid #001e91; background-color:#fff; color:#001e91; font-weight:600;}
+.main .search-group .search-tab li.on {border-top:4px solid #4d55b2; background-color:#fff; color:#4d55b2; font-weight:600;}
 .main .search-group .search-body {padding: 15px;}
 .main .search-group .search-body .search-box {margin-bottom:15px;}
 .main .search-group .search-body .search-box .title-box {font-size:1.4rem; font-weight:500; margin-bottom:10px;}
+
 

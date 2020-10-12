@@ -13,23 +13,8 @@
     <script type="text/javascript" src="<%=request.getContextPath()%>/js/common.js"></script>
 </head>
 <body>
-	<div class="header">
-		<!-- logo -->
-		<div class="logo">
-			<img src="<%=request.getContextPath()%>/images/logo_w.png" alt="logo" />
-		</div>
-		
-		
-		<!-- main menu -->
-		<ul class="main-menu cf">
-			<li class="on">창업지도</li>
-			<li>창업키워드</li>
-			<li>창업기상도</li>
-		</ul>
-		
-		<!-- user menu -->
-		<ul class="user-menu">
-			<li><img src="<%=request.getContextPath()%>/images/ic_bell.png" alt="push" /></li>
-			<li><img src="<%=request.getContextPath()%>/images/ic_user.png" alt="user" /></li>
-		</ul>
-	</div>
+<div class="page intro">
+	
+</div>
+</body>
+</html>
