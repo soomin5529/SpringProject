@@ -70,7 +70,7 @@ input[type=date]::-webkit-inner-spin-button, .top_wrap .input_wrap input[type=da
 select {
 	cursor:pointer; -webkit-appearance: none; -moz-appearance: none; appearance: none;
 }
-button:active, a:active, input[type="reset"]:active, input[type="submit"]:active, li:active, img:active {
+button:active, a:active, input[type="reset"]:active, input[type="submit"]:active, li:active, img:active, svg:active {
 	opacity:0.8;
 }
 

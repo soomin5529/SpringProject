@@ -72,6 +72,7 @@ window.onload = function() {
 		}
 
 		map.zoomBy(delta, marker.getPosition(), true);
+		document.getElementById("")
 	});
 
 	/* polygon marker mouseover*/
