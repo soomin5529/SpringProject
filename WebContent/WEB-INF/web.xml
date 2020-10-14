@@ -12,14 +12,22 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
+	
+	<servlet>
+		<servlet-name>main</servlet-name>
+		<servlet-class>controller.MainController</servlet-class>
+	</servlet>
 
+	<servlet-mapping>
+		<servlet-name>main</servlet-name>
+		<url-pattern>/main/*</url-pattern>
+	</servlet-mapping>
 
 	<jsp-config>
 		<jsp-property-group>
 			<url-pattern>/jsp/*</url-pattern>
 			<include-prelude>/jsp_common/header.jsp</include-prelude>
 			<include-coda>/jsp_common/footer.jsp</include-coda>
-
 		</jsp-property-group>
 	</jsp-config>
 </web-app>

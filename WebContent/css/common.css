@@ -42,6 +42,7 @@
 	.margin-l {margin-left:10px;}
 	.hidden {display:none;}
 	.label-box {font-size:1.4rem; font-weight:500; margin-bottom:10px;}
+	.deemed {height:100%; cursor:pointer; background:rgba(0,0,0,0.5);}
 	/* svg */
 	.reg-btn {cursor:pointer;}
 	.reg-icon {width:20px; height:20px; fill: none; stroke:#999; stroke-width:3px;}
@@ -55,7 +56,7 @@
 	.bookmark {float:right; width:20px; height:20px; margin:4px 0; cursor:pointer;}
 	.bookmark.off .bookmark-icon {fill:none; stroke:#999; stroke-width:3px;}
 	.bookmark.on .bookmark-icon {fill:#ffd828; stroke:none;}
-
+	
 
 /* common sections */
 	/* header */
@@ -114,4 +115,11 @@
 	.main .community .list-box .post-box .reply-reg-box input {padding-right:30px;}
 	.main .community .list-box .post-box .reply-reg-box .reg-btn {position:absolute; top:5px; right:23px;}
 	
+
+/* popup */
+.pop-container {width:100%; height:100%; position:fixed; top:0; left:0; z-index:999; display: none;}
+.pop-container .close-btn {position: absolute; top:20px; right: 45px; font-size: 20px; cursor: pointer; color: white;}
+.pop-container .pop-box {position:absolute;  top:50%; left:50%; bottom:0; right:0; padding: 30px; background-color: #fff; border-radius: 10px; overflow: hidden; transform: translate(-50%,-50%); transition:0.5s;}
+
+
 	

@@ -91,4 +91,9 @@ window.onload = function() {
 			fillOpacity : 0.35
 		});
 	});
+	
+	/* polygon marker onclick*/
+	naver.maps.Event.addListener(polygon, 'click', function() {
+		document.getElementById("dashboard").style.display = "block";
+	});
 }

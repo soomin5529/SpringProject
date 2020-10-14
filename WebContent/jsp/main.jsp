@@ -56,15 +56,16 @@
 	<!-- end of search -->
 	
 	<!-- dashboard -->
-	<div class="map-popup dashboard">
+	<div class="map-popup dashboard" id="dashboard" style="display:none">
 		<div class="title-box cf">
-			<div class="back-btn">
+			<div class="back-btn" onclick="closePopDashboard()">
 				<svg viewBox="0 0 40 40" class="back-icon">
 					<path d="M18 35L3 20 18 5"/>
 				</svg>
 			</div>
 			<div class="tit">강남구 어딘가</div>
-			<div class="bookmark off">
+			<!-- bookmark on/off -->
+			<div class="bookmark off" id="bookmark" onclick="bookmark()">
 				<svg viewBox="0 0 55 55" class="bookmark-icon" >
 					<path d="M9.9,30.8l-9.1-8.9c-1.6-1.6-0.7-4.3,1.5-4.6l12.6-1.8c0.9-0.1,1.6-0.7,2-1.5l5.7-11.4c1-2,3.8-2,4.8,0L33.1,14c0.4,0.8,1.1,1.3,2,1.5l12.6,1.8c2.2,0.3,3.1,3,1.5,4.6L40,30.8c-0.6,0.6-0.9,1.5-0.8,2.4l2.1,12.6c0.4,2.2-1.9,3.9-3.9,2.8l-11.3-5.9c-0.8-0.4-1.7-0.4-2.5,0l-11.3,5.9c-2,1-4.3-0.6-3.9-2.8l2.2-12.6C10.9,32.3,10.6,31.4,9.9,30.8z"/>
 				</svg>
@@ -75,13 +76,13 @@
 			훼이크 이미지에요  차트 넣어주세용
 		</div>
 		<!-- 떠들썩 커뮤니티 버튼 -->
-		<button type="button" class="btn-full btn01-reverse">떠들썩</button>
+		<button type="button" class="btn-full btn01-reverse" onclick="openPopCommunity()">떠들썩</button>
 	</div>
 	
 	<!-- 떠들썩 커뮤니티 -->
-	<div class="map-popup community">
+	<div class="map-popup community" id="community" style="display:none">
 		<div class="title-box cf">
-			<div class="back-btn">
+			<div class="back-btn" onclick="closePopCommunity()">
 				<svg viewBox="0 0 40 40" class="back-icon">
 					<path d="M18 35L3 20 18 5"/>
 				</svg>
@@ -90,25 +91,22 @@
 				<span>떠들썩</span>
 				<span class="highlight01" id="postCount">10</span>
 			</div>
-			<div class="reg-btn">
+			<div class="reg-btn" onclick="openPopCommunityReg()">
 				<svg viewBox="0 0 40 40" class="reg-icon">
 					<path d="M28.6 4.5c.4 0 .8.2 1 .4l5.5 5.4a1.5 1.5 0 010 2.1L13 34.5H5.5V27l22-22c.3-.3.7-.5 1.1-.5zm-6.1 6l7 7"/>
 				</svg>
 			</div>
 		</div>
+		<!-- list-box -->
 		<div class="list-box">
+			<!-- post-box -->
 			<div class="post-box">
 				<div class="content-box cf">
 					<div class="name">이름이름이름이름</div>
 					<div class="content">내용 Lorem Ipsum is simply dummy text of the printing and typesetting industry. </div>
 					<div class="regdate">2020.10.13 14:00</div>
-					<div class="like-btn on">
-						<!-- 좋아요 아이콘 off-->
-						<!-- <svg viewBox="0 0 40 40" class="like-icon">
-							<path d="M20 4.5h.8c.9.1 1.6.5 2.1 1.2.5.6.8 1.4.6 2.2v8.6H34c.7 0 1.4.3 1.8.9.5.6.8 1.5.7 2.4v7.8c0 2.3-.5 4.9-2.5 6.7-1.5 1.3-4 2.2-7.6 2.2H3.5v-15h7.6l5.2-8 1.3-8.6.1-.3zm-9.5 17v15"></path>
-						</svg>
-						 -->
-						<!-- 좋아요 아이콘 on -->
+					<div class="like-btn on" id="likeBtn" onclick="postLike()">
+						<!-- 좋아요 아이콘 -->
 						<svg viewBox="0 0 40 40" class="like-icon">
 							<path d="M25 15V8c.4-2.4-1.5-4.7-4-5h-2a2 2 0 00-2 1.5v.2l-1.3 8.2-3 7.1H2v18h24.4C36 38 38 32.4 38 27.6V20c.2-2.6-1.6-5-4-4.9-.5-.4-.8-.4-1 0h-8zM12 38H9V20h3v18z"></path>
 						</svg>
@@ -129,7 +127,24 @@
 					<div class="reg-btn"><svg viewBox="0 0 40 40" class="reg-icon"><path d="M28.6 4.5c.4 0 .8.2 1 .4l5.5 5.4a1.5 1.5 0 010 2.1L13 34.5H5.5V27l22-22c.3-.3.7-.5 1.1-.5zm-6.1 6l7 7"></path></svg></div>
 				</div>
 			</div>
+			<!-- end of post-box -->
+		</div>
+		<!-- end of list-box -->
+	</div>
+	<!-- end of 떠들썩커뮤니티 -->
+	
+	<!--  -->
+	<div class="pop-container" id="communityReg">
+		<div class="deemed" onclick="closePopCommunityReg()"></div>
+		<span class="close-btn" onclick="closePopCommunityReg()">x</span>
+		<div class="pop-box" style="width:500px; height:570px;">
+			<div class="title-box">
+				<div class="tit"></div>
+			</div>
+			<div class="content-box">
+				
+			</div>
 		</div>
 	</div>
 </div>
-
+<!-- end of main -->
