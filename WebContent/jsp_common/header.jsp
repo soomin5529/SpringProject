@@ -30,6 +30,6 @@
 		<!-- user menu -->
 		<ul class="user-menu">
 			<li><img src="<%=request.getContextPath()%>/images/ic_bell.png" alt="push" /></li>
-			<li><img src="<%=request.getContextPath()%>/images/ic_user.png" alt="user" /></li>
+			<li onclick="openPopMyPage()"><img src="<%=request.getContextPath()%>/images/ic_user.png" alt="user" /></li>
 		</ul>
 	</div>

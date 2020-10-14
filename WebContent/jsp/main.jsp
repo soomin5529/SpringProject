@@ -133,7 +133,7 @@
 	</div>
 	<!-- end of 떠들썩커뮤니티 -->
 	
-	<!--  -->
+	<!-- communityRegPopup -->
 	<div class="pop-container" id="communityReg">
 		<div class="deemed" onclick="closePopCommunityReg()"></div>
 		<span class="close-btn" onclick="closePopCommunityReg()">x</span>
@@ -143,6 +143,34 @@
 			</div>
 			<div class="content-box">
 				
+			</div>
+		</div>
+	</div>
+	
+	<!-- loginPopup -->
+	<div class="pop-container login" id="login">
+		<div class="deemed" onclick="closePopLogin()"></div>
+		<span class="close-btn" onclick="closePopLogin()">x</span>
+		<div class="pop-box" style="width:400px; height:360px;">
+			<div class="title-box">
+				<div class="tit">로그인</div>
+			</div>
+			<div class="content-box">
+				<form action="" class="">
+					<div class="input-box">
+						<div class="label-box">아이디</div>
+						<input type="text" name="id" placeholder="아이디를 입력하세요"/>
+					</div>
+					<div class="input-box">
+						<div class="label-box">비밀번호</div>
+						<input type="password" name="pwd" placeholder="비밀번호를 입력하세요"/>
+					</div>
+					<button type="submit" class="btn-full btn01-reverse">로그인</button>
+					<div class="join-btn">
+						<span class="gray">아직 회원이 아니신가요?</span>
+						<span class="highlight01">회원가입</span>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>

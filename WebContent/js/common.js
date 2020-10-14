@@ -22,6 +22,19 @@ function closePopCommunityReg(){
 	document.getElementById("communityReg").style.display = "none";
 }
 
+function openPopMyPage(){
+	document.getElementById("login").style.display = "block";
+}
+
+function closePopMyPage(){
+	document.getElementById("login").style.display = "none";
+}
+
+function closePopLogin(){
+	document.getElementById("login").style.display = "none";
+}
+
+
 /* bookmark icon */
 function bookmark(){
 	var bookmark = document.getElementById("bookmark");
