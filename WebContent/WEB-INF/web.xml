@@ -14,13 +14,13 @@
 	</welcome-file-list>
 	
 	<servlet>
-		<servlet-name>main</servlet-name>
+		<servlet-name>view</servlet-name>
 		<servlet-class>controller.MainController</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>main</servlet-name>
-		<url-pattern>/main/*</url-pattern>
+		<servlet-name>view</servlet-name>
+		<url-pattern>/view/*</url-pattern>
 	</servlet-mapping>
 
 	<jsp-config>

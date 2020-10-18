@@ -7,51 +7,28 @@
 	<div id="map" class="map"></div>
 	
 	<!-- search -->
-	<form action="" class="map-popup search-group" style="top:80px; left:20px;">
-		<!-- tab menu-->
-		<ul class="search-tab cf">
-			<li class="on">창업 성공률</li>
-			<li>어디에 창업할까?</li>
-		</ul>
-		
-		<div class="search-body">
-			<!-- tab menu - 창업 성공률 -->
-			<div class="tab">
-				<!-- 검색항목 묶음 - 구역선택 -->
-				<div class="search-box">
-					<div class="label-box">구역 선택</div>
-					<div class="input-box">
-						<select name="state" style="width:calc(50% - 5px); margin-right:10px; float:left;">
-							<option value="전체">전체</option>
-							<option value="서울특별시">서울특별시</option>
-						</select>
-						<select name="city" style="width:calc(50% - 5px);">
-							<option value="전체">전체</option>
-							<option value="강남구">강남구</option>
-						</select>
-					</div>
-				</div>
-				
-				<!-- 검색항목 묶음 - 업종선택 -->
-				<div class="search-box">
-					<div class="label-box">업종 선택</div>
-					<div class="input-box">
-						<select name="state" style="width:calc(50% - 5px); margin-right:10px; float:left;">
-							<option value="대분류">대분류</option>
-						</select>
-						<select name="city" style="width:calc(50% - 5px);">
-							<option value="중분류">중분류</option>
-						</select>
-					</div>
-				</div>
+	<form action="" method="post" class="map-popup search-group">
+		<!-- 검색항목 묶음 - 구역선택 -->
+		<div class="search-box">
+			<div class="input-box">
+				<!-- <div class="label-box">구역 선택</div> -->
+				<select name="state">
+					<option value="시 전체">시 전체</option>
+					<option value="서울특별시">서울특별시</option>
+				</select>
+				<select name="city">
+					<option value="구 전체">구 전체</option>
+					<option value="강남구">강남구</option>
+				</select>
+				<select name="street">
+					<option value="동 전체">동 전체</option>
+					<option value="강남구">역삼동</option>
+				</select>
 			</div>
-			
-			<!-- tab menu - 어디에 창업할까? -->
-			<div class="tab hidden"></div>
 		</div>
-		
+				
 		<!-- 검색버튼 -->
-		<button type="submit" class="btn-full btn01-reverse">검색</button>
+		<!-- <button type="submit" class="btn-full btn01-reverse">검색</button> -->
 	</form>
 	<!-- end of search -->
 	
@@ -71,6 +48,21 @@
 				</svg>
 			</div>
 		</div>
+		
+		<!-- 검색항목 묶음 - 업종선택 -->
+		<div class="search-box">
+			<div class="label-box">업종 선택</div>
+			<div class="input-box half">
+				<select name="categoryMain">
+					<option value="대분류">대분류</option>
+				</select>
+				<select name="categoryMiddle">
+					<option value="중분류">중분류</option>
+				</select>
+			</div>
+		</div>
+		
+		<!-- 통계자료 묶음 -->
 		<div class="chart-box">
 			<img src="<%=request.getContextPath()%>/images/temp.png" alt="temp" />
 			훼이크 이미지에요  차트 넣어주세용
@@ -78,6 +70,7 @@
 		<!-- 떠들썩 커뮤니티 버튼 -->
 		<button type="button" class="btn-full btn01-reverse" onclick="openPopCommunity()">떠들썩</button>
 	</div>
+	<!-- end of dashboard -->
 	
 	<!-- 떠들썩 커뮤니티 -->
 	<div class="map-popup community" id="community" style="display:none">
@@ -174,5 +167,6 @@
 			</div>
 		</div>
 	</div>
+	
 </div>
 <!-- end of main -->
