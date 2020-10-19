@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
          <dataSource type="POOLED">
             <property name="driver" value="oracle.jdbc.driver.OracleDriver" />
             <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
-            <property name="username" value="scott" />
+            <property name="username" value="FinalProject" />
             <property name="password" value="1111" />
          </dataSource>
       </environment>

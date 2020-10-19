@@ -16,21 +16,58 @@
 		<div class="search-box">
 			<div class="input-box">
 				<!-- <div class="label-box">구역 선택</div> -->
-				<select name="state">
+				<select id="state" name="state">
 					<option value="시 전체">시 전체</option>
 					<option value="서울특별시">서울특별시</option>
-				</select>
-				<select name="city">
-					<option value="구 전체">구 전체</option>
-					<option value="강남구">강남구</option>
-				</select>
-				<select name="street">
+				</select> 
+				<select id="city" onchange="selectCity()" name="city">
+					<option value="전체">전체</option>
+					<option value="Gangnamgu">강남구</option>
+					<option value="Dobonggue">도봉구</option>
+					<option value="Eunpyeonggu">은평구</option>
+					<option value="Dongdaemungu">동대문구</option>
+					<option value="Dongjakgu">동작구</option>
+					<option value="Geumcheongu">금천구</option>
+					<option value="Gurogu">구로구</option>
+					<option value="Jongnogu">종로구</option>
+					<option value="Gangbukgu">강북구</option>
+					<option value="Jungnanggu">중랑구</option>
+					<option value="Gangseogu">강서구</option>
+					<option value="Junggu">중구</option>
+					<option value="Gangdonggu">강동구</option>
+					<option value="Gwangjingu">광진구</option>
+					<option value="Mapogu">마포구</option>
+					<option value="Seochogu">서초구</option>
+					<option value="Seongbukgu">성북구</option>
+					<option value="Nowongu">노원구</option>
+					<option value="Songpagu">송파구</option>
+					<option value="Seodaemungu">서대문구</option>
+					<option value="Yangcheongu">양천구</option>
+					<option value="Yeongdeungpogu">영등포구</option>
+					<option value="Gwanakgu">관악구</option>
+					<option value="Seongdonggu">성동구</option>
+					<option value="Yongsangu">용산구</option>
+				</select> 
+				<select id= "street" onchange="selectStreet()" name="street">
 					<option value="동 전체">동 전체</option>
-					<option value="강남구">역삼동</option>
+					<option value="전체">압구정동</option>
+					<option value="전체">신사동</option>
+					<option value="전체">청담동</option>
+					<option value="전체">논현동</option>
+					<option value="전체">삼성동</option>
+					<option value="yuksamdong" >역삼동</option>
+					<option value="전체">도곡동</option>
+					<option value="전체">개포동</option>
+					<option value="전체">대치동</option>
+					<option value="전체">일원동</option>
+					<option value="전체">수서동</option>
+					<option value="전체">자곡동</option>
+					<option value="전체">세곡동</option>
+					<option value="전체">율현동</option>
 				</select>
 			</div>
 		</div>
-				
+
 		<!-- 검색버튼 -->
 		<!-- <button type="submit" class="btn-full btn01-reverse">검색</button> -->
 	</form>
@@ -44,7 +81,7 @@
 					<path d="M18 35L3 20 18 5"/>
 				</svg>
 			</div>
-			<div class="tit">강남구 어딘가</div>
+			<div class="tit">강남구 역삼동</div>
 			<!-- bookmark on/off -->
 			<div class="bookmark off" id="bookmark" onclick="bookmark()">
 				<svg viewBox="0 0 55 55" class="bookmark-icon" >
