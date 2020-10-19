@@ -1,3 +1,4 @@
+/* javascript onload */
 window.onload = function() {
 
 	/* header on */
@@ -16,7 +17,49 @@ window.onload = function() {
 	}
 	console.log(url[url.length-1]);
 	console.log(document.location.href);
+	
+	
+	/* slider*/
+	var slider = document.getElementById("myRange");
+	var output = document.getElementById("funds");
+	output.innerHTML = slider.value+'만원'; // Display the default slider value
+
+	// Update the current slider value
+	slider.oninput = function() {
+		output.innerHTML = this.value+'만원';
+	}
 }
+
+/* jQuery onload */
+$(document).ready(function(){
+	  $("#svgMap01 g").mouseover(function(event) {
+		 var cls = $(this).attr('class');
+		 var _path = event.target;
+		 var city_name = _path.id;
+		 var _over_g = $(this).find('path, polygon');
+
+		 if(cls == 'city'){
+			_path.setAttribute( "fill", "#584de4" );
+			
+		 }else{
+			$.each(_over_g, function (index, item) { 
+			   item.setAttribute( "fill", "#584de4" )
+			});
+		 }         
+	  }).mouseout(function(event) {
+		 var cls = $(this).attr('class');
+		 var _path = event.target;
+		 if(cls == 'city'){
+			_path.setAttribute( 'fill', '#fff' );   
+		 }else{
+			var _path = event.target;
+			var _over_g = $(this).find('path, polygon');
+			$.each(_over_g, function (index, item) { 
+			   item.setAttribute( 'fill', '#fff')
+			});
+		 }         
+	  });
+	});
 
 /* popup open/close */
 function closePopDashboard() {
@@ -50,6 +93,13 @@ function closePopLogin() {
 	document.getElementById("login").style.display = "none";
 }
 
+function openPopJoin() {
+	document.getElementById("join").style.display = "block";
+}
+
+function closePopJoin() {
+	document.getElementById("join").style.display = "none";
+}
 /* bookmark icon */
 function bookmark() {
 	var bookmark = document.getElementById("bookmark");

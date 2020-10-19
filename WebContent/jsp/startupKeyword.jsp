@@ -10,7 +10,7 @@
 		</div>
 	</div>
 	
-	<div class="content-body">
+	<div class="content-body cf">
 		<!-- search -->
 		<form action="" method="post" class="search-group">
 			<!-- 검색항목 묶음 - 구역선택 -->
