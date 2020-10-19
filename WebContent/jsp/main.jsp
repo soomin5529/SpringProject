@@ -96,9 +96,14 @@
 			<div class="input-box half">
 				<select name="categoryMain">
 					<option value="대분류">대분류</option>
+					<option value="음식점">음식점</option>
 				</select>
 				<select name="categoryMiddle">
 					<option value="중분류">중분류</option>
+					<option value="한식">한식</option>
+					<option value="한식">중식</option>
+					<option value="한식">일식</option>
+					<option value="한식">양식</option>
 				</select>
 			</div>
 		</div>
@@ -136,12 +141,14 @@
 			<!-- post-box -->
 			<div class="post-box">
 				<div class="content-box cf">
-					<div class="name">이름이름이름이름</div>
+					<div class="name">
+					강운기삼겹살 사장이다</div>
 					<div class="content">
 						<div class="text">
-							내용 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+						코로나 여파가 있어도 장사는 잘되더군요,, 직장인분들이 많다보니 매출손해가 크지 않아요
+						체인점 내실 분 쪽지 주십쇼.
 						</div>
-						<div class="photo" style="background-image:url(../images/temp3.png);"></div>
+						<div class="photo" style="background-image:url('../images/gogi.jpg');"></div>
 					</div>
 					<div class="regdate">2020.10.13 14:00</div>
 					<div class="like-btn on" id="likeBtn" onclick="postLike()">
@@ -156,9 +163,9 @@
 				
 				<div class="reply-list-box">
 					<div class="reply-box">
-						<div class="name">이름이름이름이름</div>
-						<div class="content">댓글 내용내용내용내용내용내용내용내용내용내용내용내용내용내용</div>
-						<div class="regdate">두달전</div>
+						<div class="name">역삼 노비</div>
+						<div class="content">댓글 : 거기 먹어보니까 맛은 별로던데 상권이 좋아서 매출이 괜찮나보네요 쩝;;</div>
+						<div class="regdate">두달 전</div>
 					</div>
 				</div>
 				<div class="reply-reg-box">
@@ -178,17 +185,19 @@
 		<span class="close-btn" onclick="closePopCommunityReg()">x</span>
 		<div class="pop-box" style="width:400px; height:570px;">
 			<div class="title-box">
-				<div class="tit">강남구 어딘가</div>
+				<div class="tit">강남구 역삼동</div>
 			</div>
 			<div class="content-box">
 				<!-- 이름 -->
-				<input type="text" value="홍길동" placeholder="닉네임을 입력하세요" style="margin-bottom:10px;">
+				<input type="text" value="역삼 뽀시래기" placeholder="닉네임을 입력하세요" style="margin-bottom:10px;">
 				<!-- 내용입력 -->
 				<textarea name="communityContent" rows=14 placeholder="이 상권에 창업을 준비하는 사람들에게 알려주고 싶은 이야기, 꿀팁을 적어주세요! 궁금하신 것을 물어보셔도 됩니다 ʕ￫ᴥ￩ʔ"></textarea>
 				<!-- 사진등록 -->
 				<div class="photo-box cf">
-					<div class="thumb" id="photo" style="background-image:url('../images/temp2.png')"></div>
-					<div class="btn-photo" onclick=""></div>
+					<div class="thumb" id="photo" style="background-image:url('../images/temp01.jpg')"></div>
+					
+					<div class="btn-photo" onclick="onclick=document.all.file.click()">
+					<input type="file" id="file" name="file"  style="display: none;"/></div>
 				</div>
 				<button type="submit" class="btn-full btn01-reverse">등록하기</button>
 			</div>

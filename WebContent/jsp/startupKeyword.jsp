@@ -34,6 +34,10 @@
 						<input type="checkbox" name="sns" id="checkInsta"/>
 						<label for="checkInsta">인스타그램</label>
 					</div>
+					<div class="check-box">
+						<input type="checkbox" name="sns" id="checkInsta"/>
+						<label for="checkInsta">페이스북</label>
+					</div>
 				</div>
 			</div>
 					

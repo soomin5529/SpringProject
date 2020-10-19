@@ -35,7 +35,7 @@ window.onload = function() {
 
 
 	/* polygon marker */
-		var polygon = new naver.maps.Polygon({
+	/*	var polygon = new naver.maps.Polygon({
       	paths : [ new naver.maps.LatLng(37.37544345085402, 127.11224555969238),
 				new naver.maps.LatLng(37.37230584065902, 127.10791110992432),
 				new naver.maps.LatLng(37.35975408751081, 127.10795402526855),
@@ -53,7 +53,7 @@ window.onload = function() {
 		zIndex : 1,
 		clickable : true,
 		map : map
-	});
+	});*/
 	
 	//압구정동
 	var polygon1 = new naver.maps.Polygon({
@@ -253,7 +253,7 @@ window.onload = function() {
 	});
 
 	/* polygon marker mouseover*/
-	naver.maps.Event.addListener(polygon, "mouseover", function(e) {
+	naver.maps.Event.addListener(polygon5, "mouseover", function(e) {
 		map.setCursor("pointer");
 
 		polygon.setOptions({
@@ -261,7 +261,7 @@ window.onload = function() {
 		});
 	});
 
-	naver.maps.Event.addListener(polygon, "mouseout", function(e) {
+	naver.maps.Event.addListener(polygon5, "mouseout", function(e) {
 		map.setCursor("auto");
 
 		polygon.setOptions({
@@ -303,7 +303,7 @@ window.onload = function() {
    	var selected_city = city.options[city.selectedIndex].value;
 
 	var Gangnamgu = new naver.maps.LatLng(37.4959854, 127.0664091); 
-	var Dobonggu = new naver.maps.LatLng(37.6658609, 126.534361); 
+	var Dobonggu = new naver.maps.LatLng(37.6658609, 127.0317674); 
 	var Eunpyeonggu = new naver.maps.LatLng(37.6176125, 126.9227004); 
 	var Dongdaemungu = new naver.maps.LatLng(37.5838012, 127.0507003); 
 	var Dongjakgu = new naver.maps.LatLng(37.4965037, 126.9443073); 
@@ -356,9 +356,9 @@ window.onload = function() {
     if(selected_city == "Seongdonggu") selected_city = Seongdonggu;
     if(selected_city == "Yongsangu") selected_city = Yongsangu;
 
-	var position = new naver.maps.LatLng(37.5642135, 127.0016985);
+	//var position = new naver.maps.LatLng(37.5642135, 127.0016985);
 	var mapOptions = {
-		center : position,
+		center : selected_city,
 		zoom : 7,
 		zoomControl : true,
 		zoomControlOptions : {
@@ -367,7 +367,7 @@ window.onload = function() {
 		}
 	};
 	var map = new naver.maps.Map('map', mapOptions);
-      map.setCenter(selected_city); // 중심 좌표 이동
+    //  map.setCenter(selected_city); // 중심 좌표 이동
       map.setZoom(13);     // 줌 레벨 변경
   
 

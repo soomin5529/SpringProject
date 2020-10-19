@@ -40,16 +40,20 @@
 					<div class="half">
 						<select name="categoryMain">
 							<option value="대분류">대분류</option>
+							<option value="음식점">음식점</option>
 						</select>
 						<select name="categoryMiddle">
 							<option value="중분류">중분류</option>
+							<option value="한식">한식</option>
+							<option value="한식">중식</option>
+							<option value="한식">일식</option>
 						</select>
 					</div>
 				</div>
 				<div class="input-box">
 					<div class="label-box">
 						<span>창업자금</span>
-						<span class="value" id="funds">1만원</span>
+						<span class="value" id="funds">1000만원</span>
 					</div>
 					<div class="slide-box">
 						<input type="range" min="1" max="10000" value="1" class="slider" id="myRange">
