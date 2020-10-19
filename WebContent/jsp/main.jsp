@@ -2,7 +2,11 @@
 	pageEncoding="UTF-8"%>
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1daef4c0ea"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/map.js"></script>
-<div class="page main">
+<script type="text/javascript">
+	var menu01 = document.getElementById("menu01");
+	menu01.className += "on";
+</script>
+<div class="page main" id="page">
 	<!-- map -->
 	<div id="map" class="map"></div>
 	
@@ -131,100 +135,5 @@
 	</div>
 	<!-- end of 떠들썩커뮤니티 -->
 	
-	<!-- communityRegPopup -->
-	<div class="pop-container" id="communityReg">
-		<div class="deemed" onclick="closePopCommunityReg()"></div>
-		<span class="close-btn" onclick="closePopCommunityReg()">x</span>
-		<div class="pop-box" style="width:400px; height:570px;">
-			<div class="title-box">
-				<div class="tit">강남구 어딘가</div>
-			</div>
-			<div class="content-box">
-				<!-- 이름 -->
-				<input type="text" value="홍길동" placeholder="닉네임을 입력하세요" style="margin-bottom:10px;">
-				<!-- 내용입력 -->
-				<textarea name="communityContent" rows=14 placeholder="이 상권에 창업을 준비하는 사람들에게 알려주고 싶은 이야기, 꿀팁을 적어주세요! 궁금하신 것을 물어보셔도 됩니다 ʕ￫ᴥ￩ʔ"></textarea>
-				<!-- 사진등록 -->
-				<div class="photo-box cf">
-					<div class="thumb" id="photo" style="background-image:url('../images/temp2.png')"></div>
-					<div class="btn-photo" onclick=""></div>
-				</div>
-				<button type="submit" class="btn-full btn01-reverse">등록하기</button>
-			</div>
-		</div>
-	</div>
-	
-	<!-- loginPopup -->
-	<div class="pop-container login" id="login">
-		<div class="deemed" onclick="closePopLogin()"></div>
-		<span class="close-btn" onclick="closePopLogin()">x</span>
-		<div class="pop-box" style="width:400px; height:360px;">
-			<div class="title-box">
-				<div class="tit">로그인</div>
-			</div>
-			<div class="content-box">
-				<form action="" class="">
-					<div class="input-box">
-						<div class="label-box">아이디</div>
-						<input type="text" name="id" placeholder="아이디를 입력하세요"/>
-					</div>
-					<div class="input-box">
-						<div class="label-box">비밀번호</div>
-						<input type="password" name="pwd" placeholder="비밀번호를 입력하세요"/>
-					</div>
-					<button type="submit" class="btn-full btn01-reverse">로그인</button>
-					<div class="join-btn">
-						<span class="gray">아직 회원이 아니신가요?</span>
-						<span class="highlight01" onclick="openPopJoin()">회원가입</span>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-	
-	<!-- joinPopup -->
-	<div class="pop-container login" id="join">
-		<div class="deemed" onclick="closePopJoin()"></div>
-		<span class="close-btn" onclick="closePopJoin()">x</span>
-		<div class="pop-box" style="width:400px; height:716px;">
-			<div class="title-box">
-				<div class="tit">회원가입</div>
-			</div>
-			<div class="content-box">
-				<form action="" class="">
-					<div class="input-box">
-						<div class="label-box">아이디</div>
-						<input type="text" name="id" placeholder="아이디를 입력하세요"/>
-					</div>
-					<div class="input-box">
-						<div class="label-box">비밀번호</div>
-						<input type="password" name="pwd" placeholder="비밀번호를 입력하세요"/>
-					</div>
-					<div class="input-box">
-						<div class="label-box">비밀번호 확인</div>
-						<input type="password" name="repwd" placeholder="비밀번호를 다시 입력하세요"/>
-					</div>
-					<div class="input-box">
-						<div class="label-box">이름</div>
-						<input type="text" name="name" placeholder="이름(닉네임)을 입력하세요"/>
-					</div>
-					<div class="input-box">
-						<div class="label-box">이메일</div>
-						<input type="email" name="email" placeholder="이메일을 입력하세요"/>
-					</div>
-					<div class="input-box">
-						<div class="label-box">생일</div>
-						<input type="date" name="birthdate" placeholder="생일을 입력하세요"/>
-					</div>
-					<div class="input-box">
-						<div class="label-box">성별</div>
-						<input type="radio" name="gender" id="male" checked/><label for="male">남성</label>
-						<input type="radio" name="gender" id="female"/><label for="female">여성</label>
-					</div>
-					<button type="submit" class="btn-full btn01-reverse">회원가입</button>
-				</form>
-			</div>
-		</div>
-	</div>
 </div>
 <!-- end of main -->

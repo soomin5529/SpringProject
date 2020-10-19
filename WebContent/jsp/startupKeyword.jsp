@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<div class="page startup-keyword">
+<div class="page startup-keyword" id="page">
 	<!-- page title section -->
 	<div class="page-title-box">
 		<div class="page-name">창업키워드</div>

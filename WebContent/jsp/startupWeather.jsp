@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<div class="page startup-keyword">
+    
+<script type="text/javascript">
+	//Update the current slider value
+	slider.oninput = function() {
+		output.innerHTML = this.value+'만원';
+	}
+</script>
+<div class="page startup-keyword" id="page">
 	<!-- page title section -->
 	<div class="page-title-box">
 		<div class="page-name">창업기상도</div>
