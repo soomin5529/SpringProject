@@ -12,15 +12,25 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
-	
+
+	<!-- Main -->
 	<servlet>
 		<servlet-name>view</servlet-name>
 		<servlet-class>controller.MainController</servlet-class>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>view</servlet-name>
 		<url-pattern>/view/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- Member -->
+	<servlet>
+		<servlet-name>member</servlet-name>
+		<servlet-class>controller.MemberController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>member</servlet-name>
+		<url-pattern>/member/*</url-pattern>
 	</servlet-mapping>
 
 	<jsp-config>

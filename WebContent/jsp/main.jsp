@@ -163,10 +163,10 @@
 				<div class="tit">로그인</div>
 			</div>
 			<div class="content-box">
-				<form action="" class="">
+				<form action="<%=request.getContextPath()%>/login/login">
 					<div class="input-box">
 						<div class="label-box">아이디</div>
-						<input type="text" name="id" placeholder="아이디를 입력하세요"/>
+						<input type="text" name="userid" placeholder="아이디를 입력하세요"/>
 					</div>
 					<div class="input-box">
 						<div class="label-box">비밀번호</div>
@@ -191,10 +191,10 @@
 				<div class="tit">회원가입</div>
 			</div>
 			<div class="content-box">
-				<form action="" class="">
+				<form action="<%=request.getContextPath()%>/member/signIn">
 					<div class="input-box">
 						<div class="label-box">아이디</div>
-						<input type="text" name="id" placeholder="아이디를 입력하세요"/>
+						<input type="text" name="userid" placeholder="아이디를 입력하세요"/>
 					</div>
 					<div class="input-box">
 						<div class="label-box">비밀번호</div>
@@ -221,7 +221,7 @@
 						<input type="radio" name="gender" id="male" checked/><label for="male">남성</label>
 						<input type="radio" name="gender" id="female"/><label for="female">여성</label>
 					</div>
-					<button type="submit" class="btn-full btn01-reverse">회원가입</button>
+					<button type="submit" class="btn-full btn01-reverse" onclick="inputCheck()">회원가입</button>
 				</form>
 			</div>
 		</div>
