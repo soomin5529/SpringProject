@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	String userId = request.getParameter("userId");
+	session.setAttribute("userId", userId);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,4 +37,9 @@
 			<li><img src="<%=request.getContextPath()%>/images/ic_bell.png" alt="push" /></li>
 			<li onclick="openPopMyPage()"><img src="<%=request.getContextPath()%>/images/ic_user.png" alt="user" /></li>
 		</ul>
+	</div>
+	
+	<div class="pop-container login" id="login">
+	</div>
+	<div class="pop-container login" id="join">
 	</div>

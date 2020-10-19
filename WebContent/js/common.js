@@ -64,34 +64,37 @@ function closePopCommunityReg() {
 }
 
 function openPopMyPage() {
-	var page = document.getElementById("page");
-	page.innerHTML += '<div class="pop-container login" id="login" style="display:block">'
-		+ '<div class="deemed" onclick="closePopLogin()"></div>'
-		+ '<span class="close-btn" onclick="closePopLogin()">x</span>'
-		+ '<div class="pop-box" style="width:400px; height:360px;">'
-		+ '	<div class="title-box">'
-		+ '		<div class="tit">로그인</div>'
-		+ '	</div>'
-		+ '<div class="content-box">'
-		+ '		<form action="/SpringTeamProject/member/login">'
-		+ '			<div class="input-box">'
-		+ '				<div class="label-box">아이디</div>'
-		+ '				<input type="text" name="userid" placeholder="아이디를 입력하세요"/>'
-		+ '			</div>'
-		+ '			<div class="input-box">'
-		+ '				<div class="label-box">비밀번호</div>'
-		+ '				<input type="password" name="pwd" placeholder="비밀번호를 입력하세요"/>'
-		+ '			</div>'
-		+ '			<button type="submit" class="btn-full btn01-reverse">로그인</button>'
-		+ '			<div class="join-btn">'
-		+ '				<span class="gray">아직 회원이 아니신가요?</span>'
-		+ '				<span class="highlight01" onclick="openPopJoin()">회원가입</span>'
-		+ '			</div>'
-		+ '		</form>'
-		+ '	</div>'
-		+ '</div>'
-		+ '</div>';
-	console.log("강운기 바보");
+	var login = document.getElementById("login");
+	/*if(sessionStorage.getItem("isLogin")){
+		
+	}else{*/
+		login.innerHTML +=
+			 '<div class="deemed" onclick="closePopLogin()"></div>'
+			+ '<span class="close-btn" onclick="closePopLogin()">x</span>'
+			+ '<div class="pop-box" style="width:400px; height:360px;">'
+			+ '	<div class="title-box">'
+			+ '		<div class="tit">로그인</div>'
+			+ '	</div>'
+			+ '<div class="content-box">'
+			+ '		<form action="/SpringTeamProject/member/login">'
+			+ '			<div class="input-box">'
+			+ '				<div class="label-box">아이디</div>'
+			+ '				<input type="text" name="userid" placeholder="아이디를 입력하세요"/>'
+			+ '			</div>'
+			+ '			<div class="input-box">'
+			+ '				<div class="label-box">비밀번호</div>'
+			+ '				<input type="password" name="pwd" placeholder="비밀번호를 입력하세요"/>'
+			+ '			</div>'
+			+ '			<button type="submit" class="btn-full btn01-reverse">로그인</button>'
+			+ '			<div class="join-btn">'
+			+ '				<span class="gray">아직 회원이 아니신가요?</span>'
+			+ '				<span class="highlight01" onclick="openPopJoin()">회원가입</span>'
+			+ '			</div>'
+			+ '		</form>'
+			+ '	</div>'
+			+ '</div>';
+		login.style.display="block";
+	/*}*/
 }
 
 function closePopMyPage() {
@@ -100,14 +103,16 @@ function closePopMyPage() {
 
 function closePopLogin() {
 	var login = document.querySelector("#login");	//제거하고자 하는 엘리먼트
-	login.parentNode.removeChild(login);
+	while(login.firstChild){
+		login.removeChild(login.firstChild);
+	}
+	login.style.display="none";
 }
 
 function openPopJoin() {
-	var page = document.getElementById("page");
-	page.innerHTML += 
-		'<div class="pop-container login" id="join" style="display:block;">'
-		+ '<div class="deemed" onclick="closePopJoin()"></div>'
+	var join = document.getElementById("join");
+	join.innerHTML += 
+		'<div class="deemed" onclick="closePopJoin()"></div>'
 		+ '<span class="close-btn" onclick="closePopJoin()">x</span>'
 		+ '<div class="pop-box" style="width:400px; height:716px;">'
 		+ '	<div class="title-box">'
@@ -147,13 +152,16 @@ function openPopJoin() {
 		+ '			<button type="submit" class="btn-full btn01-reverse">회원가입</button>'
 		+ '		</form>'
 		+ '	</div>'
-		+ '</div>'
-		+ '</div>'
+		+ '</div>';
+	join.style.display="block";
 }
 
 function closePopJoin() {
-	var login = document.querySelector("#join");
-	login.parentNode.removeChild(login);
+	var join = document.getElementById("join");
+	while(join.firstChild){
+		join.removeChild(join.firstChild);
+	};
+	join.style.display="none";
 }
 /* bookmark icon */
 function bookmark() {
@@ -169,8 +177,6 @@ function bookmark() {
 /* like icon */
 function postLike() {
 	var postLike = document.getElementById("likeBtn");
-
-	console.log("ddd00");
 	if (postLike.classList.contains('on')) {
 		postLike.className = postLike.className.replace("on", "off");
 		postLike.innerHTML = '<svg viewBox="0 0 40 40" class="like-icon">'

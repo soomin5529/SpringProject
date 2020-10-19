@@ -25,5 +25,8 @@ public class MainController extends Action {
 	public String startupWeather(HttpServletRequest request, HttpServletResponse response) throws Throwable {
 		return "/jsp/startupWeather.jsp";
 	}
-
+	
+	public String intro(HttpServletRequest request, HttpServletResponse response)  throws Throwable { 
+		return  "/jsp_nohead/intro.jsp"; 
+	}
 }

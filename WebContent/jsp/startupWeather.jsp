@@ -1,12 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<script type="text/javascript">
-	//Update the current slider value
-	slider.oninput = function() {
-		output.innerHTML = this.value+'만원';
-	}
-</script>
+
 <div class="page startup-keyword" id="page">
 	<!-- page title section -->
 	<div class="page-title-box">
@@ -251,3 +245,14 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	/* slider*/
+	var slider = document.getElementById("myRange");
+	var output = document.getElementById("funds");
+	output.innerHTML = slider.value+'만원'; // Display the default slider value
+	
+	// Update the current slider value
+	slider.oninput = function() {
+		output.innerHTML = this.value+'만원';
+	}
+</script>
