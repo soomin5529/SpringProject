@@ -33,16 +33,16 @@ public class MemberController extends Action {
 			if (loginCheck == true) {
 				request.setAttribute("userid", userid);
 				System.out.println(userid);
-				return "/jsp/main.jsp";
+				return "/jsp/okmain.jsp";
 			} else {
 				loginerror = 2;
 				request.setAttribute("loginerror", loginerror);
-				return "/jsp/main.jsp";
+				return "/jsp/okmain.jsp";
 			}
 		} else {
 			loginerror = 1;
 			request.setAttribute("loginerror", loginerror);
-			return "/jsp/main.jsp";
+			return "/jsp/okmain.jsp";
 		}
 	}
 
