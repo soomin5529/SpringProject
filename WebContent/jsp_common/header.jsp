@@ -21,12 +21,11 @@
 			<img src="<%=request.getContextPath()%>/images/logo_w.png" alt="logo" />
 		</div>
 		
-		
 		<!-- main menu -->
 		<ul class="main-menu cf">
-			<li id="menu01" onclick="location.href='<%=request.getContextPath()%>/view/main'">창업지도</li>
-			<li id="menu02" onclick="location.href='<%=request.getContextPath()%>/view/startupKeyword'">창업키워드</li>
-			<li id="menu03" onclick="location.href='<%=request.getContextPath()%>/view/startupWeather'">창업기상도</li>
+			<li id="menu01" onclick="location.href='<%=request.getContextPath()%>/view/main';">창업지도</li>
+			<li id="menu02" onclick="location.href='<%=request.getContextPath()%>/view/startupKeyword';">창업키워드</li>
+			<li id="menu03" onclick="location.href='<%=request.getContextPath()%>/view/startupWeather';">창업기상도</li>
 		</ul>
 		
 		<!-- user menu -->

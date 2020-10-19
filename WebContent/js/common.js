@@ -1,32 +1,13 @@
 /* javascript onload */
 window.onload = function() {
-
-	/* header on */
-	var menu01 = document.getElementById("menu01");
 	var menu02 = document.getElementById("menu02");
 	var menu03 = document.getElementById("menu03");
 	var url = document.location.href.split("/");
-	if (url[url.length - 1] == "nomain") {
-		menu01.className += "on";
-	}
 	if (url[url.length - 1] == "startupKeyword") {
 		menu02.className += "on";
 	}
 	if (url[url.length - 1] == "startupWeather") {
 		menu03.className += "on";
-	}
-	console.log(url[url.length-1]);
-	console.log(document.location.href);
-	
-	
-	/* slider*/
-	var slider = document.getElementById("myRange");
-	var output = document.getElementById("funds");
-	output.innerHTML = slider.value+'만원'; // Display the default slider value
-
-	// Update the current slider value
-	slider.oninput = function() {
-		output.innerHTML = this.value+'만원';
 	}
 }
 
@@ -61,6 +42,7 @@ $(document).ready(function(){
 	  });
 	});
 
+
 /* popup open/close */
 function closePopDashboard() {
 	document.getElementById("dashboard").style.display = "none";
@@ -82,23 +64,96 @@ function closePopCommunityReg() {
 }
 
 function openPopMyPage() {
-	document.getElementById("login").style.display = "block";
+	var page = document.getElementById("page");
+	page.innerHTML += '<div class="pop-container login" id="login" style="display:block">'
+		+ '<div class="deemed" onclick="closePopLogin()"></div>'
+		+ '<span class="close-btn" onclick="closePopLogin()">x</span>'
+		+ '<div class="pop-box" style="width:400px; height:360px;">'
+		+ '	<div class="title-box">'
+		+ '		<div class="tit">로그인</div>'
+		+ '	</div>'
+		+ '<div class="content-box">'
+		+ '		<form action="<%=request.getContextPath()%>/login/login">'
+		+ '			<div class="input-box">'
+		+ '				<div class="label-box">아이디</div>'
+		+ '				<input type="text" name="id" placeholder="아이디를 입력하세요"/>'
+		+ '			</div>'
+		+ '			<div class="input-box">'
+		+ '				<div class="label-box">비밀번호</div>'
+		+ '				<input type="password" name="pwd" placeholder="비밀번호를 입력하세요"/>'
+		+ '			</div>'
+		+ '			<button type="submit" class="btn-full btn01-reverse">로그인</button>'
+		+ '			<div class="join-btn">'
+		+ '				<span class="gray">아직 회원이 아니신가요?</span>'
+		+ '				<span class="highlight01" onclick="openPopJoin()">회원가입</span>'
+		+ '			</div>'
+		+ '		</form>'
+		+ '	</div>'
+		+ '</div>'
+		+ '</div>';
+	console.log("강운기 바보");
 }
 
 function closePopMyPage() {
-	document.getElementById("login").style.display = "none";
+	document.getElementById("myPage").style.display = "none";
 }
 
 function closePopLogin() {
-	document.getElementById("login").style.display = "none";
+	var login = document.querySelector("#login");	//제거하고자 하는 엘리먼트
+	login.parentNode.removeChild(login);
 }
 
 function openPopJoin() {
-	document.getElementById("join").style.display = "block";
+	var page = document.getElementById("page");
+	page.innerHTML += 
+		'<div class="pop-container login" id="join" style="display:block;">'
+		+ '<div class="deemed" onclick="closePopJoin()"></div>'
+		+ '<span class="close-btn" onclick="closePopJoin()">x</span>'
+		+ '<div class="pop-box" style="width:400px; height:716px;">'
+		+ '	<div class="title-box">'
+		+ '		<div class="tit">회원가입</div>'
+		+ '	</div>'
+		+ '	<div class="content-box">'
+		+ '		<form action="<%=request.getContextPath()%>/member/signIn">'
+		+ '			<div class="input-box">'
+		+ '				<div class="label-box">아이디</div>'
+		+ '				<input type="text" name="id" placeholder="아이디를 입력하세요"/>'
+		+ '			</div>'
+		+ '			<div class="input-box">'
+		+ '				<div class="label-box">비밀번호</div>'
+		+ '				<input type="password" name="pwd" placeholder="비밀번호를 입력하세요"/>'
+		+ '			</div>'
+		+ '			<div class="input-box">'
+		+ '				<div class="label-box">비밀번호 확인</div>'
+		+ '				<input type="password" name="repwd" placeholder="비밀번호를 다시 입력하세요"/>'
+		+ '			</div>'
+		+ '			<div class="input-box">'
+		+ '				<div class="label-box">이름</div>'
+		+ '				<input type="text" name="name" placeholder="이름(닉네임)을 입력하세요"/>'
+		+ '			</div>'
+		+ '			<div class="input-box">'
+		+ '				<div class="label-box">이메일</div>'
+		+ '				<input type="email" name="email" placeholder="이메일을 입력하세요"/>'
+		+ '			</div>'
+		+ '			<div class="input-box">'
+		+ '				<div class="label-box">생일</div>'
+		+ '				<input type="date" name="birthdate" placeholder="생일을 입력하세요"/>'
+		+ '			</div>'
+		+ '			<div class="input-box">'
+		+ '				<div class="label-box">성별</div>'
+		+ '				<input type="radio" name="gender" id="male" checked/><label for="male">남성</label>'
+		+ '				<input type="radio" name="gender" id="female"/><label for="female">여성</label>'
+		+ '			</div>'
+		+ '			<button type="submit" class="btn-full btn01-reverse">회원가입</button>'
+		+ '		</form>'
+		+ '	</div>'
+		+ '</div>'
+		+ '</div>'
 }
 
 function closePopJoin() {
-	document.getElementById("join").style.display = "none";
+	var login = document.querySelector("#join");
+	login.parentNode.removeChild(login);
 }
 /* bookmark icon */
 function bookmark() {
