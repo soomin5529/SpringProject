@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 
+import mybatis.AbstractMybatis;
+
 public class MemberDAO extends AbstractMybatis {
 	String namespace = "Member";
 	HashMap<String, Object> map = new HashMap<String, Object>();

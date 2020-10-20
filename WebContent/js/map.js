@@ -278,9 +278,9 @@ window.onload = function() {
    function selectStreet(){
 	
 	var yuksamdong = new naver.maps.LatLng(37.500457, 127.038218); 
-	var street = document.getElementById("street");
+	var street = document.getElementById("dong");
    	var selected_street = street.options[street.selectedIndex].value;
-    if(selected_street == "yuksamdong" ) selected_street = yuksamdong;
+    if(selected_street == "1168010100" ) selected_street = yuksamdong;
 
   
 	var mapOptions = {

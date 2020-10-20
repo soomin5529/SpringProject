@@ -4,21 +4,31 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-   <typeAliases>
-      <typeAlias type="member.MemberDTO" alias="Member"/>
-   </typeAliases>
-   <environments default="development">
-      <environment id="development">
-         <transactionManager type="JDBC" />
-         <dataSource type="POOLED">
-            <property name="driver" value="oracle.jdbc.driver.OracleDriver" />
-            <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
-            <property name="username" value="FinalProject" />
-            <property name="password" value="1111" />
-         </dataSource>
-      </environment>
-   </environments>
-   <mappers>
-      <mapper resource="mybatis/member.xml"/>
-   </mappers>
+	<typeAliases>
+		<typeAlias type="member.MemberDTO" alias="Member" />
+		<typeAlias type="area.Sido" alias="Sido" />
+		<typeAlias type="area.Sigungu" alias="Sigungu" />
+		<typeAlias type="area.Dong" alias="Dong" />
+		<typeAlias type="industry.MainCategory" alias="Main" />
+		<typeAlias type="industry.MiddleCategory" alias="Middle" />
+		<typeAlias type="industry.SmallCategory" alias="Small" />
+	</typeAliases>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver"
+					value="oracle.jdbc.driver.OracleDriver" />
+				<property name="url"
+					value="jdbc:oracle:thin:@localhost:1521:xe" />
+				<property name="username" value="FinalProject" />
+				<property name="password" value="1111" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="member/member.xml" />
+		<mapper resource="area/Area.xml" />
+		<mapper resource="industry/Industry.xml" />
+	</mappers>
 </configuration>

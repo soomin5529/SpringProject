@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 
-import member.AbstractMybatis;
+import mybatis.AbstractMybatis;
 
 public class CommunityDAO extends AbstractMybatis{
 	String namespace="Community";

@@ -2,9 +2,32 @@
 	pageEncoding="UTF-8"%>
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1daef4c0ea"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/map.js"></script>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script type="text/javascript">
 	var menu01 = document.getElementById("menu01");
 	menu01.className += "on";
+</script>
+<script>
+function sendToControllerSelectValue(select){
+	var area = select.getAttribute('id') == 'sido' ? 'sido' : 'sigungu';
+	
+	$.ajax({
+        type: "post", 
+        url: "<%=request.getContextPath()%>/view/mainOption",
+			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+			data : {
+				'area' : area,
+				'code' : select.value
+			},
+			success : function(textStatus) {
+				if(area == 'sido'){
+					$("#sigungu").empty().append(textStatus);	
+				}else{
+					$("#dong").empty().append(textStatus);
+				}
+			}
+		});
+	}
 </script>
 <div class="page main" id="page">
 	<!-- map -->
@@ -13,61 +36,24 @@
 	<!-- search -->
 	<form action="" method="post" class="map-popup search-group">
 		<!-- 검색항목 묶음 - 구역선택 -->
-		<div class="search-box">
+				<div class="search-box">
 			<div class="input-box">
 				<!-- <div class="label-box">구역 선택</div> -->
-				<select id="state" name="state">
-					<option value="시 전체">시 전체</option>
-					<option value="서울특별시">서울특별시</option>
-				</select> 
-				<select id="city" onchange="selectCity()" name="city">
-					<option value="전체">전체</option>
-					<option value="Gangnamgu">강남구</option>
-					<option value="Dobonggue">도봉구</option>
-					<option value="Eunpyeonggu">은평구</option>
-					<option value="Dongdaemungu">동대문구</option>
-					<option value="Dongjakgu">동작구</option>
-					<option value="Geumcheongu">금천구</option>
-					<option value="Gurogu">구로구</option>
-					<option value="Jongnogu">종로구</option>
-					<option value="Gangbukgu">강북구</option>
-					<option value="Jungnanggu">중랑구</option>
-					<option value="Gangseogu">강서구</option>
-					<option value="Junggu">중구</option>
-					<option value="Gangdonggu">강동구</option>
-					<option value="Gwangjingu">광진구</option>
-					<option value="Mapogu">마포구</option>
-					<option value="Seochogu">서초구</option>
-					<option value="Seongbukgu">성북구</option>
-					<option value="Nowongu">노원구</option>
-					<option value="Songpagu">송파구</option>
-					<option value="Seodaemungu">서대문구</option>
-					<option value="Yangcheongu">양천구</option>
-					<option value="Yeongdeungpogu">영등포구</option>
-					<option value="Gwanakgu">관악구</option>
-					<option value="Seongdonggu">성동구</option>
-					<option value="Yongsangu">용산구</option>
-				</select> 
-				<select id= "street" onchange="selectStreet()" name="street">
-					<option value="동 전체">동 전체</option>
-					<option value="전체">압구정동</option>
-					<option value="전체">신사동</option>
-					<option value="전체">청담동</option>
-					<option value="전체">논현동</option>
-					<option value="전체">삼성동</option>
-					<option value="yuksamdong" >역삼동</option>
-					<option value="전체">도곡동</option>
-					<option value="전체">개포동</option>
-					<option value="전체">대치동</option>
-					<option value="전체">일원동</option>
-					<option value="전체">수서동</option>
-					<option value="전체">자곡동</option>
-					<option value="전체">세곡동</option>
-					<option value="전체">율현동</option>
+				<select id="sido" name="state"
+					onchange="sendToControllerSelectValue(this)">
+					<option value="no" disabled selected>선택</option>
+					<c:forEach var="sido" items="${sido }">
+						<option value="${sido.code}">${sido.name}</option>
+					</c:forEach>
+				</select> <select id="sigungu" name="city"
+					onchange="sendToControllerSelectValue(this)">
+					<option value="no" disabled selected>선택</option>
+				</select>
+				<select id="dong" name="street" onchange="selectStreet()">
+					<option value="no" disabled selected>선택</option>
 				</select>
 			</div>
 		</div>
-
 		<!-- 검색버튼 -->
 		<!-- <button type="submit" class="btn-full btn01-reverse">검색</button> -->
 	</form>
@@ -94,11 +80,11 @@
 		<div class="search-box">
 			<div class="label-box">업종 선택</div>
 			<div class="input-box half">
-				<select name="categoryMain">
+				<select id="categoryMain" name="categoryMain">
 					<option value="대분류">대분류</option>
 					<option value="음식점">음식점</option>
 				</select>
-				<select name="categoryMiddle">
+				<select id="categoryMiddle" name="categoryMiddle">
 					<option value="중분류">중분류</option>
 					<option value="한식">한식</option>
 					<option value="한식">중식</option>
