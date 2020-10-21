@@ -1,8 +1,12 @@
 /* javascript onload */
 window.onload = function() {
+	var menu01 = document.getElementById("menu01");
 	var menu02 = document.getElementById("menu02");
 	var menu03 = document.getElementById("menu03");
 	var url = document.location.href.split("/");
+	if (url[url.length - 1] == "main") {
+		menu01.className += "on";
+	}
 	if (url[url.length - 1] == "startupKeyword") {
 		menu02.className += "on";
 	}

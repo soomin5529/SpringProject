@@ -1,12 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1daef4c0ea"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/map.js"></script>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script type="text/javascript">
-	var menu01 = document.getElementById("menu01");
-	menu01.className += "on";
-</script>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1daef4c0ea"></script>
 <script>
 function sendToControllerSelectValue(select){
 	var area = select.getAttribute('id') == 'sido' ? 'sido' : 'sigungu';
@@ -40,13 +35,13 @@ function sendToControllerSelectValue(select){
 			<div class="input-box">
 				<!-- <div class="label-box">구역 선택</div> -->
 				<select id="sido" name="state"
-					onchange="sendToControllerSelectValue(this)">
+					onchange="javascript:sendToControllerSelectValue(this);">
 					<option value="no" disabled selected>선택</option>
 					<c:forEach var="sido" items="${sido }">
 						<option value="${sido.code}">${sido.name}</option>
 					</c:forEach>
 				</select> <select id="sigungu" name="city"
-					onchange="sendToControllerSelectValue(this)">
+					onchange="javascript:sendToControllerSelectValue(this); selectCity();">
 					<option value="no" disabled selected>선택</option>
 				</select>
 				<select id="dong" name="street" onchange="selectStreet()">
@@ -191,4 +186,5 @@ function sendToControllerSelectValue(select){
 	</div>
 	
 </div>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/map2.js"></script>
 <!-- end of main -->
