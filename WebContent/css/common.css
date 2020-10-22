@@ -20,7 +20,7 @@
 	input:focus, select:focus {border:1px solid var(--point-color); color:var(--point-color);}
 	select {width:100%; height:32px; font-size:1.4rem; line-height:2rem; padding:5px 10px; background-image:url(../images/ic_arrow.png); background-repeat:no-repeat; background-size:16px; background-position: right 5px center;}
 	select:focus {background-image:url(../images/ic_arrow_on.png); }
-	.half input, .half select {width:calc(50% - 5px); margin-right:10px;}
+	.half input, .half select {width:calc(30% - 5px); margin-right:10px;}
 	.half input:first-child, .half select:first-child {float:left;}
 	.half input:last-child, .half select:last-child {margin-right:0;}
 	.slide-box {width: 100%;}
@@ -117,10 +117,13 @@
 	.main .search-group {top:60px; left:0; width:100%; border-bottom:1px solid #ddd; background-color:#fff;}
 	.main .search-group .search-box {padding:10px 15px;}
 	.main .search-group .search-box .label-box {float:left; margin-right:15px; line-height:3.2rem;}
-	.main .search-group .search-box .input-box select {width:150px; margin-right:10px;}
-	.main .search-group .search-box .input-box select:last-child {margin-right:0;}
+	.main .search-group .search-box .input-box select {width:150px; margin-right:10px; }
+	.main .search-group .search-box .input-box .main { width:70px; float:left;  margin-right:3px; }
+	.main .search-group .search-box .input-box .middle { width:70px; float:left;  margin-right:3px; }
+	.main .search-group .search-box .input-box .small { width:70px; float:left;   }
+	.main .search-group .search-box .input-box select:last-child {margin-right:0px;}
 	/* map-pop dashboard */
-	.main .dashboard {top:113px; width:350px; height:calc(100% - 113px);background-color:#f2f2f2; transition:.5s;}
+	.main .dashboard {top:113px; width:400px; height:calc(100% - 113px);background-color:#f2f2f2; transition:.5s;}
 	.main .dashboard .title-box .tit {float:left; width:calc(100% - 40px);}
 	.main .dashboard .search-box {padding:15px; margin-bottom:10px; border-bottom:1px solid #eee; background-color:#fff;}
 	.main .dashboard .chart-box {height:calc(100% - 192px); border-top:1px solid #eee; overflow:auto; background-color:#fff;}

@@ -1,29 +1,24 @@
 package industry;
 
 public class MainCategory {
-	private String maincategory_code;
-	private String maincategory_name;
-
-	public String getMaincategory_code() {
-		return maincategory_code;
+	private String code;
+	private String name;
+	
+	public String getCode() {
+		return code;
 	}
-
-	public void setMaincategory_code(String maincategory_code) {
-		this.maincategory_code = maincategory_code;
+	public void setCode(String code) {
+		this.code = code;
 	}
-
-	public String getMaincategory_name() {
-		return maincategory_name;
+	public String getName() {
+		return name;
 	}
-
-	public void setMaincategory_name(String maincategory_name) {
-		this.maincategory_name = maincategory_name;
+	public void setName(String name) {
+		this.name = name;
 	}
-
 	@Override
 	public String toString() {
-		return "MainCategory [maincategory_code=" + maincategory_code + ", maincategory_name=" + maincategory_name
-				+ "]";
+		return "Main [code=" + code + ", name=" + name + "]";
 	}
 
 }
