@@ -78,7 +78,7 @@ function sendToControllerSelectCategoryValue(select){
 	<!-- dashboard -->
 	<div class="map-popup dashboard" id="dashboard" style="display:none">
 		<div class="title-box cf">
-			<div class="back-btn" onclick="closePopDashboard(); closePopCommunity();">
+			<div class="back-btn" onclick="closePopDashboard();">
 				<svg viewBox="0 0 40 40" class="back-icon">
 					<path d="M18 35L3 20 18 5"/>
 				</svg>
@@ -95,14 +95,15 @@ function sendToControllerSelectCategoryValue(select){
 		<!-- 검색항목 묶음 - 업종선택 -->
 		<div class="search-box">
 			<div class="label-box">업종 선택</div>
-			<div class="input-box half">
-			<select id="main" name="main_category"
+			<div class="input-box third">
+				<select id="main" name="main_category"
 					onchange="javascript:sendToControllerSelectCategoryValue(this);">
 					<option value="no" disabled selected>대분류</option>
 					<c:forEach var="main" items="${main }">
 						<option value="${main.code}">${main.name}</option>
 					</c:forEach>
-				</select> <select id="middle" name="middle_category"
+				</select>
+				<select id="middle" name="middle_category"
 					onchange="javascript:sendToControllerSelectCategoryValue(this);">
 					<option value="no" disabled selected>중분류</option>
 				</select>
@@ -120,7 +121,6 @@ function sendToControllerSelectCategoryValue(select){
 		<!-- 떠들썩 커뮤니티 버튼 -->
 		<button type="button" class="btn-full btn01-reverse" onclick="openPopCommunity()">떠들썩</button>
 	</div>
-	
 	<!-- end of dashboard -->
 	
 	<!-- 떠들썩 커뮤니티 -->
@@ -146,12 +146,11 @@ function sendToControllerSelectCategoryValue(select){
 			<!-- post-box -->
 			<div class="post-box">
 				<div class="content-box cf">
-					<div class="name">
-					강운기삼겹살 사장이다</div>
+					<div class="name">강운기삼겹살 사장이다</div>
 					<div class="content">
 						<div class="text">
-						코로나 여파가 있어도 장사는 잘되더군요,, 직장인분들이 많다보니 매출손해가 크지 않아요
-						체인점 내실 분 쪽지 주십쇼.
+							코로나 여파가 있어도 장사는 잘되더군요,, 직장인분들이 많다보니 매출손해가 크지 않아요
+							체인점 내실 분 쪽지 주십쇼.
 						</div>
 						<div class="photo" style="background-image:url('../images/gogi.jpg');"></div>
 					</div>

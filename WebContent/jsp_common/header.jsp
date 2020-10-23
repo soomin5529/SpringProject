@@ -16,7 +16,6 @@
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/202010_reset.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/common.css">
     <script src = "http://code.jquery.com/jquery-1.7.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath()%>/js/common.js"></script>
 </head>
 <body>
 	<div class="header">

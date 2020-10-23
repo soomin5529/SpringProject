@@ -1,5 +1,6 @@
 /* javascript onload */
 window.onload = function() {
+	/* header - current menu active */
 	var menu01 = document.getElementById("menu01");
 	var menu02 = document.getElementById("menu02");
 	var menu03 = document.getElementById("menu03");
@@ -48,27 +49,40 @@ $(document).ready(function(){
 
 
 /* popup open/close */
+var dashboard = document.getElementById("dashboard");
+var community = document.getElementById("community");
+var communityReg = document.getElementById("communityReg");
+var login = document.getElementById("login");
+var myPage = document.getElementById("myPage");
+var join = document.getElementById("join");
+
 function closePopDashboard() {
-	document.getElementById("dashboard").style.display = "none";
+	dashboard.style.display = "none";
+	if(community.style.display == "block"){
+		community.style.left = 0;
+	}
 }
+
 function openPopCommunity() {
-	document.getElementById("community").style.display = "block";
+	community.style.display = "block";
+	if(dashboard.style.display == "block"){
+		community.style.left = "350px";
+	}
 }
 
 function closePopCommunity() {
-	document.getElementById("community").style.display = "none";
+	community.style.display = "none";
 }
 
 function openPopCommunityReg() {
-	document.getElementById("communityReg").style.display = "block";
+	communityReg.style.display = "block";
 }
 
 function closePopCommunityReg() {
-	document.getElementById("communityReg").style.display = "none";
+	communityReg.style.display = "none";
 }
 
 function openPopMyPage() {
-	var login = document.getElementById("login");
 	/*if(sessionStorage.getItem("isLogin")){
 		
 	}else{*/
@@ -102,11 +116,10 @@ function openPopMyPage() {
 }
 
 function closePopMyPage() {
-	document.getElementById("myPage").style.display = "none";
+	myPage.style.display = "none";
 }
 
 function closePopLogin() {
-	var login = document.querySelector("#login");	//제거하고자 하는 엘리먼트
 	while(login.firstChild){
 		login.removeChild(login.firstChild);
 	}
@@ -114,7 +127,6 @@ function closePopLogin() {
 }
 
 function openPopJoin() {
-	var join = document.getElementById("join");
 	join.innerHTML += 
 		'<div class="deemed" onclick="closePopJoin()"></div>'
 		+ '<span class="close-btn" onclick="closePopJoin()">x</span>'
@@ -161,15 +173,19 @@ function openPopJoin() {
 }
 
 function closePopJoin() {
-	var join = document.getElementById("join");
 	while(join.firstChild){
 		join.removeChild(join.firstChild);
 	};
 	join.style.display="none";
 }
+
+
+/* SVG toggle button*/
+var bookmark = document.getElementById("bookmark");
+var postLike = document.getElementById("likeBtn");
+
 /* bookmark icon */
 function bookmark() {
-	var bookmark = document.getElementById("bookmark");
 
 	if (bookmark.classList.contains('on')) {
 		bookmark.className = bookmark.className.replace("on", "off");
@@ -180,7 +196,6 @@ function bookmark() {
 
 /* like icon */
 function postLike() {
-	var postLike = document.getElementById("likeBtn");
 	if (postLike.classList.contains('on')) {
 		postLike.className = postLike.className.replace("on", "off");
 		postLike.innerHTML = '<svg viewBox="0 0 40 40" class="like-icon">'
