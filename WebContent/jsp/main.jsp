@@ -215,6 +215,27 @@ function sendToControllerSelectValue(select){
 			}
 		});
 	}
+	
+function sendToControllerSelectCategoryValue(select){
+	var category = select.getAttribute('id') == 'main' ? 'main' : 'middle';
+	
+	$.ajax({
+        type: "post", 
+        url: "<%=request.getContextPath()%>/view/categoryOption",
+			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+			data : {
+				'category' : category,
+				'code' : select.value
+			},
+			success : function(textStatus) {
+				if(category == 'main'){
+					$("#middle").empty().append(textStatus);	
+				}else{
+					$("#small").empty().append(textStatus);
+				}
+			}
+		});
+	}
 </script>
 <div class="page main" id="page">
 	<!-- map -->
@@ -249,7 +270,7 @@ function sendToControllerSelectValue(select){
 	<!-- dashboard -->
 	<div class="map-popup dashboard" id="dashboard" style="display:none">
 		<div class="title-box cf">
-			<div class="back-btn" onclick="closePopDashboard()">
+			<div class="back-btn" onclick="closePopDashboard();">
 				<svg viewBox="0 0 40 40" class="back-icon">
 					<path d="M18 35L3 20 18 5"/>
 				</svg>
@@ -266,17 +287,20 @@ function sendToControllerSelectValue(select){
 		<!-- 검색항목 묶음 - 업종선택 -->
 		<div class="search-box">
 			<div class="label-box">업종 선택</div>
-			<div class="input-box half">
-				<select id="categoryMain" name="categoryMain">
-					<option value="대분류">대분류</option>
-					<option value="음식점">음식점</option>
+			<div class="input-box third">
+				<select id="main" name="main_category"
+					onchange="javascript:sendToControllerSelectCategoryValue(this);">
+					<option value="no" disabled selected>대분류</option>
+					<c:forEach var="main" items="${main }">
+						<option value="${main.code}">${main.name}</option>
+					</c:forEach>
 				</select>
-				<select id="categoryMiddle" name="categoryMiddle">
-					<option value="중분류">중분류</option>
-					<option value="한식">한식</option>
-					<option value="한식">중식</option>
-					<option value="한식">일식</option>
-					<option value="한식">양식</option>
+				<select id="middle" name="middle_category"
+					onchange="javascript:sendToControllerSelectCategoryValue(this);">
+					<option value="no" disabled selected>중분류</option>
+				</select>
+				<select id="small" name="small_category" >
+					<option value="no" disabled selected>소분류</option>
 				</select>
 			</div>
 		</div>
@@ -314,12 +338,11 @@ function sendToControllerSelectValue(select){
 			<!-- post-box -->
 			<div class="post-box">
 				<div class="content-box cf">
-					<div class="name">
-					강운기삼겹살 사장이다</div>
+					<div class="name">강운기삼겹살 사장이다</div>
 					<div class="content">
 						<div class="text">
-						코로나 여파가 있어도 장사는 잘되더군요,, 직장인분들이 많다보니 매출손해가 크지 않아요
-						체인점 내실 분 쪽지 주십쇼.
+							코로나 여파가 있어도 장사는 잘되더군요,, 직장인분들이 많다보니 매출손해가 크지 않아요
+							체인점 내실 분 쪽지 주십쇼.
 						</div>
 						<div class="photo" style="background-image:url('../images/gogi.jpg');"></div>
 					</div>
@@ -368,7 +391,7 @@ function sendToControllerSelectValue(select){
 				<!-- 사진등록 -->
 				<div class="photo-box cf">
 					<div class="thumb" id="photo" style="background-image:url('../images/temp01.jpg')"></div>
-					
+						
 					<div class="btn-photo" onclick="onclick=document.all.file.click()">
 					<input type="file" id="file" name="file"  style="display: none;"/></div>
 				</div>
@@ -378,6 +401,6 @@ function sendToControllerSelectValue(select){
 	</div>
 	
 </div>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/map2.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/map.js"></script>
 <!-- end of main -->
 >>>>>>> refs/remotes/origin/soomin

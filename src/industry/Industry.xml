@@ -4,5 +4,26 @@
 
 <!-- 연결을 namespace로 한다.(대소문자 구분함) -->
 <mapper namespace="Industry">
-	
+
+	<select id="category_mainList" resultType="MainCategory">
+		select
+		maincategory_code as code, maincategory_name as name from
+		category_main
+	</select>
+
+	<select id="category_middleList" resultType="MiddleCategory"
+		parameterType="hashmap">
+		select middlecategory_code as code, middlecategory_name
+		as name from
+		category_middle where maincategory_code =
+		#{maincategory_code}
+	</select>
+
+	<select id="category_smallList" resultType="SmallCategory"
+		parameterType="hashmap">
+		select smallcategory_code as code, smallcategory_name as
+		name from
+		category_small where middlecategory_code =
+		#{middlecategory_code}
+	</select>
 </mapper>

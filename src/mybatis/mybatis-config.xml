@@ -9,9 +9,9 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="area.Sido" alias="Sido" />
 		<typeAlias type="area.Sigungu" alias="Sigungu" />
 		<typeAlias type="area.Dong" alias="Dong" />
-		<typeAlias type="industry.MainCategory" alias="Main" />
-		<typeAlias type="industry.MiddleCategory" alias="Middle" />
-		<typeAlias type="industry.SmallCategory" alias="Small" />
+		<typeAlias type="industry.MainCategory" alias="MainCategory" />
+		<typeAlias type="industry.MiddleCategory" alias="MiddleCategory" />
+		<typeAlias type="industry.SmallCategory" alias="SmallCategory" />
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">

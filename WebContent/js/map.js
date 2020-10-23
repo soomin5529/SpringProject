@@ -254,7 +254,13 @@ naver.maps.Event.addListener(polygon5, "mouseout", function(e) {
 
 /* polygon marker onclick*/
 naver.maps.Event.addListener(polygon5, 'click', function() {
-	document.getElementById("dashboard").style.display = "block";
+	var dashboard = document.getElementById("dashboard");
+	var community = document.getElementById("community");
+	
+	dashboard.style.display = "block";
+	if(community.style.display == "block"){
+		community.style.left = "350px";
+	}	
 });
 
 
