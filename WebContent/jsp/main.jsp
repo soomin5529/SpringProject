@@ -48,7 +48,6 @@ function sendToControllerSelectCategoryValue(select){
 <div class="page main" id="page">
 	<!-- map -->
 	<div id="map" class="map"></div>
-	
 	<!-- search -->
 	<form action="" method="post" class="map-popup search-group">
 		<!-- 검색항목 묶음 - 구역선택 -->
@@ -208,6 +207,9 @@ function sendToControllerSelectCategoryValue(select){
 		</div>
 	</div>
 	
+	<!-- mypage -->
+	
+	
 </div>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/map.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/map2.js"></script>
 <!-- end of main -->
