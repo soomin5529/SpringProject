@@ -43,7 +43,6 @@ public class MemberDAO extends AbstractMybatis {
 			map.put("pwd", pwd);
 			String statement = namespace + ".loginMember";
 			x = sqlSession.selectOne(statement, map);
-			System.out.println(x);
 			if (x != null) {
 				result = true;
 			}
@@ -60,7 +59,7 @@ public class MemberDAO extends AbstractMybatis {
 		try {
 			String statement = namespace + ".checkId";
 			checkId = sqlSession.selectOne(statement, userid);
-			if (checkId != "" || checkId != null) {
+			if (checkId != null) {
 				result = true;
 			}
 		} finally {
@@ -87,9 +86,8 @@ public class MemberDAO extends AbstractMybatis {
  * String hobby[] = bean.getHobby();
  * 
  * char hb[] = {'0','0','0','0','0'}; String lists[] =
- * {"�뜝�룞�삕�뜝�떢�냲�삕","�뜝�룞�삕�뜝�룞�삕","�뜝�룞�삕�뜝�룞�삕",
- * "�뜝�룞�삕�솕","�뜝�룜�룞"}; //list[] �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕
- * �솗�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 1�뜝�룞�삕
+ * {"�뜝�룞�삕�뜝�떢�냲�삕","�뜝�룞�삕�뜝�룞�삕","�뜝�룞�삕�뜝�룞�삕", "�뜝�룞�삕�솕","�뜝�룜�룞"};
+ * //list[] �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �솗�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 1�뜝�룞�삕
  * �뜝�룞�삕�뜝�룞�삕
  * 
  * for(int i=0;i<hobby.length;i++) { System.out.println(hobby[i]); for (int j =

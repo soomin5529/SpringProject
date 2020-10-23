@@ -1,8 +1,12 @@
 /* javascript onload */
 window.onload = function() {
+	var menu01 = document.getElementById("menu01");
 	var menu02 = document.getElementById("menu02");
 	var menu03 = document.getElementById("menu03");
 	var url = document.location.href.split("/");
+	if (url[url.length - 1] == "main") {
+		menu01.className += "on";
+	}
 	if (url[url.length - 1] == "startupKeyword") {
 		menu02.className += "on";
 	}
@@ -65,9 +69,9 @@ function closePopCommunityReg() {
 
 function openPopMyPage() {
 	var login = document.getElementById("login");
-	/*if(sessionStorage.getItem("isLogin")){
-		
-	}else{*/
+	if(login==null){
+		alert("로그인되어있지롱");
+	}else{
 		login.innerHTML +=
 			 '<div class="deemed" onclick="closePopLogin()"></div>'
 			+ '<span class="close-btn" onclick="closePopLogin()">x</span>'
@@ -76,16 +80,17 @@ function openPopMyPage() {
 			+ '		<div class="tit">로그인</div>'
 			+ '	</div>'
 			+ '<div class="content-box">'
-			+ '		<form action="/SpringTeamProject/member/login">'
+			+ '		<form name="loginFrm" action="/SpringTeamProject/member/login">'
 			+ '			<div class="input-box">'
 			+ '				<div class="label-box">아이디</div>'
-			+ '				<input type="text" name="userid" placeholder="아이디를 입력하세요"/>'
+			+ '				<input type="text" id="loginId" name="userid" placeholder="아이디를 입력하세요"/>'
 			+ '			</div>'
 			+ '			<div class="input-box">'
 			+ '				<div class="label-box">비밀번호</div>'
-			+ '				<input type="password" name="pwd" placeholder="비밀번호를 입력하세요"/>'
+			+ '				<input type="password" id="loginPwd" name="pwd" placeholder="비밀번호를 입력하세요"/>'
 			+ '			</div>'
-			+ '			<button type="submit" class="btn-full btn01-reverse">로그인</button>'
+			+ '			<span id="idPresenceCheck" style="color:red;"></span>'
+			+ '			<button type="button" onclick="loginCheck()" class="btn-full btn01-reverse">로그인</button>'
 			+ '			<div class="join-btn">'
 			+ '				<span class="gray">아직 회원이 아니신가요?</span>'
 			+ '				<span class="highlight01" onclick="openPopJoin()">회원가입</span>'
@@ -94,7 +99,7 @@ function openPopMyPage() {
 			+ '	</div>'
 			+ '</div>';
 		login.style.display="block";
-	/*}*/
+	}
 }
 
 function closePopMyPage() {
@@ -119,10 +124,11 @@ function openPopJoin() {
 		+ '		<div class="tit">회원가입</div>'
 		+ '	</div>'
 		+ '	<div class="content-box">'
-		+ '		<form action="/SpringTeamProject/member/signIn">'
+		+ '		<form name = "regForm" action="/SpringTeamProject/member/signIn">'
 		+ '			<div class="input-box">'
 		+ '				<div class="label-box">아이디</div>'
-		+ '				<input type="text" name="userid" placeholder="아이디를 입력하세요"/>'
+		+ '				<input type="text" name="userid" placeholder="아이디를 입력하세요"/ onkeyup="idCheck(this.form.userid.value)">'
+		+ '             <span id="idOverlapCheck"></span>'				
 		+ '			</div>'
 		+ '			<div class="input-box">'
 		+ '				<div class="label-box">비밀번호</div>'
@@ -146,10 +152,10 @@ function openPopJoin() {
 		+ '			</div>'
 		+ '			<div class="input-box">'
 		+ '				<div class="label-box">성별</div>'
-		+ '				<input type="radio" name="gender" id="male" checked/><label for="male">남성</label>'
-		+ '				<input type="radio" name="gender" id="female"/><label for="female">여성</label>'
+		+ '				<input type="radio" name="gender" id="male" value="male" checked/><label for="male">남성</label>'
+		+ '				<input type="radio" name="gender" id="female" value="female"/><label for="female">여성</label>'
 		+ '			</div>'
-		+ '			<button type="submit" class="btn-full btn01-reverse">회원가입</button>'
+		+ '			<button type="button" class="btn-full btn01-reverse" onclick="inputCheck()">회원가입</button>'
 		+ '		</form>'
 		+ '	</div>'
 		+ '</div>';

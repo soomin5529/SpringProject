@@ -38,6 +38,20 @@ public class MainController extends Action {
 		}
 		return "/jsp_nohead/mainOption.jsp";
 	}
+	
+	public String mainIndustryOption(HttpServletRequest request, HttpServletResponse response) throws Throwable {
+		AreaDAO dbpro = new AreaDAO();
+		if (request.getParameter("area").equals("sido")) {
+			System.out.println("시도 선택!!!");
+			List<Sigungu> sigunguList = dbpro.sigunguList((String) request.getParameter("code"));
+			System.out.println(sigunguList);
+			request.setAttribute("option", sigunguList);
+		} else {
+			List<Dong> dongList = dbpro.dongList((String) request.getParameter("code"));
+			request.setAttribute("option", dongList);
+		}
+		return "/jsp_nohead/mainOption.jsp";
+	}
 
 	public String startupKeyword(HttpServletRequest request, HttpServletResponse response) throws Throwable {
 		return "/jsp/startupKeyword.jsp";
