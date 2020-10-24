@@ -1,7 +1,9 @@
 package area;
 
-// 시도 클래스
-public class Sido {
+import java.io.Serializable;
+
+// 시군구 클래스
+public class AreaDTO implements Serializable {
 	private String code;
 	private String name;
 
@@ -23,7 +25,7 @@ public class Sido {
 
 	@Override
 	public String toString() {
-		return "Sido [code=" + code + ", name=" + name + "]";
+		return "Area [code=" + code + ", name=" + name + "]";
 	}
 
 }

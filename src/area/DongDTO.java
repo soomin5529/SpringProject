@@ -1,7 +1,9 @@
 package area;
 
-// 시군구 클래스
-public class Sigungu {
+import java.io.Serializable;
+
+// 동 클래스
+public class DongDTO implements Serializable {
 	private String code;
 	private String name;
 
@@ -23,7 +25,7 @@ public class Sigungu {
 
 	@Override
 	public String toString() {
-		return "Sigungu [code=" + code + ", name=" + name + "]";
+		return "Dong [code=" + code + ", name=" + name + "]";
 	}
 
 }

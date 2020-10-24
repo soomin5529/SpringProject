@@ -1,4 +1,4 @@
-package Comment;
+package comment;
 
 public class CommentDTO {
 	private String userid;

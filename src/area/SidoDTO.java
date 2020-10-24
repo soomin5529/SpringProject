@@ -1,24 +1,31 @@
-package industry;
+package area;
 
-public class MiddleCategory {
+import java.io.Serializable;
+
+// 시도 클래스
+public class SidoDTO implements Serializable {
 	private String code;
 	private String name;
-	
+
 	public String getCode() {
 		return code;
 	}
+
 	public void setCode(String code) {
 		this.code = code;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	@Override
 	public String toString() {
-		return "Middle [code=" + code + ", name=" + name + "]";
+		return "Sido [code=" + code + ", name=" + name + "]";
 	}
 
 }

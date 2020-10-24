@@ -1,15 +1,18 @@
 package controller;
 
-import java.util.Date;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import member.MemberDAO;
-import member.MemberDTO;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-public class MemberController extends Action {
+import member.MemberDTO;
+import service.MemberDAO;
+
+@Controller
+@RequestMapping("/member/")
+public class MemberController {
 	public MemberDAO memberdao = new MemberDAO();
 	public MemberDTO memberdto = new MemberDTO();
 

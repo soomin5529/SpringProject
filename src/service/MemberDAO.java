@@ -1,12 +1,12 @@
-package member;
+package service;
 
 import java.util.Date;
 import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Service;
 
-import mybatis.AbstractMybatis;
-
+@Service
 public class MemberDAO extends AbstractMybatis {
 	String namespace = "Member";
 	HashMap<String, Object> map = new HashMap<String, Object>();

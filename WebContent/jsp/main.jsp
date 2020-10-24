@@ -3,12 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1daef4c0ea"></script>
 <script>
+/* main화면에서 지역선택 시, 동적으로 다음 옵션 받아옴 */
 function sendToControllerSelectValue(select){
 	var area = select.getAttribute('id') == 'sido' ? 'sido' : 'sigungu';
 	
 	$.ajax({
         type: "post", 
-        url: "<%=request.getContextPath()%>/view/mainOption",
+        url: "<%=request.getContextPath()%>/request/areaOption",
 			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 			data : {
 				'area' : area,
@@ -23,13 +24,14 @@ function sendToControllerSelectValue(select){
 			}
 		});
 	}
-	
+
+// main화면에서 업종분류 선택시, 다음 하위 옵션의 카테고리 동적으로 받아옴
 function sendToControllerSelectCategoryValue(select){
 	var category = select.getAttribute('id') == 'main' ? 'main' : 'middle';
 	
 	$.ajax({
         type: "post", 
-        url: "<%=request.getContextPath()%>/view/categoryOption",
+        url: "<%=request.getContextPath()%>/request/categoryOption",
 			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 			data : {
 				'category' : category,

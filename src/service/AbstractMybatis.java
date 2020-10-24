@@ -1,4 +1,4 @@
-package mybatis;
+package service;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,8 +14,8 @@ public abstract class AbstractMybatis {
 		setsqlSessionFactory();
 	}
 	
-	private static void setsqlSessionFactory() { //getConnection ¿ªÇÒ
-		String resource = "mybatis/mybatis-config.xml"; //xmlÀ» ºÒ·¯¿Â´Ù
+	private static void setsqlSessionFactory() { //getConnection ï¿½ï¿½ï¿½ï¿½
+		String resource = "mybatis/mybatis-config.xml"; //xmlï¿½ï¿½ ï¿½Ò·ï¿½ï¿½Â´ï¿½
 		InputStream inputStream;
 		try {
 			inputStream = Resources.getResourceAsStream(resource);

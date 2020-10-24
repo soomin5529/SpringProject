@@ -1,6 +1,6 @@
 package industry;
 
-public class MainCategory {
+public class SmallCategoryDTO {
 	private String code;
 	private String name;
 	
@@ -18,7 +18,6 @@ public class MainCategory {
 	}
 	@Override
 	public String toString() {
-		return "Main [code=" + code + ", name=" + name + "]";
+		return "Small [code=" + code + ", name=" + name + "]";
 	}
-
 }

@@ -10,20 +10,28 @@
        http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-	
+
 	<!-- annotation 컨트롤러를 인지하지만, injection 기능이 없다. 즉, autoWired가 안된다. -->
 	<mvc:annotation-driven />
 	<!-- autoWired가 되게한다. -->
-	<context:component-scan base-package="controller, service" />
-	
-	<mvc:default-servlet-handler />
-	
-	<mvc:view-controller path="/index" view-name="index" />
+	<context:component-scan
+		base-package="controller, service" />
 
+	<mvc:default-servlet-handler />
+
+	<mvc:resources location="/uploadFile/"
+		mapping="/uploadFile/**" />
+
+	<!-- index는 주소가 들어가는 위치라고 생각하자 -->
+	<mvc:view-controller path="/index"
+		view-name="index" />
+	<!-- view-controller의 index가 합쳐져, /jsp/index.jsp 가된다. -->
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
 
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 </beans>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 연결을 namespace로 한다.(대소문자 구분함) -->
+<mapper namespace="Area">
+
+	<!-- 시도 출력 -->
+	<select id="sidoList" resultType="Sido">
+		select sido_code as code,
+		sido_name as name from sido
+	</select>
+
+	<select id="sigunguList" resultType="Area"
+		parameterType="hashmap">
+		select sigungu_code as code, sigungu_name as name from
+		sigungu where sido_code = ${sido_code}
+	</select>
+
+	<select id="dongList" resultType="Area" parameterType="hashmap">
+		select
+		dong_code as code, dong_name as name from dong where sigungu_code =
+		${sigungu_code}
+	</select>
+
+</mapper>

@@ -12,27 +12,7 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
-
-	<!-- Main -->
-	<servlet>
-		<servlet-name>view</servlet-name>
-		<servlet-class>controller.MainController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>view</servlet-name>
-		<url-pattern>/view/*</url-pattern>
-	</servlet-mapping>
-
-	<!-- Member -->
-	<servlet>
-		<servlet-name>member</servlet-name>
-		<servlet-class>controller.MemberController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>member</servlet-name>
-		<url-pattern>/member/*</url-pattern>
-	</servlet-mapping>
-
+	
 	<jsp-config>
 		<jsp-property-group>
 			<url-pattern>/jsp/*</url-pattern>
@@ -40,4 +20,48 @@
 			<include-coda>/jsp_common/footer.jsp</include-coda>
 		</jsp-property-group>
 	</jsp-config>
+
+	<!-- Main -->
+<!-- 	<servlet>
+		<servlet-name>view</servlet-name>
+		<servlet-class>controller.MainController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>view</servlet-name>
+		<url-pattern>/view/*</url-pattern>
+	</servlet-mapping> -->
+
+	<!-- Member -->
+<!-- 	<servlet>
+		<servlet-name>member</servlet-name>
+		<servlet-class>controller.MemberController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>member</servlet-name>
+		<url-pattern>/member/*</url-pattern>
+	</servlet-mapping> -->
+	
+	<!-- Spring으로 바꿔줄께요 -->
+	<servlet>
+		<servlet-name>springTeamProject</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>springTeamProject</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 </web-app>
