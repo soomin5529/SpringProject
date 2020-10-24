@@ -207,8 +207,6 @@ function sendToControllerSelectCategoryValue(select){
 		</div>
 	</div>
 	
-	<!-- mypage -->
-	
 	
 </div>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/map2.js"></script>
