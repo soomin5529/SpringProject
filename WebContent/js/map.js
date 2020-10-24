@@ -23,7 +23,98 @@ var markerOptions = {
 		anchor : new naver.maps.Point(15, 20)
 	}
 };
+
+var listener = naver.maps.Event.addDOMListener(mapElement, 'click', function() {
+    map.setZoom(8);
+    map.setCenter(marker.getPosition());
+
+    naver.maps.Event.removeDOMListener(listener);
+});
+
+/*marker*/
+
+var map = new naver.maps.Map(document.getElementById('map'), {
+    zoom: 17,
+    center: new naver.maps.LatLng(37.5642135, 127.0016985)
+
+});
+
+var latlngs = [
+	new naver.maps.LatLng(37.6658609, 127.0317674),
+	new naver.maps.LatLng(37.6176125, 126.9227004),
+    new naver.maps.LatLng(37.5838012, 127.0507003),
+    new naver.maps.LatLng(37.4965037, 126.9443073),
+    new naver.maps.LatLng(37.4600969, 126.9001546),
+    new naver.maps.LatLng(37.4954856, 126.858121),
+    new naver.maps.LatLng(37.5990998, 126.9861493),
+    new naver.maps.LatLng(37.6469954, 127.0147158),
+    new naver.maps.LatLng(37.5953795, 127.0939669),
+    new naver.maps.LatLng(37.4959854, 127.0664091),
+    new naver.maps.LatLng(37.5657617, 126.8226561),
+    new naver.maps.LatLng(37.5579452,126.9941904),
+    new naver.maps.LatLng(37.5492077, 127.1464824),
+    new naver.maps.LatLng(37.5481445, 127.0857528),
+    new naver.maps.LatLng(37.5622906,126.9087803),
+    new naver.maps.LatLng(37.4769528, 127.0378103),
+    new naver.maps.LatLng(37.606991,127.0232185),
+    new naver.maps.LatLng(37.655264, 127.0771201),
+    new naver.maps.LatLng(37.5048534,127.1144822),
+    new naver.maps.LatLng(37.5820369,126.9356665),
+    new naver.maps.LatLng(37.5270616,126.8561534),
+    new naver.maps.LatLng(37.520641,126.9139242),
+    new naver.maps.LatLng(37.4653993,126.9438071),
+    new naver.maps.LatLng(37.5506753,127.0409622),
+    new naver.maps.LatLng(37.5311008,126.9810742),
+];
+
+
+var markerList = [];
+
+for (var i=0, ii=latlngs.length; i<ii; i++) {
+    var icon = {
+            url: '/SpringTeamProject/images/ic_marker.png',
+            size : new naver.maps.Size(30, 40),
+    		origin : new naver.maps.Point(0, 0),
+    		anchor : new naver.maps.Point(15, 20)
+        },
+        marker = new naver.maps.Marker({
+            position: latlngs[i],
+            map: map,
+            icon: icon
+        });
+    
+
+    marker.set('seq', i);
+
+    markerList.push(marker);
+
+    marker = null;
+    map.setZoom(13);
+    
+}
+
 var marker = new naver.maps.Marker(markerOptions);
+
+/* 스크롤에 따른 함수 호출(sample) */
+naver.maps.Event.addListener(map, 'mousewheel', function(e) {
+	console.log(map.getZoom());
+	if(map.getZoom()>12){
+		$.ajax({
+	        url: '/SpringTeamProject/json/sig/Songpa-gu.geojson',
+	        dataType: 'json',
+	        success: function(data) {
+	        	map.data.removeGeoJson(prev);
+	        	startDataLayer(data);
+	        	prev2 = data;
+	        }
+	    });
+	}else{
+		map.data.removeGeoJson(prev2);
+	}
+});
+var prev2 = {};
+
+
 
 /* polygon marker */
 	var polygon = new naver.maps.Polygon({
@@ -262,6 +353,7 @@ naver.maps.Event.addListener(polygon5, 'click', function() {
 		community.style.left = "350px";
 	}	
 });
+
 
 
 function selectCity() {
