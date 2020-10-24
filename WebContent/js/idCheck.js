@@ -12,10 +12,10 @@ function loginCheck() {
 		var id = document.getElementById("loginId").value;
 		var pwd = document.getElementById("loginPwd").value;
 		var idcheck = document.getElementById("idPresenceCheck");
-		
+
 		$.ajax({
 			type : "post",
-			url : "/SpringTeamProject/member/loginCheck",
+			url : "/SpringTeamProject/request/loginCheck",
 			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 			data : {
 				'userid' : id,
@@ -42,7 +42,7 @@ function idCheck(userid) {
 		// 중복체크
 		$.ajax({
 			type : "post",
-			url : "/SpringTeamProject/member/checkId",
+			url : "/SpringTeamProject/request/checkId",
 			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 			data : {
 				'userid' : userid
@@ -118,5 +118,27 @@ function inputCheck() {
 		return;
 	}
 
-	document.regForm.submit();
+	var signInInfo = {
+		"userid" : $('#userid').val(),
+		"pwd" : $('#pwd').val(),
+		"name" : $('#name').val(),
+		"email" : $('#email').val(),
+		"birthdate" : $('#birthdate').val(),
+		"gender" : $("input:radio[name='gender']:checked").val()
+	}
+
+	$.ajax({
+		type : "post",
+		url : "/SpringTeamProject/member/signIn",
+		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+		data : signInInfo,
+		success : function(textStatus) {
+			if (textStatus.includes('fail')) {
+				alert("회원가입에 실패하였습니다.");
+			} else {
+				alert("회원가입 되셨습니다.");
+			}
+			window.location.href = "/SpringTeamProject/view/main";
+		}
+	});
 }

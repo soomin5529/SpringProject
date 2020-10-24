@@ -4,84 +4,60 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import member.MemberDTO;
 import service.MemberDAO;
 
 @Controller
 @RequestMapping("/member/")
 public class MemberController {
-	public MemberDAO memberdao = new MemberDAO();
-	public MemberDTO memberdto = new MemberDTO();
 
-	public String login(HttpServletRequest request, HttpServletResponse response) throws Throwable {
-		String userid = request.getParameter("userid");
-		String pwd = request.getParameter("pwd");
+	@Autowired
+	MemberDAO memberDB;
 
-		// 로그인 세션
-		HttpSession session = request.getSession();
-		String sessionId = session.getId();
-		boolean loginCheck = false;
-
-		loginCheck = memberdao.loginMember(userid, pwd);
-		System.out.println(loginCheck + "---------> 로그인상태" );
-		if (loginCheck == true) {
-			session.setAttribute("userid", userid);
-			return "/jsp/okmain.jsp";
-		} else {
-			request.setAttribute("msg", "아이디나 비밀번호가 올바르지 않습니다.");
-			return "/jsp_nohead/idCheck.jsp";
-		}
-	}
-	
-	public String loginCheck(HttpServletRequest request, HttpServletResponse response) throws Throwable {
-		String userid = request.getParameter("userid");
-		String pwd = request.getParameter("pwd");
-		System.out.println("--------------->쿼리 부르기 전");
-		boolean loginCheck = false;
-		loginCheck = memberdao.loginMember(userid, pwd);
-		if (loginCheck == true) {
-			request.setAttribute("msg", "ok");
-		} else {
-			request.setAttribute("msg", "아이디나 비밀번호가 올바르지 않습니다.");
-		}
-		System.out.println("--------------->쿼리 부른 후");
-		return "/jsp_nohead/idCheck.jsp";
-	}
-	
-	public String checkId(HttpServletRequest request, HttpServletResponse response) throws Throwable {
-		boolean result = memberdao.checkId(request.getParameter("userid"));
-		if(result) {
-			request.setAttribute("msg", "이미 존재하는 아이디입니다.");
-		}else {
-			request.setAttribute("msg", "사용가능합니다.");
-		}
-		return "/jsp_nohead/idCheck.jsp";
-	}
-
+	@RequestMapping("member")
 	public String member(HttpServletRequest request, HttpServletResponse response) throws Throwable {
-		return "/jsp/main.jsp";
+		return "main";
 	}
 
-	public String signIn(HttpServletRequest request, HttpServletResponse response) throws Throwable {
+	@RequestMapping(value = "/signIn", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String signIn(HttpServletRequest request) throws Throwable {
 		String userid = request.getParameter("userid");
 		String pwd = request.getParameter("pwd");
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 		String birthdate = request.getParameter("birthdate");
 		String gender = request.getParameter("gender");
-
+		String message = null;
 		int result = 0;
-		result = memberdao.insertmember(userid, pwd, name, email, birthdate, gender);
+		System.out.println(userid + ", " + pwd + ", " + name + ", " + email + ", " + birthdate + ", " + gender);
+		result = memberDB.insertmember(userid, pwd, name, email, birthdate, gender);
 		System.out.println("========================================" + result);
 		if (result == 1) { // 성공시
-			request.setAttribute("Message", "가입성공!");
+			message = "ok";
 		} else { // 실패시
-			request.setAttribute("Message", "실패!");
+			message = "fail";
 		}
-		return "/jsp/okmain.jsp";
+		return message;
 	}
 
+	@RequestMapping("login")
+	public String login(HttpServletRequest request, HttpServletResponse response) throws Throwable {
+		String userid = request.getParameter("userid");
+		String pwd = request.getParameter("pwd");
+		// 로그인 세션
+		HttpSession session = request.getSession();
+		String sessionId = session.getId();
+		boolean loginCheck = false;
+
+		loginCheck = memberDB.loginMember(userid, pwd);
+		System.out.println(loginCheck + "---------> 로그인상태");
+		session.setAttribute("userid", userid);
+		return "okmain";
+	}
 }

@@ -2,6 +2,10 @@ package controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +17,7 @@ import area.AreaDTO;
 import industry.IndustryDTO;
 import service.AreaDAO;
 import service.IndustryDAO;
+import service.MemberDAO;
 
 @Controller
 @RequestMapping("/request/")
@@ -22,6 +27,8 @@ public class AjaxController {
 	AreaDAO areaDB;
 	@Autowired
 	IndustryDAO industryDB;
+	@Autowired
+	MemberDAO memberDB;
 
 	// produces -> encoding문제 해결/안해주면 한글깨짐
 	@RequestMapping(value = "/areaOption", method = RequestMethod.POST, produces = "application/text; charset=utf8")
@@ -69,5 +76,34 @@ public class AjaxController {
 		}
 
 		return resultOption;
+	}
+
+	@RequestMapping(value = "/loginCheck", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String loginCheck(@RequestParam("userid") String requestId, @RequestParam("pwd") String requestPwd)
+			throws Throwable {
+		boolean loginCheck = false;
+		String result = null;
+		loginCheck = memberDB.loginMember(requestId, requestPwd);
+		if (loginCheck == true) {
+			result = "ok";
+		} else {
+			result = "아이디나 비밀번호가 올바르지 않습니다.";
+		}
+		return result;
+	}
+
+	@RequestMapping(value = "/checkId", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String checkId(@RequestParam("userid") String requestId) throws Throwable {
+		boolean checkId = memberDB.checkId(requestId);
+		String result = null;
+
+		if (checkId) {
+			result = "이미 존재하는 아이디입니다.";
+		} else {
+			result = "사용가능합니다.";
+		}
+		return result;
 	}
 }
