@@ -48,15 +48,14 @@
 
 		<!-- user menu -->
 		<ul class="user-menu">
-			<li><img src="<%=request.getContextPath()%>/images/ic_bell.png"
-				alt="push" /></li>
+			<li onclick="openPopMyPage()"><img src="<%=request.getContextPath()%>/images/ic_bell.png" alt="push" /></li>
 			<li onclick="openPopMyPage()"><img src="<%=request.getContextPath()%>/images/ic_user.png" alt="user" /></li>
 		</ul>
 	</div>
 
 	<div class="pop-container login" id="login"></div>
 	<div class="pop-container login" id="join"></div>
-
+	
 	<%
 		} else {
 	%>
@@ -79,12 +78,13 @@
 
 		<!-- user menu -->
 		<ul class="user-menu">
-			<li><img src="<%=request.getContextPath()%>/images/ic_bell.png"
-				alt="push" /></li>
+			<li onclick="openPopPush()"><img src="<%=request.getContextPath()%>/images/ic_bell.png" alt="push" /></li>
 			<li onclick="openPopMyPage()"><img src="<%=request.getContextPath()%>/images/ic_user.png" alt="user" /></li>
 		</ul>
 	</div>
-
+	
+	<div class="map-popup my-page" id="myPage"></div>
 	<%
 		}
 	%>
+	<div class="map-popup push" id="push"></div>
