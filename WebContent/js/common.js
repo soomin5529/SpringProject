@@ -104,7 +104,7 @@ function openPopMyPage() {
 				+ '	<ul>'
 				+ '		<li onclick="openPopMyPageModify()">내 정보</li>'
 				+ '		<li>회원탈퇴</li>'
-				+ '		<li>로그아웃</li>'
+				+ '		<li onclick="location.href=\'/SpringTeamProject/member/logout\'">로그아웃</li>'
 				+ '	</ul>'
 				+ '	<ul>'
 				+ '		<li>관심지역</li>'
