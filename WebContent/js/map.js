@@ -83,38 +83,12 @@ for (var i=0, ii=latlngs.length; i<ii; i++) {
             icon: icon
         });
     
-
-    marker.set('seq', i);
-
     markerList.push(marker);
-
-    marker = null;
     map.setZoom(13);
     
 }
 
 var marker = new naver.maps.Marker(markerOptions);
-
-/* 스크롤에 따른 함수 호출(sample) */
-naver.maps.Event.addListener(map, 'mousewheel', function(e) {
-	console.log(map.getZoom());
-	if(map.getZoom()>12){
-		$.ajax({
-	        url: '/SpringTeamProject/json/sig/Songpa-gu.geojson',
-	        dataType: 'json',
-	        success: function(data) {
-	        	map.data.removeGeoJson(prev);
-	        	startDataLayer(data);
-	        	prev2 = data;
-	        }
-	    });
-	}else{
-		map.data.removeGeoJson(prev2);
-	}
-});
-var prev2 = {};
-
-
 
 /* polygon marker */
 	var polygon = new naver.maps.Polygon({
