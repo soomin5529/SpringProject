@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import service.MemberDAO;
 
+
 @Controller
 @RequestMapping("/member/")
 public class MemberController {
@@ -60,4 +61,13 @@ public class MemberController {
 		session.setAttribute("userid", userid);
 		return "okmain";
 	}
+	
+	@RequestMapping("logout")
+	public String logout(HttpServletRequest request, HttpServletResponse response) throws Throwable {
+		HttpSession session = request.getSession();
+		memberDB.logout(session);
+		return "okmain";
+	}
+	
+	
 }
