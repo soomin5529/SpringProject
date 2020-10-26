@@ -81,7 +81,7 @@
 	/* page */
 	.page {width:100%; height:calc(100% - 60px); margin-top:60px; overflow:auto; }
 	/* popup */
-	.pop-container {width:100%; height:100%; position:fixed; top:0; left:0; z-index:200; display: none;}
+	.pop-container {width:100%; height:100%; position:fixed; top:0; left:0; z-index:300; display: none;}
 	.deemed {height:100%; cursor:pointer; background:rgba(0,0,0,0.5);}
 	.pop-container .close-btn {position: absolute; top:20px; right: 45px; font-size: 20px; cursor: pointer; color: white;}
 	.pop-container .pop-box {position:absolute; top:50%; left:50%; bottom:0; right:0; transform:translate(-50%,-50%); padding: 30px; background-color: #fff; border-radius: 10px; overflow: hidden; transition: all 600ms cubic-bezier(0.86, 0, 0.07, 1);}
@@ -192,6 +192,22 @@
 .push ul li .regdate {color:#999; font-size:1.4rem;}
 li.readed {background-color:#efefef;}
 li.readed .msg, li.readed .msg .highlight01 {color:#999;}
+
+/* pwd-modify */
+.my-modify {display:none; top:0; right:-350px; width:350px; height:100%; border-left:1px solid #ddd; background-color:#fff; z-index:210;}
+.my-modify form {padding: 15px; }
+.my-modify input {margin-bottom:15px; height:42px;}
+.my-modify button {margin-bottom:15px;}
+.my-modify span {font-size:1.4rem; color:#ccc;}
+
+/* my-area 관심지역 */
+.my-area {display:none; top:0; right:-350px; width:350px; height:100%; border-left:1px solid #ddd; background-color:#fff; z-index:210;}
+.my-area ul {margin-bottom: 10px; background-color:#fff;}
+.my-area ul li {padding:15px; font-size:1.6rem; font-weight:500; cursor:pointer;}
+.my-area ul li .area {float:left; width:calc(100% - 20px);}
+.my-area ul li .delete-btn {font-weight:500; opacity:0%; color:#ff036c; transition:.3s;}
+.my-area ul li:hover .delete-btn {opacity:100%; transition:.3s;}
+
 
 /* startup-keyword */
 .content-body .content {float:left; width:calc(100% - 280px);}

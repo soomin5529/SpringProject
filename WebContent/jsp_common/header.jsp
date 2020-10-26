@@ -76,6 +76,8 @@
 	<!-- layer popup box -->
 	<div class="map-popup my-page" id="myPage"></div>
 	<div class="pop-container my-page-modify login" id="myPageModify"></div>
+	<div class="map-popup my-modify" id="pwdModify"></div>
+	<div class="map-popup my-modify" id="userDelete"></div>
 	<div class="map-popup my-area" id="myArea"></div>
 	<div class="map-popup my-community" id="myCommunity"></div>
 	<%

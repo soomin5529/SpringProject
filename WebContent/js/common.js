@@ -57,6 +57,8 @@ var myPage = document.getElementById("myPage");
 var join = document.getElementById("join");
 var push = document.getElementById("push");
 var myPageModify = document.getElementById("myPageModify");
+var pwdModify = document.getElementById("pwdModify");
+var userDelete = document.getElementById("userDelete");
 var myArea = document.getElementById("myArea");
 var myCommunity = document.getElementById("myCommunity");
 
@@ -99,18 +101,23 @@ function openPopMyPage() {
 				+ '				<line x1="35.1" y1="4.9" x2="4.9" y2="35.1"/>'
 				+ '			</svg>'
 				+ '		</div>'
-				+ '		<div class="tit">내 정보</div>'
+				+ '		<div class="tit">마이페이지</div>'
 				+ '	</div>'
 				+ '	<ul>'
-				+ '		<li onclick="openPopMyPageModify()">내 정보</li>'
-				+ '		<li>회원탈퇴</li>'
+				+ '		<li onclick="openPopMyPageModify()">내 정보 변경</li>'
+				+ '		<li onclick="openPopPwd()">비밀번호 변경</li>'
+				+ '		<li onclick="openPopUserDelete()">회원탈퇴</li>'
 				+ '		<li onclick="location.href=\'/SpringTeamProject/member/logout\'">로그아웃</li>'
 				+ '	</ul>'
 				+ '	<ul>'
-				+ '		<li>관심지역</li>'
-				+ '		<li>떠들썩</li>'
+				+ '		<li onclick="openPopMyArea()">관심지역</li>'
+				+ '		<li onclick="openPopMyCommunity()">떠들썩</li>'
 				+ '	</ul>';
 				myPage.style.display="block";
+				pwdModify.style.display="block";
+				userDelete.style.display="block";
+				myArea.style.display="block";
+				myCommunity.style.display="block";
 		}
 	}else{
 		if(!login.firstChild){
@@ -149,6 +156,10 @@ function closePopMyPage() {
 		myPage.removeChild(myPage.firstChild);
 	}
 	myPage.style.display="none";
+	pwdModify.style.display="none";
+	userDelete.style.display="none";
+	myArea.style.display="none";
+	myCommunity.style.display="none";
 }
 
 /* login */
@@ -257,9 +268,9 @@ function closePopPush(){
 function openPopMyPageModify(){
 	if (!myPageModify.firstChild){
 		myPageModify.innerHTML = 
-			'<div class="deemed" onclick="closePopJoin()"></div>'
-		+ '<span class="close-btn" onclick="closePopJoin()">x</span>'
-		+ '<div class="pop-box" style="width:400px; height:716px;">'
+			'<div class="deemed" onclick="closePopMyPageModify()"></div>'
+		+ '<span class="close-btn" onclick="closePopMyPageModify()">x</span>'
+		+ '<div class="pop-box" style="width:400px; height:645px;">'
 		+ '	<div class="title-box">'
 		+ '		<div class="tit">내 정보 수정</div>'
 		+ '	</div>'
@@ -271,16 +282,8 @@ function openPopMyPageModify(){
 		+ '             <span id="idOverlapCheck"></span>'				
 		+ '			</div>'
 		+ '			<div class="input-box">'
-		+ '				<div class="label-box">기존 비밀번호</div>'
-		+ '				<input type="password" id="oldpwd" name="oldpwd" placeholder="기존 비밀번호를 입력하세요"/>'
-		+ '			</div>'
-		+ '			<div class="input-box">'
-		+ '				<div class="label-box">신규 비밀번호</div>'
-		+ '				<input type="password" id="pwd" name="pwd" placeholder="새로운 비밀번호를 입력하세요"/>'
-		+ '			</div>'
-		+ '			<div class="input-box">'
-		+ '				<div class="label-box">신규 비밀번호 확인</div>'
-		+ '				<input type="password" name="repwd" placeholder="새로운 비밀번호를 다시 입력하세요"/>'
+		+ '				<div class="label-box">비밀번호</div>'
+		+ '				<input type="password" id="pwd" name="pwd" placeholder="비밀번호를 입력하세요"/>'
 		+ '			</div>'
 		+ '			<div class="input-box">'
 		+ '				<div class="label-box">이름</div>'
@@ -305,6 +308,90 @@ function openPopMyPageModify(){
 		+ '</div>';
 		myPageModify.style.display="block";
 	}
+}
+function closePopMyPageModify(){
+	while(myPageModify.firstChild){
+		myPageModify.removeChild(myPageModify.firstChild);
+	};
+	myPageModify.style.display="none";
+}
+
+/* pwdModify */
+function openPopPwd(){
+	if (!pwdModify.firstChild){
+		pwdModify.innerHTML = 
+			'	<div class="title-box cf">'
+			+ '		<div class="close-btn" onclick="closePopPwd();">'
+			+ '			<svg viewBox="0 0 40 40" class="close-icon">'
+			+ '				<line x1="4.9" y1="4.9" x2="35.1" y2="35.1"/>'
+			+ '				<line x1="35.1" y1="4.9" x2="4.9" y2="35.1"/>'
+			+ '			</svg>'
+			+ '		</div>'
+			+ '		<div class="tit">비밀번호 변경</div>'
+			+ '	</div>'
+			+ '	<form action="">'
+			+ '	<input type="password" name="oldpwd" id="oldpwd" placeholder="기존 비밀번호를 입력하세요"/>'
+			+ '	<input type="password" name="pwd" id="pwd" placeholder="새 비밀번호를 입력하세요"/>'
+			+ '	<input type="password" name="repwd" id="repwd" placeholder="새 비밀번호를 다시 입력하세요"/>'
+			+ '	<button type="submit" class="btn-full btn01">비밀번호 변경</button>'
+			+ '	</form>';
+	}pwdModify.style.right=0;
+}
+function closePopPwd(){
+	pwdModify.style.right="-350px";
+}
+
+/* userDelete */
+function openPopUserDelete(){
+	if (!userDelete.firstChild){
+		userDelete.innerHTML = 
+			'	<div class="title-box cf">'
+			+ '		<div class="close-btn" onclick="closePopUserDelete();">'
+			+ '			<svg viewBox="0 0 40 40" class="close-icon">'
+			+ '				<line x1="4.9" y1="4.9" x2="35.1" y2="35.1"/>'
+			+ '				<line x1="35.1" y1="4.9" x2="4.9" y2="35.1"/>'
+			+ '			</svg>'
+			+ '		</div>'
+			+ '		<div class="tit">회원탈퇴</div>'
+			+ '	</div>'
+			+ '	<form action="">'
+			+ '	<input type="password" name="pwd" id="pwd" placeholder="비밀번호를 입력하세요"/>'
+			+ '	<button type="submit" class="btn-full btn01">탈퇴하기</button>'
+			+ '<span>정말 가실거에요오?( Ĭ ^ Ĭ )</span>'
+			+ '	</form>';
+	}userDelete.style.right=0;
+}
+function closePopUserDelete(){
+	userDelete.style.right="-350px";
+}
+
+/* myArea */
+function openPopMyArea(){
+	if (!myArea.firstChild){
+		myArea.innerHTML = 
+			'	<div class="title-box cf">'
+			+ '		<div class="close-btn" onclick="closePopMyArea();">'
+			+ '			<svg viewBox="0 0 40 40" class="close-icon">'
+			+ '				<line x1="4.9" y1="4.9" x2="35.1" y2="35.1"/>'
+			+ '				<line x1="35.1" y1="4.9" x2="4.9" y2="35.1"/>'
+			+ '			</svg>'
+			+ '		</div>'
+			+ '		<div class="tit">관심지역</div>'
+			+ '	</div>'
+			+ '	<ul>'
+			+ '		<li>'
+			+ '			<div class="area">강남구 역삼동</div>'
+			+ '			<div class="delete-btn">x</div>'
+			+ '		</li>'
+			+ '		<li>'
+			+ '			<div class="area">강남구 역삼동</div>'
+			+ '			<div class="delete-btn">x</div>'
+			+ '		</li>'
+			+ '</ul>'
+	}myArea.style.right=0;
+}
+function closePopMyArea(){
+	myArea.style.right="-350px";
 }
 /* end of popup open/close */
 
