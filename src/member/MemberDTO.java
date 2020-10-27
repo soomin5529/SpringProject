@@ -1,15 +1,16 @@
 package member;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class MemberDTO {
+public class MemberDTO implements Serializable {
 	private String userid;
 	private String pwd;
 	private String name;
 	private String email;
 	private String gender;
 	private int birthdate;
-	private Date regdate;
+	private String regdate;
 	private int author;
 	public String getUserid() {
 		return userid;
@@ -47,10 +48,10 @@ public class MemberDTO {
 	public void setBirthdate(int birthdate) {
 		this.birthdate = birthdate;
 	}
-	public Date getRegdate() {
+	public String getRegdate() {
 		return regdate;
 	}
-	public void setRegdate(Date regdate) {
+	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}
 	public int getAuthor() {

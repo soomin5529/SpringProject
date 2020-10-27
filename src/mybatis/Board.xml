@@ -3,10 +3,41 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Board">
-   <insert id="insertboard" parameterType="hashmap" > 
-      INSERT INTO BOARD(userid,boardid,dong_code, writer,content,regdate,filename)
-      VALUES (#{userid}, #{boardid}, #{dong_code}, #{writer}, #{content}, #{regdate}, #{filename})
-   </insert>
-   
+
+	<!-- 선택한 동 게시물 갯수 세기 -->
+	<select id="getBoardCount" parameterType="hashmap"
+		resultType="int">
+		select nvl(count(*),0) from board where dong_code =
+		#{dong_code}
+	</select>
+
+
+	<!-- 선택한 동, 선택한 게시물만 보이기 -->
+	<select id="getArticles" parameterType="hashmap"
+		resultType="Board">
+		select * from board where dong_code = #{dong_code}
+	</select>
+
+	<!-- boardid 값에 고유값 insert 해주기 -->
+	<select id="insertArticle_new" resultType="int">
+		select
+		boardNum.nextval from dual
+
+	</select>
+
+	<!-- writeuploadform insert -->
+	<insert id="insertArticle" parameterType="hashmap">
+		insert into
+		board (userid, boardid , dong_code, writer, content , regDate ,filename)
+		values (#{userid},#{boardid},#{dong_code},#{writer},#{content},#{regDate},#{filename})
+	</insert>
+
+	<!-- 삭제 기능 -->
+	<select id="delete" parameterType="hashmap">
+		delete from board where
+		dong_code=#{dong_code} and boardid =
+		#{boardid} and userid = #{userid}
+	</select>
+
 
 </mapper>
