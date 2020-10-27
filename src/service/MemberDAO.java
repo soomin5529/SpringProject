@@ -5,14 +5,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+<<<<<<< HEAD
 import area.DongDTO;
 import member.MemberDTO;
 
+=======
+import member.MemberDTO;
+
+
+>>>>>>> main
 @Service
 public class MemberDAO extends AbstractMybatis {
 	
@@ -21,11 +29,15 @@ public class MemberDAO extends AbstractMybatis {
 	String namespace = "Member";
 	
 	HashMap<String, Object> map = new HashMap<String, Object>();
+<<<<<<< HEAD
 
 	public List<MemberDTO> selectMember() throws Exception {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		return sqlSession.selectList(namespace + ".selectMember");
 	}
+=======
+//회원가입
+>>>>>>> main
 	public int insertmember(String userid, String pwd, String name, String email, String birthdate, String gender) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		int result = 0;
@@ -47,7 +59,7 @@ public class MemberDAO extends AbstractMybatis {
 		}
 		return result;
 	}
-
+//로그인
 	public boolean loginMember(String userid, String pwd) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		String x = "";
@@ -82,7 +94,16 @@ public class MemberDAO extends AbstractMybatis {
 		}
 		return result;
 	}
+//로그아웃
+	public boolean logout(HttpSession session) {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		boolean result = false;
+		session.invalidate();
+		return result;
+	}
+	
 
+<<<<<<< HEAD
 	public String  nameMember(String userid) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
@@ -179,5 +200,7 @@ public class MemberDAO extends AbstractMybatis {
  * (Exception e) { e.printStackTrace(); } finally { Util.close(conn, pstmt, rs);
  * } return result; }
  */
+=======
+>>>>>>> main
 
-//}
+}
