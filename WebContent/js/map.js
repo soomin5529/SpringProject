@@ -24,6 +24,16 @@ var markerOptions = {
 	}
 };
 
+<<<<<<< HEAD
+=======
+var listener = naver.maps.Event.addDOMListener(mapElement, 'click', function() {
+    map.setZoom(8);
+    map.setCenter(marker.getPosition());
+
+    naver.maps.Event.removeDOMListener(listener);
+});
+
+>>>>>>> origin/yunmin
 /*marker*/
 
 var map = new naver.maps.Map(document.getElementById('map'), {
@@ -76,7 +86,10 @@ for (var i=0, ii=latlngs.length; i<ii; i++) {
             icon: icon
         });
     
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/yunmin
     markerList.push(marker);
     map.setZoom(13);
     

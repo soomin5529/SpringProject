@@ -8,8 +8,11 @@ import javax.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
+<<<<<<< HEAD:src/service/MemberDAO.java
 import member.MemberDTO;
 
+=======
+>>>>>>> origin/yunmin:src/service/MemberDAO.java
 @Service
 public class MemberDAO extends AbstractMybatis {
 	String namespace = "Member";
