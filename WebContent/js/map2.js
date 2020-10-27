@@ -205,3 +205,27 @@ function startDataLayer(geojson) {
     });
 }
 
+// 동 선택시 폴리곤을 그릴꺼야
+var polygon = new naver.maps.Polygon({
+	paths : [],
+	strokeColor : '#F3FF33',
+	strokeOpacity : 0.8,
+	strokeWeight : 2,
+	fillColor : '#F3FF33',
+	fillOpacity : 0.35,
+	zIndex : 1,
+	clickable : true,
+	map : map
+});
+function drawPolygonDong(coordinates) {
+	var paths = new Array();
+	
+	var coordinatesArr = coordinates.split('/');
+
+	for(var i in coordinatesArr){
+		paths[i] = (new naver.maps.LatLng(coordinatesArr[i].split(',')[0],coordinatesArr[i].split(',')[1]))
+	}
+	polygon.setOptions({
+		paths : paths
+	});
+}

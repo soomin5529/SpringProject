@@ -3,14 +3,19 @@ package service;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
+
+import member.MemberDTO;
 
 @Service
 public class MemberDAO extends AbstractMybatis {
 	String namespace = "Member";
 	HashMap<String, Object> map = new HashMap<String, Object>();
 
+//회원가입
 	public int insertmember(String userid, String pwd, String name, String email, String birthdate, String gender) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		int result = 0;
@@ -33,6 +38,7 @@ public class MemberDAO extends AbstractMybatis {
 		return result;
 	}
 
+//로그인
 	public boolean loginMember(String userid, String pwd) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		String x = "";
@@ -68,6 +74,13 @@ public class MemberDAO extends AbstractMybatis {
 		return result;
 	}
 
+//로그아웃
+	public boolean logout(HttpSession session) {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		boolean result = false;
+		session.invalidate();
+		return result;
+	}
 }
 /*
  * public boolean updateMember(MemberDTO bean) { Connection conn = null;
