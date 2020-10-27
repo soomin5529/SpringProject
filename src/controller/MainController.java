@@ -15,7 +15,6 @@ import industry.IndustryMybatisDAO;
 import industry.MainCategory;
 import industry.MiddleCategory;
 import industry.SmallCategory;
-import member.MemberDAO;
 import member.MemberDTO;
 
 public class MainController extends Action {
