@@ -1,15 +1,20 @@
 package controller;
 
+import java.util.List;
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import member.MemberDTO;
 import service.MemberDAO;
 
 @Controller
@@ -18,7 +23,7 @@ public class MemberController {
 
 	@Autowired
 	MemberDAO memberDB;
-
+	
 	@RequestMapping("member")
 	public String member(HttpServletRequest request, HttpServletResponse response) throws Throwable {
 		return "main";
@@ -53,11 +58,16 @@ public class MemberController {
 		// 로그인 세션
 		HttpSession session = request.getSession();
 		String sessionId = session.getId();
+		//String sessionName = session.getAttribute(name);
 		boolean loginCheck = false;
 
 		loginCheck = memberDB.loginMember(userid, pwd);
+		String name =memberDB.nameMember(userid);
+		System.out.println(name);
 		System.out.println(loginCheck + "---------> 로그인상태");
+		System.out.println(name + "----------> name 상태");
 		session.setAttribute("userid", userid);
+		session.setAttribute("name", name);
 		return "okmain";
 	}
 }

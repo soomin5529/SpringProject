@@ -14,8 +14,7 @@
 	<!-- annotation 컨트롤러를 인지하지만, injection 기능이 없다. 즉, autoWired가 안된다. -->
 	<mvc:annotation-driven />
 	<!-- autoWired가 되게한다. -->
-	<context:component-scan
-		base-package="controller, service" />
+	<context:component-scan base-package="controller, service" />
 
 	<mvc:default-servlet-handler />
 

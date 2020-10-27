@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import area.AreaDTO;
+import area.DongDTO;
+import area.SigunguDTO;
 import industry.IndustryDTO;
 import service.AreaDAO;
 import service.IndustryDAO;
@@ -73,6 +75,39 @@ public class AjaxController {
 		System.out.println("상업리스트------>" + industryList);
 		for (IndustryDTO industry : industryList) {
 			resultOption += "<option value=\"" + industry.getCode() + "\">" + industry.getName() + "</option>\n";
+		}
+
+		return resultOption;
+	}
+
+	@RequestMapping(value = "/selectCode", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@ResponseBody
+	// 카테고리 selectBox에서 옵션을 받기위한 bean
+	public String selectCode(@RequestParam("area") String requestArea, @RequestParam("code") String requestCode)
+			throws Throwable {
+		List<SigunguDTO> areaList = null;
+		List<DongDTO> areaList2 = null;
+		String resultOption = "";
+
+		if (requestArea.contains("sigungu")) {
+			areaList = areaDB.sigungu(requestCode);
+			System.out.println("구코드 이름------>" + areaList);
+
+			for (SigunguDTO area : areaList) {
+				resultOption += area.getName();
+				System.out.println("resultOption구---" + resultOption);
+
+			}
+		}
+
+		if (requestArea.contains("dong")) {
+			areaList2 = areaDB.dong(requestCode);
+			System.out.println("동코드 이름------>" + areaList2);
+
+			for (DongDTO area : areaList2) {
+				resultOption += area.getName();
+				System.out.println("resultOption동---" + resultOption);
+			}
 		}
 
 		return resultOption;

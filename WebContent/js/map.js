@@ -329,6 +329,8 @@ function selectCity() {
 
 
 function selectStreet() {
+	
+	document.getElementById("dashboard").style.display = "block";
 
 	var yuksamdong = new naver.maps.LatLng(37.500457, 127.038218);
 	var street = document.getElementById("dong");
@@ -339,6 +341,6 @@ function selectStreet() {
 	map.setCenter(selected_street);
 	map.setZoom(15); // 줌 레벨 변경
 
-	document.getElementById("dashboard").style.display = "block";
+	
 }
 

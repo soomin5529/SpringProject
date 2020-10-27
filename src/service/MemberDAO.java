@@ -2,15 +2,30 @@ package service;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+
+import area.DongDTO;
+import member.MemberDTO;
 
 @Service
 public class MemberDAO extends AbstractMybatis {
+	
+	
+	
 	String namespace = "Member";
+	
 	HashMap<String, Object> map = new HashMap<String, Object>();
 
+	public List<MemberDTO> selectMember() throws Exception {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		return sqlSession.selectList(namespace + ".selectMember");
+	}
 	public int insertmember(String userid, String pwd, String name, String email, String birthdate, String gender) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		int result = 0;
@@ -22,7 +37,7 @@ public class MemberDAO extends AbstractMybatis {
 			map.put("email", email);
 			map.put("birthdate", birthdate.replace("-", ""));
 			map.put("gender", gender);
-			map.put("regdate", new Date());
+			map.put("regDate", new Date());
 			map.put("author", 1);
 			System.out.println(map);
 			result = sqlSession.insert(statement, map);
@@ -67,6 +82,21 @@ public class MemberDAO extends AbstractMybatis {
 		}
 		return result;
 	}
+
+	public String  nameMember(String userid) {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			map.clear();
+			map.put("userid", userid);
+			String statement = namespace + ".nameMember";
+			return sqlSession.selectOne(statement, map);
+
+		} finally {
+			sqlSession.close();
+		}
+
+	}
+
 
 }
 /*

@@ -9,10 +9,14 @@
 				</svg>
 		</div>
 		<div class="tit">
-			<c:forEach var="dong" items="${dong }">
-				${dong.code}" ${dong.name}
+
+			<c:forEach var="sigungu" items="${sigungu}">
+			  ${sigungu.name}
 			</c:forEach>
-			강남구 역삼동
+			<c:forEach var="dong" items="${dong }">
+				 ${dong.name}
+			</c:forEach>
+			
 		</div>
 		<!-- bookmark on/off -->
 		<div class="bookmark off" id="bookmark" onclick="bookmark()">
