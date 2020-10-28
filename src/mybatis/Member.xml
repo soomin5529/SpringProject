@@ -6,51 +6,23 @@
 	<select id="selectMember" resultType="Member">
 		select * from member
 	</select>
-
+	<!-- 회원가입 -->
 	<insert id="insertmember" parameterType="hashmap">
 		INSERT INTO
 		MEMBER(userid, pwd, name,email,birthdate,gender,regdate,author)
-		VALUES(#{userid}, #{pwd}, #{name}, #{email}, #{birthdate},
-		#{gender},#{regdate}, #{author})
+		VALUES(#{userid}, #{pwd}, #{name}, #{email}, #{birthdate}, #{gender},#{regdate}, #{author})
 	</insert>
-
+	<!-- 아이디 체크 -->
 	<select id="checkId" parameterType="hashmap" resultType="String">
 		SELECT
 		userid FROM Member WHERE userid = #{userid}
 	</select>
-
+	<!-- 로그인 -->
 	<select id="loginMember" parameterType="hashmap"
 		resultType="String">
-		SELECT userid FROM Member WHERE userid = #{userid} AND pwd
-		= #{pwd}
+		SELECT userid FROM Member WHERE userid = #{userid} AND pwd = #{pwd}
 	</select>
-
-	<select id="userInfo" resultType="hashmap">
-		SELECT userid, pwd,
-		name,email,birthdate,gender
-		FROM MEMBER
-		WHERE userid = #{userid}
-	</select>
-
-
-	<update id="upadatemember" parameterType="hashmap">
-		UPDATE MEMBER
-		SET name =
-		#{name}, email = #{email}, birthdate = #{birthdate}
-		WHERE userid =
-		#{userid}
-	</update>
-
-	<update id="updatepassword" parameterType="hashmap">
-		UPDATE MEMBER
-		SET pwd =
-		#{pwd}
-		WHERE userid = #{userid}
-	</update>
-
-	<!-- <select id="passwordChk" parameterType="hashmap"> SELECT count(*) FROM 
-		Member WHERE userid = #{userid} AND pwd = #{pwd} </select> -->
-
+	<!-- 회원탈퇴 -->
 	<delete id="deletemember" parameterType="hashmap">
 		DELETE FROM member WHERE
 		userid = #{userid} and pwd = #{pwd}
@@ -60,4 +32,24 @@
 		resultType="String">select name from Member where userid = #{userid}
 	</select>
 
+
+
+
+	<update id="upadatemember" parameterType="hashmap">
+		UPDATE MEMBER
+		SET name = #{name}, email = #{email}, birthdate = #{birthdate}
+		WHERE userid =
+		#{userid}
+	</update>
+
+	<update id="updatepassword" parameterType="hashmap">
+		UPDATE MEMBER
+		SET pwd = #{pwd}
+		WHERE userid = #{userid}
+	</update>
+
+
+
+	<!-- <select id="userInfo" resultType="hashmap"> SELECT userid, pwd, name,email,birthdate,gender 
+		FROM MEMBER WHERE userid = #{userid} </select> -->
 </mapper>

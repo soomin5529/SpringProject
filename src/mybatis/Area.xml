@@ -5,22 +5,35 @@
 <!-- 연결을 namespace로 한다.(대소문자 구분함) -->
 <mapper namespace="Area">
 
-	<!-- 시도 출력 -->
-	<select id="sidoList" resultType="Sido">
-		select sido_code as code,
-		sido_name as name from sido
-	</select>
+   <!-- 시도 출력 -->
+   <select id="sidoList" resultType="Sido">
+      select sido_code as code,
+      sido_name as name from sido
+   </select>
 
-	<select id="sigunguList" resultType="Area"
-		parameterType="hashmap">
-		select sigungu_code as code, sigungu_name as name from
-		sigungu where sido_code = ${sido_code} order by sigungu_name
-	</select>
+   <select id="sigunguList" resultType="Area"
+      parameterType="hashmap">
+      select sigungu_code as code, sigungu_name as name from
+      sigungu where sido_code = #{sido_code} order by sigungu_name
+   </select>
 
-	<select id="dongList" resultType="Area" parameterType="hashmap">
-		select
-		dong_code as code, dong_name as name from dong where sigungu_code =
-		${sigungu_code} order by dong_name
-	</select>
+   <select id="dongList" resultType="Area" parameterType="hashmap">
+      select
+      dong_code as code, dong_name as name from dong where sigungu_code =
+      #{sigungu_code} order by dong_name
+   </select>
+   
+   <select id="sigungu" resultType="Sigungu"
+      parameterType="hashmap">
+      select sigungu_code as code, sigungu_name as name from
+      sigungu where sigungu_code = #{sigungu_code}
+   </select>
+
+   <select id="dong" resultType="Dong" parameterType="hashmap">
+      select
+      dong_code as code, dong_name as name from dong where dong_code =
+      #{dong_code}
+   </select>
+   
 
 </mapper>

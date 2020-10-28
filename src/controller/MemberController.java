@@ -37,7 +37,7 @@ public class MemberController {
 		int result = 0;
 		System.out.println(userid + ", " + pwd + ", " + name + ", " + email + ", " + birthdate + ", " + gender);
 		result = memberDB.insertmember(userid, pwd, name, email, birthdate, gender);
-		System.out.println("userInfo============" + memberDB.userInfo(userid, pwd, name, email, birthdate, gender));
+		//System.out.println("userInfo============" + memberDB.userInfo(userid, pwd, name, email, birthdate, gender));
 		System.out.println("========================================" + result);
 		if (result == 1) { // 성공시
 			message = "ok";
@@ -125,26 +125,22 @@ public class MemberController {
 	 * }
 	 */
 
-	@RequestMapping(value = "/userInfo", method = RequestMethod.POST, produces = "application/text; charset=utf8")
-	public String userInfo(HttpServletRequest request, HttpServletResponse response) throws Throwable {
-		HttpSession session = request.getSession();
-
-		String userid = request.getParameter("userid");
-		String pwd = request.getParameter("pwd");
-		String name = request.getParameter("name");
-		String email = request.getParameter("email");
-		String birthdate = request.getParameter("birthdate");
-		String gender = request.getParameter("gender");
-		String message = null;
-		int result = 0;
-		System.out.println(userid + ", " + pwd + ", " + name + ", " + email + ", " + birthdate + ", " + gender);
-		result = memberDB.userInfo(userid, pwd, name, email, birthdate, gender);
-		System.out.println("========================================" + result);
-		if (result == 1) { // 성공시
-			message = "ok";
-		} else { // 실패시
-			message = "fail";
-		}
-		return message;
-	}
+	/*
+	 * @RequestMapping(value = "/userInfo", method = RequestMethod.POST, produces =
+	 * "application/text; charset=utf8") public String userInfo(HttpServletRequest
+	 * request, HttpServletResponse response) throws Throwable { HttpSession session
+	 * = request.getSession();
+	 * 
+	 * String userid = request.getParameter("userid"); String pwd =
+	 * request.getParameter("pwd"); String name = request.getParameter("name");
+	 * String email = request.getParameter("email"); String birthdate =
+	 * request.getParameter("birthdate"); String gender =
+	 * request.getParameter("gender"); String message = null; int result = 0;
+	 * System.out.println(userid + ", " + pwd + ", " + name + ", " + email + ", " +
+	 * birthdate + ", " + gender); result = memberDB.userInfo(userid, pwd, name,
+	 * email, birthdate, gender);
+	 * System.out.println("========================================" + result); if
+	 * (result == 1) { // 성공시 message = "ok"; } else { // 실패시 message = "fail"; }
+	 * return message; }
+	 */
 }
