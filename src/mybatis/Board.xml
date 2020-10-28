@@ -15,7 +15,7 @@
 	<!-- 선택한 동, 선택한 게시물만 보이기 -->
 	<select id="getArticles" parameterType="hashmap"
 		resultType="Board">
-		select * from board where dong_code = #{dong_code}
+		select * from board where dong_code = #{dong_code} order by boardid desc
 	</select>
 
 	<!-- boardid 값에 고유값 insert 해주기 -->
@@ -33,11 +33,11 @@
 	</insert>
 
 	<!-- 삭제 기능 -->
-	<select id="delete" parameterType="hashmap">
+	<delete id="delete" parameterType="hashmap">
 		delete from board where
 		dong_code=#{dong_code} and boardid =
 		#{boardid} and userid = #{userid}
-	</select>
+	</delete>
 
 
 </mapper>

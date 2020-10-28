@@ -24,9 +24,11 @@ import org.springframework.web.servlet.ModelAndView;
 import area.DongDTO;
 import area.SigunguDTO;
 import board.BoardDTO;
+import comment.CommentDTO;
 import industry.MainCategoryDTO;
 import service.AreaDAO;
 import service.BoardDAO;
+import service.CommentDAO;
 import service.IndustryDAO;
 import service.MemberDAO;
 
@@ -51,6 +53,9 @@ public class BoardController {
 
 	@Autowired
 	IndustryDAO industryDB;
+	
+	@Autowired
+	CommentDAO commentDB;
 
 	@ModelAttribute
 	public void headProcess(HttpServletRequest request, HttpServletResponse res) {
@@ -92,7 +97,7 @@ public class BoardController {
 	public String writeUploadPro(MultipartHttpServletRequest multipart, BoardDTO article) throws Exception {
 		
 		Date today = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
 	    String regDate = sdf.format(today);
 	    
 		MultipartFile multi = multipart.getFile("uploadfile");
@@ -117,6 +122,28 @@ public class BoardController {
 
 		System.out.println("전" + article);
 	     boardDB.insertArticle(article);
+		return "redirect:/view/main";
+		// jsp로 보내지 않고 바로 view 로
+	}
+	
+	@RequestMapping("commentUploadPro")
+	public String commentUploadPro(CommentDTO article, HttpServletRequest request) throws Exception {
+		
+		Date today = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+	    String regDate = sdf.format(today);
+		
+        String userid= request.getParameter("userid");
+        String name = request.getParameter("name");
+        int boardid = Integer.parseInt(request.getParameter("boardid"));
+        String content = request.getParameter("content");
+        article.setBoardid(boardid);
+        article.setContent(content);
+        article.setName(name);
+        article.setUserid(userid);
+        article.setRegDate(regDate);
+		System.out.println("comment article------" + article);
+	    commentDB.insertComment(article);
 		return "redirect:/view/main";
 		// jsp로 보내지 않고 바로 view 로
 	}

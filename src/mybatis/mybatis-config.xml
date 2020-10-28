@@ -18,6 +18,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 			alias="SmallCategory" />
 		<typeAlias type="industry.IndustryDTO" alias="Industry" />
 		<typeAlias type="board.BoardDTO" alias="Board" />
+		<typeAlias type="comment.CommentDTO" alias="Comment" />
+		
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -37,5 +39,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="mybatis/Area.xml" />
 		<mapper resource="mybatis/Industry.xml" />
 		<mapper resource="mybatis/Board.xml" />
+		<mapper resource="mybatis/Comment.xml" />
 	</mappers>
 </configuration>

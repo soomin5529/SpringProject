@@ -13,7 +13,12 @@
 					<input type="hidden" name="dongCode" value="${dong.code }">
 				</c:forEach> 
 				<input type="hidden" name="userid" value="<%=userid%>" />
-				<div class="tit">강남구 역삼동</div>
+				<div class="tit"><c:forEach var="sigungu" items="${sigungu}">
+			  ${sigungu.name}
+			</c:forEach>
+			<c:forEach var="dong" items="${dong }">
+				 ${dong.name}
+			</c:forEach></div>
 			</div>
 			<div class="content-box">
 				<!-- member 테이블에 있는 name 값 : 이름 -->

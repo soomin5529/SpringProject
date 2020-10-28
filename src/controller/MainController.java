@@ -21,10 +21,12 @@ import area.DongDTO;
 import area.SidoDTO;
 import area.SigunguDTO;
 import board.BoardDTO;
+import comment.CommentDTO;
 import industry.MainCategoryDTO;
 import member.MemberDTO;
 import service.AreaDAO;
 import service.BoardDAO;
+import service.CommentDAO;
 import service.IndustryDAO;
 import service.MemberDAO;
 
@@ -43,9 +45,12 @@ public class MainController {
 
 	@Autowired
 	MemberDAO memberDB;
-	
+
 	@Autowired
 	BoardDAO boardDB;
+
+	@Autowired
+	CommentDAO commentDB;
 
 	@ModelAttribute
 	public void headProcess(HttpServletRequest request, HttpServletResponse res) {
@@ -79,30 +84,52 @@ public class MainController {
 		List<DongDTO> dongList = areaDB.dong("1168010100");
 		model.addAttribute("sigungu", sigunguList);
 		model.addAttribute("dong", dongList);
+
+		// dong코드 받아오기
 		String dong_code = "";
-		for(DongDTO d : dongList) {
+		for (DongDTO d : dongList) {
 			dong_code = d.getCode();
 		}
-		
+
 		int count = 0;
 		List<BoardDTO> article = null;
-
+		// board 개수 count
 		count = boardDB.getBoardCount(dong_code);
-		if(count == 0) {
-			
-		}
 		if (count > 0) {
+			// board list
 			article = boardDB.getArticles(dong_code);
-			System.out.println("article" +article);
+			System.out.println("article" + article);
 			model.addAttribute("articleList", article);
 		}
 		model.addAttribute("count", count);
-		
 
-		//String name = "";
-		//name = memberDB.nameMember(userid);
+		// boardid 받아오기
+		//int []boardid = new int[article.size()];
+		// 댓글 수 count
+		int cnt = 0;
+		int boardid = 0;
+		List<CommentDTO> comment = null;
+		BoardDTO b = new BoardDTO();
+		for(BoardDTO bd : article) {
+		boardid =	bd.getBoardid();
+		}
 
-		//model.addAttribute("name", name);
+		/*
+		 * for (int i = 0; i < boardid.length; i++) { boardid[i] = b.getBoardid(); }
+		 */
+		//	int boardid=111111;
+			System.out.println("boardid 값은???" + boardid);
+			cnt = commentDB.getCommentCount(boardid);
+			System.out.println(cnt + "-----cnt count 수");
+			model.addAttribute("cnt", cnt);
+
+			// 댓글 list
+			comment = commentDB.getComments(boardid);
+			System.out.println("comment:" + comment);
+			model.addAttribute("commentList", comment);
+
+		//}
+
 		return "main";
 	}
 
