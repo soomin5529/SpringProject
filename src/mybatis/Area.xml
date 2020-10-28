@@ -14,13 +14,13 @@
 	<select id="sigunguList" resultType="Area"
 		parameterType="hashmap">
 		select sigungu_code as code, sigungu_name as name from
-		sigungu where sido_code = ${sido_code}
+		sigungu where sido_code = ${sido_code} order by sigungu_name
 	</select>
 
 	<select id="dongList" resultType="Area" parameterType="hashmap">
 		select
 		dong_code as code, dong_name as name from dong where sigungu_code =
-		${sigungu_code}
+		${sigungu_code} order by dong_name
 	</select>
 
 </mapper>

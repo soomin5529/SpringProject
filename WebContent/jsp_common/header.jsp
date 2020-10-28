@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%
 	String userid = (String) session.getAttribute("userid");
+    String name = (String ) session.getAttribute("name");
 %>
 <!DOCTYPE html>
 <html>

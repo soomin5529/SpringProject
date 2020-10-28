@@ -1,4 +1,4 @@
-/**** map setting *****/
+/** ** map setting **** */
 /* basic option */
 var position = new naver.maps.LatLng(37.5642135, 127.0016985);
 var mapOptions = {
@@ -24,70 +24,64 @@ var markerOptions = {
 	}
 };
 
-/*marker*/
+/* marker */
 
 var map = new naver.maps.Map(document.getElementById('map'), {
-    zoom: 17,
-    center: new naver.maps.LatLng(37.5642135, 127.0016985)
+	zoom : 17,
+	center : new naver.maps.LatLng(37.5642135, 127.0016985)
 
 });
 
-var latlngs = [
-	new naver.maps.LatLng(37.6658609, 127.0317674),
-	new naver.maps.LatLng(37.6176125, 126.9227004),
-    new naver.maps.LatLng(37.5838012, 127.0507003),
-    new naver.maps.LatLng(37.4965037, 126.9443073),
-    new naver.maps.LatLng(37.4600969, 126.9001546),
-    new naver.maps.LatLng(37.4954856, 126.858121),
-    new naver.maps.LatLng(37.5990998, 126.9861493),
-    new naver.maps.LatLng(37.6469954, 127.0147158),
-    new naver.maps.LatLng(37.5953795, 127.0939669),
-    new naver.maps.LatLng(37.4959854, 127.0664091),
-    new naver.maps.LatLng(37.5657617, 126.8226561),
-    new naver.maps.LatLng(37.5579452,126.9941904),
-    new naver.maps.LatLng(37.5492077, 127.1464824),
-    new naver.maps.LatLng(37.5481445, 127.0857528),
-    new naver.maps.LatLng(37.5622906,126.9087803),
-    new naver.maps.LatLng(37.4769528, 127.0378103),
-    new naver.maps.LatLng(37.606991,127.0232185),
-    new naver.maps.LatLng(37.655264, 127.0771201),
-    new naver.maps.LatLng(37.5048534,127.1144822),
-    new naver.maps.LatLng(37.5820369,126.9356665),
-    new naver.maps.LatLng(37.5270616,126.8561534),
-    new naver.maps.LatLng(37.520641,126.9139242),
-    new naver.maps.LatLng(37.4653993,126.9438071),
-    new naver.maps.LatLng(37.5506753,127.0409622),
-    new naver.maps.LatLng(37.5311008,126.9810742),
-];
-
+var latlngs = [ new naver.maps.LatLng(37.6658609, 127.0317674),
+		new naver.maps.LatLng(37.6176125, 126.9227004),
+		new naver.maps.LatLng(37.5838012, 127.0507003),
+		new naver.maps.LatLng(37.4965037, 126.9443073),
+		new naver.maps.LatLng(37.4600969, 126.9001546),
+		new naver.maps.LatLng(37.4954856, 126.858121),
+		new naver.maps.LatLng(37.5990998, 126.9861493),
+		new naver.maps.LatLng(37.6469954, 127.0147158),
+		new naver.maps.LatLng(37.5953795, 127.0939669),
+		new naver.maps.LatLng(37.4959854, 127.0664091),
+		new naver.maps.LatLng(37.5657617, 126.8226561),
+		new naver.maps.LatLng(37.5579452, 126.9941904),
+		new naver.maps.LatLng(37.5492077, 127.1464824),
+		new naver.maps.LatLng(37.5481445, 127.0857528),
+		new naver.maps.LatLng(37.5622906, 126.9087803),
+		new naver.maps.LatLng(37.4769528, 127.0378103),
+		new naver.maps.LatLng(37.606991, 127.0232185),
+		new naver.maps.LatLng(37.655264, 127.0771201),
+		new naver.maps.LatLng(37.5048534, 127.1144822),
+		new naver.maps.LatLng(37.5820369, 126.9356665),
+		new naver.maps.LatLng(37.5270616, 126.8561534),
+		new naver.maps.LatLng(37.520641, 126.9139242),
+		new naver.maps.LatLng(37.4653993, 126.9438071),
+		new naver.maps.LatLng(37.5506753, 127.0409622),
+		new naver.maps.LatLng(37.5311008, 126.9810742), ];
 
 var markerList = [];
 
-for (var i=0, ii=latlngs.length; i<ii; i++) {
-    var icon = {
-            url: '/SpringTeamProject/images/ic_marker.png',
-            size : new naver.maps.Size(30, 40),
-    		origin : new naver.maps.Point(0, 0),
-    		anchor : new naver.maps.Point(15, 20)
-        },
-        marker = new naver.maps.Marker({
-            position: latlngs[i],
-            map: map,
-            icon: icon
-        });
-    
+for (var i = 0, ii = latlngs.length; i < ii; i++) {
+	var icon = {
+		url : '/SpringTeamProject/images/ic_marker.png',
+		size : new naver.maps.Size(30, 40),
+		origin : new naver.maps.Point(0, 0),
+		anchor : new naver.maps.Point(15, 20)
+	}, marker = new naver.maps.Marker({
+		position : latlngs[i],
+		map : map,
+		icon : icon
+	});
 
-    markerList.push(marker);
-    map.setZoom(13);
-    
+	markerList.push(marker);
+	map.setZoom(13);
+
 }
 
 var marker = new naver.maps.Marker(markerOptions);
 
-
 /* polygon marker */
-	var polygon = new naver.maps.Polygon({
-  	paths : [ new naver.maps.LatLng(37.37544345085402, 127.11224555969238),
+var polygon = new naver.maps.Polygon({
+	paths : [ new naver.maps.LatLng(37.37544345085402, 127.11224555969238),
 			new naver.maps.LatLng(37.37230584065902, 127.10791110992432),
 			new naver.maps.LatLng(37.35975408751081, 127.10795402526855),
 			new naver.maps.LatLng(37.359924641705476, 127.11576461791992),
@@ -106,7 +100,7 @@ var marker = new naver.maps.Marker(markerOptions);
 	map : map
 });
 
-//압구정동
+// 압구정동
 var polygon1 = new naver.maps.Polygon({
 	paths : [ new naver.maps.LatLng(37.528926, 127.033433),
 			new naver.maps.LatLng(37.522610, 127.019646),
@@ -123,7 +117,7 @@ var polygon1 = new naver.maps.Polygon({
 	clickable : true,
 	map : map
 });
-//논현
+// 논현
 var polygon2 = new naver.maps.Polygon({
 	paths : [ new naver.maps.LatLng(37.519069, 127.017798),
 			new naver.maps.LatLng(37.515466, 127.015910),
@@ -140,7 +134,7 @@ var polygon2 = new naver.maps.Polygon({
 	clickable : true,
 	map : map
 });
-//학동역
+// 학동역
 var polygon3 = new naver.maps.Polygon({
 	paths : [ new naver.maps.LatLng(37.517813, 127.025831),
 			new naver.maps.LatLng(37.516954, 127.023846),
@@ -182,7 +176,7 @@ var polygon4 = new naver.maps.Polygon({
 	clickable : true,
 	map : map
 });
-//강남역
+// 강남역
 var polygon5 = new naver.maps.Polygon({
 	paths : [ new naver.maps.LatLng(37.497806, 127.027697),
 			new naver.maps.LatLng(37.487829, 127.032330),
@@ -201,7 +195,7 @@ var polygon5 = new naver.maps.Polygon({
 	clickable : true,
 	map : map
 });
-//압구정로데오
+// 압구정로데오
 var polygon6 = new naver.maps.Polygon({
 	paths : [ new naver.maps.LatLng(37.527851, 127.040072),
 			new naver.maps.LatLng(37.528365, 127.044204),
@@ -224,7 +218,7 @@ var polygon6 = new naver.maps.Polygon({
 	clickable : true,
 	map : map
 });
-//신논현역
+// 신논현역
 var polygon8 = new naver.maps.Polygon({
 	paths : [ new naver.maps.LatLng(37.512398, 127.025969),
 			new naver.maps.LatLng(37.509538, 127.016914),
@@ -243,7 +237,7 @@ var polygon8 = new naver.maps.Polygon({
 	clickable : true,
 	map : map
 });
-//선릉역
+// 선릉역
 var polygon7 = new naver.maps.Polygon({
 	paths : [ new naver.maps.LatLng(37.503882, 127.054736),
 			new naver.maps.LatLng(37.501633, 127.053521),
@@ -268,20 +262,16 @@ var polygon7 = new naver.maps.Polygon({
 	map : map
 });
 
-/* rectangle marker*/
-/*var rectangle = new naver.maps.Rectangle({
-	strokeColor : '#ff00ff',
-	strokeOpacity : 0.8,
-	strokeWeight : 2,
-	fillColor : '#ff00ff',
-	fillOpacity : 0.35,
-	bounds : new naver.maps.LatLngBounds(new naver.maps.LatLng(37.5924988,
-			127.1291527), new naver.maps.LatLng(37.5315893, 127.2149296)),
-	clickable : true,
-	map : map
-});*/
+/* rectangle marker */
+/*
+ * var rectangle = new naver.maps.Rectangle({ strokeColor : '#ff00ff',
+ * strokeOpacity : 0.8, strokeWeight : 2, fillColor : '#ff00ff', fillOpacity :
+ * 0.35, bounds : new naver.maps.LatLngBounds(new naver.maps.LatLng(37.5924988,
+ * 127.1291527), new naver.maps.LatLng(37.5315893, 127.2149296)), clickable :
+ * true, map : map });
+ */
 
-/* basic marker onclick*/
+/* basic marker onclick */
 naver.maps.Event.addListener(marker, 'click', function() {
 	var delta = 0, zoom = map.getZoom();
 
@@ -295,7 +285,7 @@ naver.maps.Event.addListener(marker, 'click', function() {
 	document.getElementById("")
 });
 
-/* polygon marker mouseover*/
+/* polygon marker mouseover */
 naver.maps.Event.addListener(polygon5, "mouseover", function(e) {
 	map.setCursor("pointer");
 
@@ -312,24 +302,22 @@ naver.maps.Event.addListener(polygon5, "mouseout", function(e) {
 	});
 });
 
-/* polygon marker onclick*/
+/* polygon marker onclick */
 naver.maps.Event.addListener(polygon5, 'click', function() {
 	var dashboard = document.getElementById("dashboard");
 	var community = document.getElementById("community");
-	
+
 	dashboard.style.display = "block";
-	if(community.style.display == "block"){
+	if (community.style.display == "block") {
 		community.style.left = "350px";
-	}	
+	}
 });
-
-
 
 function selectCity() {
 	var city = document.getElementById("sigungu");
 	var selected_city = city.options[city.selectedIndex].value;
-	var cityPosition ;
-	
+	var cityPosition;
+
 	var Gangnamgu = new naver.maps.LatLng(37.4959854, 127.0664091);
 	var Dobonggu = new naver.maps.LatLng(37.6658609, 127.0317674);
 	var Eunpyeonggu = new naver.maps.LatLng(37.6176125, 126.9227004);
@@ -357,39 +345,65 @@ function selectCity() {
 	var Seongdonggu = new naver.maps.LatLng(37.5506753, 127.0409622);
 	var Yongsangu = new naver.maps.LatLng(37.5311008, 126.9810742);
 
-	if(selected_city == "11680") selected_city = Gangnamgu;
-    if(selected_city == "11320") selected_city = Dobonggu;
-    if(selected_city == "11380") selected_city = Eunpyeonggu;
-    if(selected_city == "11230") selected_city = Dongdaemungu;
-    if(selected_city == "11590") selected_city = Dongjakgu;
-    if(selected_city == "11545") selected_city = Geumcheongu;
-    if(selected_city == "11530") selected_city = Gurogu;
-    if(selected_city == "11110") selected_city = Jongnogu;
-    if(selected_city == "11305") selected_city = Gangbukgu;
-    if(selected_city == "11260") selected_city = Jungnanggu;
-    if(selected_city == "11500") selected_city = Gangseogu;
-    if(selected_city == "11140") selected_city = Junggu;
-    if(selected_city == "11740") selected_city = Gangdonggu;
-    if(selected_city == "11215") selected_city = Gwangjingu;
-    if(selected_city == "11440") selected_city = Mapogu;
-    if(selected_city == "11650") selected_city = Seochogu;
-    if(selected_city == "11290") selected_city = Seongbukgu;
-    if(selected_city == "11350") selected_city = Nowongu;
-    if(selected_city == "11710") selected_city = Songpagu;
-    if(selected_city == "11410") selected_city = Seodaemungu;
-    if(selected_city == "11470") selected_city = Yangcheongu;
-    if(selected_city == "11560") selected_city = Yeongdeungpogu;
-    if(selected_city == "11620") selected_city = Gwanakgu;
-    if(selected_city == "11200") selected_city = Seongdonggu;
-    if(selected_city == "11170") selected_city = Yongsangu;
-    console.log(selected_city);
+	if (selected_city == "11680")
+		selected_city = Gangnamgu;
+	if (selected_city == "11320")
+		selected_city = Dobonggu;
+	if (selected_city == "11380")
+		selected_city = Eunpyeonggu;
+	if (selected_city == "11230")
+		selected_city = Dongdaemungu;
+	if (selected_city == "11590")
+		selected_city = Dongjakgu;
+	if (selected_city == "11545")
+		selected_city = Geumcheongu;
+	if (selected_city == "11530")
+		selected_city = Gurogu;
+	if (selected_city == "11110")
+		selected_city = Jongnogu;
+	if (selected_city == "11305")
+		selected_city = Gangbukgu;
+	if (selected_city == "11260")
+		selected_city = Jungnanggu;
+	if (selected_city == "11500")
+		selected_city = Gangseogu;
+	if (selected_city == "11140")
+		selected_city = Junggu;
+	if (selected_city == "11740")
+		selected_city = Gangdonggu;
+	if (selected_city == "11215")
+		selected_city = Gwangjingu;
+	if (selected_city == "11440")
+		selected_city = Mapogu;
+	if (selected_city == "11650")
+		selected_city = Seochogu;
+	if (selected_city == "11290")
+		selected_city = Seongbukgu;
+	if (selected_city == "11350")
+		selected_city = Nowongu;
+	if (selected_city == "11710")
+		selected_city = Songpagu;
+	if (selected_city == "11410")
+		selected_city = Seodaemungu;
+	if (selected_city == "11470")
+		selected_city = Yangcheongu;
+	if (selected_city == "11560")
+		selected_city = Yeongdeungpogu;
+	if (selected_city == "11620")
+		selected_city = Gwanakgu;
+	if (selected_city == "11200")
+		selected_city = Seongdonggu;
+	if (selected_city == "11170")
+		selected_city = Yongsangu;
+	console.log(selected_city);
 	map.setCenter(selected_city);
 	map.setZoom(13); // 줌 레벨 변경
 	console.log(selected_city);
 }
 
-
 function selectStreet() {
+
+	document.getElementById("dashboard").style.display = "block";
 
 	var yuksamdong = new naver.maps.LatLng(37.500457, 127.038218);
 	var street = document.getElementById("dong");
@@ -400,6 +414,4 @@ function selectStreet() {
 	map.setCenter(selected_street);
 	map.setZoom(15); // 줌 레벨 변경
 
-	document.getElementById("dashboard").style.display = "block";
 }
-

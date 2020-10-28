@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import member.MemberDTO;
 import service.MemberDAO;
 
 @Controller
@@ -58,6 +57,7 @@ public class MemberController {
 		boolean loginCheck = false;
 
 		loginCheck = memberDB.loginMember(userid, pwd);
+		String name = memberDB.nameMember(userid);
 		System.out.println(loginCheck + "---------> 로그인상태");
 
 		session.setAttribute("userid", userid);
@@ -96,8 +96,7 @@ public class MemberController {
 
 	// 회원 탈퇴
 	@RequestMapping(value = "/deletemember", method = RequestMethod.POST, produces = "application/text; charset=utf8")
-	public String deletemember(HttpServletRequest request, HttpServletResponse response)
-			throws Throwable {
+	public String deletemember(HttpServletRequest request, HttpServletResponse response) throws Throwable {
 		HttpSession session = request.getSession();
 		String userid = (String) session.getAttribute("userid");
 		String pwd = request.getParameter("pwd");

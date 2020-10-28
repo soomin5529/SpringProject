@@ -2,10 +2,8 @@ package service;
 
 import java.util.Date;
 import java.util.HashMap;
-
+import java.util.List;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +13,11 @@ import member.MemberDTO;
 public class MemberDAO extends AbstractMybatis {
 	String namespace = "Member";
 	HashMap<String, Object> map = new HashMap<String, Object>();
+
+	public List<MemberDTO> selectMember() throws Exception {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		return sqlSession.selectList(namespace + ".selectMember");
+	}
 
 //회원가입
 	public int insertmember(String userid, String pwd, String name, String email, String birthdate, String gender) {
@@ -39,7 +42,7 @@ public class MemberDAO extends AbstractMybatis {
 		return result;
 	}
 
-	//로그인
+	// 로그인
 	public boolean loginMember(String userid, String pwd) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		String x = "";
@@ -76,7 +79,20 @@ public class MemberDAO extends AbstractMybatis {
 		return result;
 	}
 
-	//로그아웃
+	public String nameMember(String userid) {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			map.clear();
+			map.put("userid", userid);
+			String statement = namespace + ".nameMember";
+			return sqlSession.selectOne(statement, map);
+		} finally {
+			sqlSession.close();
+		}
+
+	}
+
+	// 로그아웃
 	public boolean logout(HttpSession session) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		boolean result = false;
@@ -107,7 +123,7 @@ public class MemberDAO extends AbstractMybatis {
 	// 회원정보
 	public int userInfo(String userid, String pwd, String name, String email, String birthdate, String gender) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
-		MemberDTO bean = null; 
+		MemberDTO bean = null;
 		String userinfo = "";
 		int result = 0;
 		try {

@@ -47,5 +47,30 @@ public class AreaDAO extends AbstractMybatis {
 			sqlSession.close();
 		}
 	}
+	
+	public List<SigunguDTO> sigungu(String sigunguCode) {
+		Map<String, Object> sigungucode = new HashMap<String, Object>();
+		sigungucode.put("sigungu_code", sigunguCode);
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			return sqlSession.selectList(namespace + ".sigungu", sigungucode);
+		} finally {
+			sqlSession.close();
+		}
+
+	}
+
+	public List<DongDTO> dong(String dongCode) {
+		Map<String, Object> dong_code = new HashMap<String, Object>();
+		dong_code.put("dong_code", dongCode);
+		System.out.println("동코드가 머냐" +dongCode);
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			return sqlSession.selectList(namespace + ".dong", dong_code);
+		} finally {
+			sqlSession.close();
+		}
+
+	}
 
 }

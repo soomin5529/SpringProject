@@ -3,10 +3,15 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Member">
+	<select id="selectMember" resultType="Member">
+		select * from member
+	</select>
+
 	<insert id="insertmember" parameterType="hashmap">
 		INSERT INTO
 		MEMBER(userid, pwd, name,email,birthdate,gender,regdate,author)
-		VALUES(#{userid}, #{pwd}, #{name}, #{email}, #{birthdate}, #{gender},#{regdate}, #{author})
+		VALUES(#{userid}, #{pwd}, #{name}, #{email}, #{birthdate},
+		#{gender},#{regdate}, #{author})
 	</insert>
 
 	<select id="checkId" parameterType="hashmap" resultType="String">
@@ -21,7 +26,8 @@
 	</select>
 
 	<select id="userInfo" resultType="hashmap">
-		SELECT userid, pwd, name,email,birthdate,gender
+		SELECT userid, pwd,
+		name,email,birthdate,gender
 		FROM MEMBER
 		WHERE userid = #{userid}
 	</select>
@@ -29,21 +35,29 @@
 
 	<update id="upadatemember" parameterType="hashmap">
 		UPDATE MEMBER
-		SET name = #{name}, email = #{email}, birthdate = #{birthdate}
-		WHERE userid = #{userid}
+		SET name =
+		#{name}, email = #{email}, birthdate = #{birthdate}
+		WHERE userid =
+		#{userid}
 	</update>
 
 	<update id="updatepassword" parameterType="hashmap">
 		UPDATE MEMBER
-		SET pwd = #{pwd}
+		SET pwd =
+		#{pwd}
 		WHERE userid = #{userid}
 	</update>
 
-	<!-- <select id="passwordChk" parameterType="hashmap">
-		SELECT count(*) FROM Member WHERE userid = #{userid} AND pwd = #{pwd}
-	</select> -->
+	<!-- <select id="passwordChk" parameterType="hashmap"> SELECT count(*) FROM 
+		Member WHERE userid = #{userid} AND pwd = #{pwd} </select> -->
 
 	<delete id="deletemember" parameterType="hashmap">
-		DELETE FROM member WHERE userid = #{userid} and pwd = #{pwd}
+		DELETE FROM member WHERE
+		userid = #{userid} and pwd = #{pwd}
 	</delete>
+
+	<select id="nameMember" parameterType="hashmap"
+		resultType="String">select name from Member where userid = #{userid}
+	</select>
+
 </mapper>

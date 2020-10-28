@@ -17,6 +17,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="industry.SmallCategoryDTO"
 			alias="SmallCategory" />
 		<typeAlias type="industry.IndustryDTO" alias="Industry" />
+		<typeAlias type="board.BoardDTO" alias="Board" />
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -35,5 +36,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="mybatis/Member.xml" />
 		<mapper resource="mybatis/Area.xml" />
 		<mapper resource="mybatis/Industry.xml" />
+		<mapper resource="mybatis/Board.xml" />
 	</mappers>
 </configuration>
