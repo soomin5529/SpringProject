@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import area.SidoDTO;
 import area.SigunguDTO;
+import mybatis.AbstractMybatis;
 
 @Service
 public class CommentDAO extends AbstractMybatis {

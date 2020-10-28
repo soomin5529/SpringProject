@@ -11,6 +11,7 @@ import area.AreaDTO;
 import area.DongDTO;
 import area.SidoDTO;
 import area.SigunguDTO;
+import mybatis.AbstractMybatis;
 
 @Service
 public class AreaDAO extends AbstractMybatis {
@@ -47,13 +48,13 @@ public class AreaDAO extends AbstractMybatis {
 			sqlSession.close();
 		}
 	}
-	
+
 	public List<SigunguDTO> sigungu(String sigunguCode) {
-		Map<String, Object> sigungucode = new HashMap<String, Object>();
-		sigungucode.put("sigungu_code", sigunguCode);
+		Map<String, Object> sigungu_code = new HashMap<String, Object>();
+		sigungu_code.put("sigungu_code", sigunguCode);
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
-			return sqlSession.selectList(namespace + ".sigungu", sigungucode);
+			return sqlSession.selectList(namespace + ".sigungu", sigungu_code);
 		} finally {
 			sqlSession.close();
 		}
@@ -63,7 +64,7 @@ public class AreaDAO extends AbstractMybatis {
 	public List<DongDTO> dong(String dongCode) {
 		Map<String, Object> dong_code = new HashMap<String, Object>();
 		dong_code.put("dong_code", dongCode);
-		System.out.println("동코드가 머냐" +dongCode);
+		System.out.println("동코드가 머냐" + dongCode);
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
 			return sqlSession.selectList(namespace + ".dong", dong_code);

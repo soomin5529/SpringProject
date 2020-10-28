@@ -11,6 +11,7 @@ import industry.IndustryDTO;
 import industry.MainCategoryDTO;
 import industry.MiddleCategoryDTO;
 import industry.SmallCategoryDTO;
+import mybatis.AbstractMybatis;
 
 @Service
 public class IndustryDAO extends AbstractMybatis {

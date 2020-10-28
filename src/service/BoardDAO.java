@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import board.BoardDTO;
+import mybatis.AbstractMybatis;
 
 @Service
 public class BoardDAO extends AbstractMybatis {

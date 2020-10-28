@@ -18,6 +18,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 			alias="SmallCategory" />
 		<typeAlias type="industry.IndustryDTO" alias="Industry" />
 		<typeAlias type="board.BoardDTO" alias="Board" />
+		<typeAlias type="store.StoreDTO" alias="Store" />
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">

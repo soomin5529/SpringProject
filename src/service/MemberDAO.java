@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import member.MemberDTO;
+import mybatis.AbstractMybatis;
 
 @Service
 public class MemberDAO extends AbstractMybatis {

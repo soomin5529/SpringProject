@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,13 +15,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import area.AreaDTO;
 import area.DongDTO;
 import area.SidoDTO;
 import area.SigunguDTO;
 import board.BoardDTO;
 import industry.MainCategoryDTO;
-import member.MemberDTO;
 import service.AreaDAO;
 import service.BoardDAO;
 import service.IndustryDAO;
@@ -37,13 +34,10 @@ public class MainController {
 
 	@Autowired
 	AreaDAO areaDB;
-
 	@Autowired
 	IndustryDAO industryDB;
-
 	@Autowired
 	MemberDAO memberDB;
-	
 	@Autowired
 	BoardDAO boardDB;
 
@@ -80,29 +74,28 @@ public class MainController {
 		model.addAttribute("sigungu", sigunguList);
 		model.addAttribute("dong", dongList);
 		String dong_code = "";
-		for(DongDTO d : dongList) {
+		for (DongDTO d : dongList) {
 			dong_code = d.getCode();
 		}
-		
+
 		int count = 0;
 		List<BoardDTO> article = null;
 
 		count = boardDB.getBoardCount(dong_code);
-		if(count == 0) {
-			
+		if (count == 0) {
+
 		}
 		if (count > 0) {
 			article = boardDB.getArticles(dong_code);
-			System.out.println("article" +article);
+			System.out.println("article" + article);
 			model.addAttribute("articleList", article);
 		}
 		model.addAttribute("count", count);
-		
 
-		//String name = "";
-		//name = memberDB.nameMember(userid);
+		// String name = "";
+		// name = memberDB.nameMember(userid);
 
-		//model.addAttribute("name", name);
+		// model.addAttribute("name", name);
 		return "main";
 	}
 
@@ -121,7 +114,6 @@ public class MainController {
 			List<DongDTO> dongList = areaDB.dong(code);
 			model.addAttribute("dong", dongList);
 		}
-
 		return "main";
 	}
 

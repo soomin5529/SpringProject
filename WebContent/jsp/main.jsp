@@ -65,7 +65,7 @@ function sendToControllerSelectCategoryValue(select){
 		});
 	}
 	
-   function sendToControlerguCode(select) {
+   function sendToControllerguCode(select) {
 	   var area = select.getAttribute('id') == 'sigungu' ? 'sigungu' : 'dong';
 	   var code =  document.getElementById("sigungu");
 	   code = code.options[code.selectedIndex].value;
@@ -76,7 +76,6 @@ function sendToControllerSelectCategoryValue(select){
 				data : {
 					'area' : area,
 					'code' : code
-					
 				},
 				success : function(textStatus) {
 					var gu_name = textStatus;
@@ -85,7 +84,7 @@ function sendToControllerSelectCategoryValue(select){
 			});
    }
    
-   function sendToControlerdongCode(select) {
+   function sendToControllerdongCode(select) {
 	   var area = select.getAttribute('id') == 'sigungu' ? 'sigungu' : 'dong';
 	   var code =  document.getElementById("dong");
 	   code = code.options[code.selectedIndex].value;
@@ -105,9 +104,13 @@ function sendToControllerSelectCategoryValue(select){
 	}
 </script>
 <div class="page main" id="page">
+	
 	<!-- map -->
-	<div id="map" class="map"></div>
-
+	<div id="map" class="map">
+		<!-- canvas -->
+		<canvas id="myCanvas" style="width: 100%; height: 100%;"></canvas>
+	</div>
+	
 	<!-- search -->
 	<form action="" method="post" class="map-popup search-group">
 		<!-- 검색항목 묶음 - 구역선택 -->
@@ -121,10 +124,10 @@ function sendToControllerSelectCategoryValue(select){
 						<option value="${sido.code}">${sido.name}</option>
 					</c:forEach>
 				</select> <select id="sigungu" name="city"
-					onchange="javascript:sendToControllerSelectValue(this); selectCity();  sendToControlerguCode(this)">
+					onchange="javascript:sendToControllerSelectValue(this); sendToControllerguCode(this); selectCity()">
 					<option value="no" disabled selected>선택</option>
 				</select> <select id="dong" name="street"
-					onchange="javascript:selectStreet();  sendToControlerdongCode(this)">
+					onchange="javascript:findAreaToJson(this); sendToControllerdongCode(this)">
 					<option value="no" disabled selected>선택</option>
 				</select>
 			</div>
@@ -146,5 +149,6 @@ function sendToControllerSelectCategoryValue(select){
 	<jsp:include page="board/boardWriteForm.jsp" flush="false" />
 
 </div>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/map2.js"></script>
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/js/map2.js"></script>
 <!-- end of main -->

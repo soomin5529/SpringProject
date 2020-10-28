@@ -41,33 +41,23 @@ var Yongsangu = new naver.maps.LatLng(37.5311008, 126.9810742);
 /* 스크롤에 따른 함수 호출(sample) */
 naver.maps.Event.addListener(map, 'mousewheel', function(e) {
 	console.log(map.getZoom());
-	if(map.getZoom()>12){
-		$.ajax({
-	        url: '/SpringTeamProject/json/sig/Songpa-gu.geojson',
-	        dataType: 'json',
-	        success: function(data) {
-	        	map.data.removeGeoJson(prev);
-	        	startDataLayer(data);
-	        	prev2 = data;
-	        }
-	    });
-	}else{
+	if (map.getZoom() < 14) {
+	} else {
 		map.data.removeGeoJson(prev2);
 	}
 });
 var prev2 = {};
 
-
 /* 구 선택시 함수 */
 function selectCity() {
+	polygon.removeLayer;
+	
 	var city = document.getElementById("sigungu");
 	var selected_city = city.options[city.selectedIndex].value;
 
 	var selected_city_JSON;
-	if (selected_city == "11680"){
+	if (selected_city == "11680")
 		selected_city = Gangnamgu;
-		selected_city_JSON = '/SpringTeamProject/json/sig/Gangnam-gu.json';
-	}
 	if (selected_city == "11320")
 		selected_city = Dobonggu;
 	if (selected_city == "11380")
@@ -102,10 +92,8 @@ function selectCity() {
 		selected_city = Seongbukgu;
 	if (selected_city == "11350")
 		selected_city = Nowongu;
-	if (selected_city == "11710"){
+	if (selected_city == "11710")
 		selected_city = Songpagu;
-		selected_city_JSON = '/SpringTeamProject/json/sig/Songpa-gu.geojson';
-	}
 	if (selected_city == "11410")
 		selected_city = Seodaemungu;
 	if (selected_city == "11470")
@@ -118,114 +106,124 @@ function selectCity() {
 		selected_city = Seongdonggu;
 	if (selected_city == "11170")
 		selected_city = Yongsangu;
-
-	$.ajax({
-        url: selected_city_JSON,
-        dataType: 'json',
-        success: function(data) {
-        	map.data.removeGeoJson(prev);
-        	startDataLayer(data);
-        }
-    });
 	
 	map.setCenter(selected_city);
 	map.setZoom(13); // 줌 레벨 변경
 }
-
-/* 동선택 시 함수 */
-function selectStreet() {
-	var yuksamdong = new naver.maps.LatLng(37.500457, 127.038218);
-	var street = document.getElementById("dong");
-	var selected_street = street.options[street.selectedIndex].value;
-	var selected_street_JSON;
-		
-	if (selected_street == "1168010100"){
-		selected_street = yuksamdong;
-		selected_street_JSON = '/SpringTeamProject/json/umd/yeoksam.json';
-	}
-	
-	map.setCenter(selected_street);
-	map.setZoom(15); // 줌 레벨 변경
-	
-	$.ajax({
-        url: selected_street_JSON,
-        dataType: 'json',
-        success: function(data) {
-        	map.data.removeGeoJson(prev);
-        	startDataLayer(data);
-        }
-        
-    });
-	
-	document.getElementById("dashboard").style.display = "block";
-}
-
-
-/* 영역 그리는 함수 */
-var prev = {};
-function startDataLayer(geojson) {
-    map.data.setStyle(function(feature) {
-        var styleOptions = {
-            fillColor: '#001e91',
-            fillOpacity: 0.4,
-            strokeColor: '#001e91',
-            strokeWeight: 2,
-            strokeOpacity: 0.6
-        };
-        prev=geojson;
-        return styleOptions;
-    });
-
-    map.data.addGeoJson(geojson);
-    
-    map.data.addListener('click', function(e) {
-    	var feature = e.feature;
-    	var dashboard = document.getElementById("dashboard");
-    	var community = document.getElementById("community");
-    	
-    	dashboard.style.display = "block";
-    	if(community.style.display == "block"){
-    		community.style.left = "350px";
-    	}	
-    });
-
-    map.data.addListener('mouseover', function(e) {
-        var feature = e.feature,
-            regionName = feature.getProperty('area1');
-        
-        map.data.overrideStyle(feature, {
-            fillOpacity: 0.6,
-            strokeWeight: 4,
-            strokeOpacity: 1
-        });
-    });
-
-    map.data.addListener('mouseout', function(e) {
-        map.data.revertStyle();
-    });
-}
+//
+// /* 동선택 시 함수 */
+// function selectStreet() {
+// var yuksamdong = new naver.maps.LatLng(37.500457, 127.038218);
+// var street = document.getElementById("dong");
+// var selected_street = street.options[street.selectedIndex].value;
+// var selected_street_JSON;
+//		
+// if (selected_street == "1168010100"){
+// selected_street = yuksamdong;
+// selected_street_JSON = '/SpringTeamProject/json/umd/yeoksam.json';
+// }
+//	
+// map.setCenter(selected_street);
+// map.setZoom(15); // 줌 레벨 변경
+//	
+// $.ajax({
+// url: selected_street_JSON,
+// dataType: 'json',
+// success: function(data) {
+// map.data.removeGeoJson(prev);
+// startDataLayer(data);
+// }
+//        
+// });
+//	
+// document.getElementById("dashboard").style.display = "block";
+// }
+//
+//
+// /* 영역 그리는 함수 */
+// var prev = {};
+// function startDataLayer(geojson) {
+// map.data.setStyle(function(feature) {
+// var styleOptions = {
+// fillColor: '#001e91',
+// fillOpacity: 0.4,
+// strokeColor: '#001e91',
+// strokeWeight: 2,
+// strokeOpacity: 0.6
+// };
+// prev=geojson;
+// return styleOptions;
+// });
+//
+// map.data.addGeoJson(geojson);
+//    
+// map.data.addListener('click', function(e) {
+// var feature = e.feature;
+// var dashboard = document.getElementById("dashboard");
+// var community = document.getElementById("community");
+//    	
+// dashboard.style.display = "block";
+// if(community.style.display == "block"){
+// community.style.left = "350px";
+// }
+// });
+//
+// map.data.addListener('mouseover', function(e) {
+// var feature = e.feature,
+// regionName = feature.getProperty('area1');
+//        
+// map.data.overrideStyle(feature, {
+// fillOpacity: 0.6,
+// strokeWeight: 4,
+// strokeOpacity: 1
+// });
+// });
+//
+// map.data.addListener('mouseout', function(e) {
+// map.data.revertStyle();
+// });
+// }
 
 // 동 선택시 폴리곤을 그릴꺼야
 var polygon = new naver.maps.Polygon({
 	paths : [],
-	strokeColor : '#F3FF33',
+	strokeColor : 'red',
 	strokeOpacity : 0.8,
-	strokeWeight : 2,
-	fillColor : '#F3FF33',
-	fillOpacity : 0.35,
+	strokeWeight : 5,
 	zIndex : 1,
 	clickable : true,
 	map : map
 });
 function drawPolygonDong(coordinates) {
-	var paths = new Array();
 	
+	var paths = new Array();
 	var coordinatesArr = coordinates.split('/');
-
-	for(var i in coordinatesArr){
-		paths[i] = (new naver.maps.LatLng(coordinatesArr[i].split(',')[0],coordinatesArr[i].split(',')[1]))
+	
+//	var offSet = new Array();
+//	var projection = map.getProjection();
+//	var c = document.getElementById("myCanvas");
+//	var ctx = c.getContext("2d");
+//	ctx.beginPath();
+//	ctx.strokeStyle = 'green';
+//	ctx.moveTo(0,0);
+	for ( var i in coordinatesArr) {
+		paths[i] = (new naver.maps.LatLng(coordinatesArr[i].split(',')[0],
+				coordinatesArr[i].split(',')[1]));
+		//offSet[i] = projection.fromCoordToOffset(paths[i]);
 	}
 	polygon.setOptions({
 		paths : paths
 	});
+	alert(document.getElementsByClassName("svg").get.length);
+//	alert(offSet);
+//	for(var i in offSet){
+//		ctx.lineTo(offSet[i].x,offSet[i].y);
+//	}
+//	ctx.stroke();
 }
+naver.maps.Event.addListener(polygon, 'click', function() {
+    polygon.setOptions({
+        strokeColor: '#E51D1A',
+        strokeOpacity: 1
+    });
+});
