@@ -227,3 +227,8 @@ naver.maps.Event.addListener(polygon, 'click', function() {
         strokeOpacity: 1
     });
 });
+
+// 동 polygon 선택하면 dashboard 오픈
+naver.maps.Event.addListener(polygon, 'click', function() {
+	openPopDashboard();
+});

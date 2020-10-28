@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script type="text/javascript"
-	src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1daef4c0ea"></script>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1daef4c0ea"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script>
 function findAreaToJson(select){
 	var id = select.getAttribute('id');
@@ -18,6 +18,7 @@ function findAreaToJson(select){
 		},
 		success : function(textStatus) {
 			drawPolygonDong(textStatus);
+			openPopDashboard();
 		}
 	});
 }
@@ -104,13 +105,9 @@ function sendToControllerSelectCategoryValue(select){
 	}
 </script>
 <div class="page main" id="page">
-	
 	<!-- map -->
-	<div id="map" class="map">
-		<!-- canvas -->
-		<canvas id="myCanvas" style="width: 100%; height: 100%;"></canvas>
-	</div>
-	
+	<div id="map" class="map"></div>
+
 	<!-- search -->
 	<form action="" method="post" class="map-popup search-group">
 		<!-- 검색항목 묶음 - 구역선택 -->
@@ -149,6 +146,6 @@ function sendToControllerSelectCategoryValue(select){
 	<jsp:include page="board/boardWriteForm.jsp" flush="false" />
 
 </div>
-<script type="text/javascript"
-	src="<%=request.getContextPath()%>/js/map2.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/map2.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/chart.js"></script>
 <!-- end of main -->
