@@ -18,11 +18,11 @@ import comment.CommentDTO;
 public class CommentDAO extends AbstractMybatis {
 	String namespace = "Comment";
 
-	HashMap<String, Object> map = new HashMap<String, Object>();
+	Map<String, Object> map = new HashMap<String, Object>();
     //댓글 개수 ${cnt} count
 	
 	public int getCommentCount(int boardid) throws Exception {
-
+       
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
 			map.put("boardid", boardid);

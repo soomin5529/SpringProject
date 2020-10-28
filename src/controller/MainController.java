@@ -1,7 +1,9 @@
 package controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -84,52 +86,44 @@ public class MainController {
 		List<DongDTO> dongList = areaDB.dong("1168010100");
 		model.addAttribute("sigungu", sigunguList);
 		model.addAttribute("dong", dongList);
-
 		// dong코드 받아오기
 		String dong_code = "";
 		for (DongDTO d : dongList) {
 			dong_code = d.getCode();
 		}
-
 		int count = 0;
-		List<BoardDTO> article = null;
+		List<BoardDTO> articles = null;
 		// board 개수 count
 		count = boardDB.getBoardCount(dong_code);
 		if (count > 0) {
 			// board list
-			article = boardDB.getArticles(dong_code);
-			System.out.println("article" + article);
-			model.addAttribute("articleList", article);
+			articles = boardDB.getArticles(dong_code);
+			System.out.println("article" + articles);
+			model.addAttribute("articleList", articles);
 		}
 		model.addAttribute("count", count);
-
-		// boardid 받아오기
-		//int []boardid = new int[article.size()];
-		// 댓글 수 count
-		int cnt = 0;
 		int boardid = 0;
+		int cnt = 0;
 		List<CommentDTO> comment = null;
-		BoardDTO b = new BoardDTO();
-		for(BoardDTO bd : article) {
-		boardid =	bd.getBoardid();
-		}
+		// List<BoardDTO> boardidList = boardDB.getBoardid(dong_code);
+		System.out.println("boardid 값은???" + articles);
+		Map<Integer, List<CommentDTO>> map = new HashMap<Integer, List<CommentDTO>>();
+		// 댓글 list
+		for (BoardDTO b : articles) {
 
-		/*
-		 * for (int i = 0; i < boardid.length; i++) { boardid[i] = b.getBoardid(); }
-		 */
-		//	int boardid=111111;
-			System.out.println("boardid 값은???" + boardid);
+			boardid = b.getBoardid();
+			System.out.println("boardid 값은?=====" + boardid);
+			System.out.println("===========================여기냐?");
 			cnt = commentDB.getCommentCount(boardid);
 			System.out.println(cnt + "-----cnt count 수");
 			model.addAttribute("cnt", cnt);
 
-			// 댓글 list
 			comment = commentDB.getComments(boardid);
-			System.out.println("comment:" + comment);
-			model.addAttribute("commentList", comment);
-
-		//}
-
+			map.put(boardid, comment);
+		}
+		System.out.println(map.values());
+		System.out.println("map:" + map);
+		model.addAttribute("map", map);
 		return "main";
 	}
 

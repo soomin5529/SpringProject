@@ -129,32 +129,9 @@ function selectCity() {
 }
 
 /* 동선택 시 함수 */
-/*function selectStreet() {
-	var yuksamdong = new naver.maps.LatLng(37.500457, 127.038218);
-	var street = document.getElementById("dong");
-	var selected_street = street.options[street.selectedIndex].value;
-	var selected_street_JSON;
-		
-	if (selected_street == "1168010100"){
-		selected_street = yuksamdong;
-		selected_street_JSON = '/SpringTeamProject/json/umd/yeoksam.json';
-	}
-	
-	map.setCenter(selected_street);
-	map.setZoom(15); // 줌 레벨 변경
-	
-	$.ajax({
-        url: selected_street_JSON,
-        dataType: 'json',
-        success: function(data) {
-        	map.data.removeGeoJson(prev);
-        	startDataLayer(data);
-        }
-        
-    });
-	
+function selectStreet() {
 	document.getElementById("dashboard").style.display = "block";
-}*/
+}
 
 
 /* 영역 그리는 함수 */

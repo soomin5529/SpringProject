@@ -5,8 +5,7 @@
 <!-- 연결을 namespace로 한다.(대소문자 구분함) -->
 <mapper namespace="Comment">
 
-	<select id="getCommentCount" parameterType="hashmap"
-		resultType="int">
+	<select id="getCommentCount" resultType="int">
 		select nvl(count(*),0) from board_comment where boardid =
 		#{boardid}
 	</select>

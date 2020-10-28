@@ -7,8 +7,7 @@
 	<!-- 선택한 동 게시물 갯수 세기 -->
 	<select id="getBoardCount" parameterType="hashmap"
 		resultType="int">
-		select nvl(count(*),0) from board where dong_code =
-		#{dong_code}
+		select nvl(count(*),0) from board where dong_code = #{dong_code}
 	</select>
 
 
@@ -24,7 +23,7 @@
 		boardNum.nextval from dual
 
 	</select>
-
+	
 	<!-- writeuploadform insert -->
 	<insert id="insertArticle" parameterType="hashmap">
 		insert into

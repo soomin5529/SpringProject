@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import board.BoardDTO;
 public class BoardDAO extends AbstractMybatis {
 	String namespace = "Board";
 
-	HashMap<String, Object> map = new HashMap<String, Object>();
+	Map<String, Object> map = new HashMap<String, Object>();
 
 	// 동마다 게시물 수 count
 	public int getBoardCount(String dong_code) throws Exception {

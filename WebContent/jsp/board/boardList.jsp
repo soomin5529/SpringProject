@@ -29,22 +29,21 @@
 			</c:if>
 		<c:if test="${count != 0 }">
 			<c:forEach var="article" items="${articleList}">
-			<script type="text/javascript">
-			
-				var regDate = new Date("${article.regDate}");
-				var today = new Date();
-				var day = "일 전";
+				<script type="text/javascript">
+					var regDate = new Date("${article.regDate}");
+					var today = new Date();
+					var day = "일 전";
 
-				regDate = new Date(regDate.getFullYear(),
-						regDate.getMonth() + 1, regDate.getDate());
-				today = new Date(today.getFullYear(), today.getMonth() + 1,
-						today.getDate());
+					regDate = new Date(regDate.getFullYear(), regDate
+							.getMonth() + 1, regDate.getDate());
+					today = new Date(today.getFullYear(), today.getMonth() + 1,
+							today.getDate());
 
-				var diff = Math.abs(today.getTime() - regDate.getTime());
-				diff = Math.ceil(diff/(1000 * 3600 * 24 ));
-				
-			//	document.getElementById("boardregDate").innerHTML = diff + day;
-			</script>
+					var diff = Math.abs(today.getTime() - regDate.getTime());
+					diff = Math.ceil(diff / (1000 * 3600 * 24));
+
+					document.getElementById("boardregDate").innerHTML = diff + day;
+				</script>
 				<div class="post-box">
 					<div class="content-box cf">
 						<div class="name">${article.writer}</div>
@@ -54,26 +53,35 @@
 								style="background-image:url('<%=request.getContextPath() %>/uploadFile/${article.filename}');"></div>
 						</div>
 						<div class="regdate" id="boardregDate">${article.regDate }</div>
+						
+						<div class="regdate" >명에게 도움됐어요</div>
 						<div class="like-btn off" id="likeBtn"
-							onclick="javascript:postLike(); sendBoardLike();">
+							onclick="javascript:postLike(); ">
+							
 							<!-- 좋아요 아이콘 -->
 							<svg viewBox="0 0 40 40" class="like-icon">
-								<path d="M20 4.5h.8c.9.1 1.6.5 2.1 1.2.5.6.8 1.4.6 2.2v8.6H34c.7 0 1.4.3 1.8.9.5.6.8 1.5.7 2.4v7.8c0 2.3-.5 4.9-2.5 6.7-1.5 1.3-4 2.2-7.6 2.2H3.5v-15h7.6l5.2-8 1.3-8.6.1-.3zm-9.5 17v15"></path>
+								<path
+									d="M20 4.5h.8c.9.1 1.6.5 2.1 1.2.5.6.8 1.4.6 2.2v8.6H34c.7 0 1.4.3 1.8.9.5.6.8 1.5.7 2.4v7.8c0 2.3-.5 4.9-2.5 6.7-1.5 1.3-4 2.2-7.6 2.2H3.5v-15h7.6l5.2-8 1.3-8.6.1-.3zm-9.5 17v15"></path>
 							</svg>
 							<span class="like-txt">좋아요</span>
 						</div>
 					</div>
-					<c:if test="${cnt != 0 }">
-						<div class="reply-list-box">
-							<c:forEach var="comment" items="${commentList}">
-							<div class="reply-box">
-									<div class="name">${comment.name }</div>
-									<div class="content"> ${comment.content }</div>
-									<div class="regdate" id="comment.regDate">${comment.regDate }</div>
-							</div>
-							</c:forEach>
-						</div>
-					</c:if>
+
+					<div class="reply-list-box">
+						<c:forEach var="map" items="${map}">
+							<c:if test="${map.key eq article.boardid}">
+								<c:forEach var="comment" items="${map.value}">
+									<div class="reply-box">
+										<div class="name">${comment.name }</div>
+										<div class="content">${comment.content }</div>
+										<div class="regdate" id="comment.regDate">${comment.regDate}</div>
+									</div>
+								</c:forEach>
+							</c:if>
+						</c:forEach>
+					</div>
+
+
 					<div class="reply-reg-box">
 						<form method="post" id="commentform"
 							action="<%=request.getContextPath()%>/board/commentUploadPro">
@@ -90,10 +98,11 @@
 							</div>
 						</form>
 					</div>
-				</div>
 			</c:forEach>
 		</c:if>
 	</div>
+
+</div>
 
 </div>
 <!-- end of post-box -->

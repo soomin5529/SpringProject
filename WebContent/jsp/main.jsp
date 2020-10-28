@@ -85,17 +85,21 @@ function sendToControllerSelectCategoryValue(select){
 			});
    }
    
-   function sendToControlerdongCode(select) {
-	   var area = select.getAttribute('id') == 'sigungu' ? 'sigungu' : 'dong';
-	   var code =  document.getElementById("dong");
-	   code = code.options[code.selectedIndex].value;
-	   $.ajax({
-	        type: "post", 
-	        url: "<%=request.getContextPath()%>/request/selectCode",
+    function sendToControlerdongCode(select) {
+		var area = select.getAttribute('id') == 'sigungu' ? 'sigungu' : 'dong';
+		var gucode = document.getElementById("sigungu");
+		var dongcode = document.getElementById("dong");
+
+		gucode = gucode.options[gucode.selectedIndex].value;
+		dongcode = dongcode.options[dongcode.selectedIndex].value;
+		//document.street.submit();
+		$.ajax({
+			type : "post",
+			url : "<%=request.getContextPath()%>/request/selectCode",
 			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 			data : {
 				'area' : area,
-				'code' : code
+				'code' : dongcode
 			},
 			success : function(textStatus) {
 				var dong_name = textStatus;
@@ -120,13 +124,17 @@ function sendToControllerSelectCategoryValue(select){
 					<c:forEach var="sido" items="${sido }">
 						<option value="${sido.code}">${sido.name}</option>
 					</c:forEach>
-				</select> <select id="sigungu" name="city"
+				</select>
+				<!--  	<form method="post" name="sendDashboard"
+					action="<%=request.getContextPath()%>/board/dashBoardPro">-->
+				<select id="sigungu" name="city"
 					onchange="javascript:sendToControllerSelectValue(this); selectCity(); sendToControlerguCode(this)">
 					<option value="no" disabled selected>선택</option>
 				</select> <select id="dong" name="street"
-					onchange="javascript:sendToControlerdongCode(this); findAreaToJson(this);">
+					onchange="javascript:sendToControlerdongCode(this); findAreaToJson(this); selectStreet();">
 					<option value="no" disabled selected>선택</option>
 				</select>
+				<!--  </form> -->
 			</div>
 		</div>
 		<!-- 검색버튼 -->
@@ -146,5 +154,6 @@ function sendToControllerSelectCategoryValue(select){
 	<jsp:include page="board/boardWriteForm.jsp" flush="false" />
 
 </div>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/map2.js"></script>
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/js/map2.js"></script>
 <!-- end of main -->
