@@ -1,17 +1,18 @@
 // 로그인 체크
 function loginCheck() {
-	if (document.loginFrm.loginId.value == "") {
-		alert("아이디를 입력해 주세요.");
-		document.loginFrm.loginId.focus();
-		return;
-	} else if (document.loginFrm.loginPwd.value == "") {
-		alert("비밀번호를 입력해 주세요.");
-		document.loginFrm.loginPwd.focus();
-		return;
-	} else {
-		var id = document.getElementById("loginId").value;
-		var pwd = document.getElementById("loginPwd").value;
-		var idcheck = document.getElementById("idPresenceCheck");
+		if (document.loginFrm.loginId.value == "") {
+			alert("아이디를 입력해 주세요.");
+			document.loginFrm.loginId.focus();
+			return;
+		} else if (document.loginFrm.loginPwd.value == "") {
+			alert("비밀번호를 입력해 주세요.");
+			document.loginFrm.loginPwd.focus();
+			return;
+		} else {
+			var id = document.getElementById("loginId").value;
+			var pwd = document.getElementById("loginPwd").value;
+			var idcheck = document.getElementById("idPresenceCheck");
+		}
 
 		$.ajax({
 			type : "post",
@@ -29,7 +30,6 @@ function loginCheck() {
 				}
 			}
 		});
-	}
 }
 
 // 회원가입 아이디 중복 및 8자리 체크
@@ -141,4 +141,5 @@ function inputCheck() {
 			window.location.href = "/SpringTeamProject/view/main";
 		}
 	});
+
 }

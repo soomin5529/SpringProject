@@ -7,15 +7,14 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-public abstract class AbstractMybatis {
-	private static SqlSessionFactory sqlSessionFactory; 
-
-	static {
+public  class AbstractMybatis {
+	private SqlSessionFactory sqlSessionFactory; 
+	{
 		setsqlSessionFactory();
 	}
 	
-	private static void setsqlSessionFactory() { //getConnection ����
-		String resource = "mybatis/mybatis-config.xml"; //xml�� �ҷ��´�
+	private void setsqlSessionFactory() { 
+		String resource = "mybatis/mybatis-config.xml"; 
 		InputStream inputStream;
 		try {
 			inputStream = Resources.getResourceAsStream(resource);
