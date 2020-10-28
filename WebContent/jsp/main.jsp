@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script type="text/javascript"
-	src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1daef4c0ea"></script>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1daef4c0ea"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script>
 function findAreaToJson(select){
 	var id = select.getAttribute('id');
@@ -18,6 +18,7 @@ function findAreaToJson(select){
 		},
 		success : function(textStatus) {
 			drawPolygonDong(textStatus);
+			openPopDashboard();
 		}
 	});
 }
@@ -124,7 +125,7 @@ function sendToControllerSelectCategoryValue(select){
 					onchange="javascript:sendToControllerSelectValue(this); selectCity();  sendToControlerguCode(this)">
 					<option value="no" disabled selected>선택</option>
 				</select> <select id="dong" name="street"
-					onchange="javascript:selectStreet();  sendToControlerdongCode(this)">
+					onchange="javascript:sendToControlerdongCode(this); findAreaToJson(this);">
 					<option value="no" disabled selected>선택</option>
 				</select>
 			</div>
@@ -147,4 +148,5 @@ function sendToControllerSelectCategoryValue(select){
 
 </div>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/map2.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/chart.js"></script>
 <!-- end of main -->

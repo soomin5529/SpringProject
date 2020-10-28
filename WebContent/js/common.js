@@ -63,6 +63,14 @@ var myArea = document.getElementById("myArea");
 var myCommunity = document.getElementById("myCommunity");
 
 /* dashboard */
+function openPopDashboard(){
+	dashboard.style.display = "block";
+	if(community.style.display == "block"){
+		community.style.left = "350px";
+	}
+	drawChart();
+}
+
 function closePopDashboard() {
 	dashboard.style.display = "none";
 	if(community.style.display == "block"){
@@ -132,14 +140,14 @@ function openPopMyPage() {
 				+ '		<form name="loginFrm" action="/SpringTeamProject/member/login">'
 				+ '			<div class="input-box">'
 				+ '				<div class="label-box">아이디</div>'
-				+ '				<input type="text" id="loginId" name="userid" placeholder="아이디를 입력하세요"/>'
+				+ '				<input type="text" id="loginId" name="userid" placeholder="아이디를 입력하세요" onkeyup="enterLogin(event);"/>'
 				+ '			</div>'
 				+ '			<div class="input-box">'
 				+ '				<div class="label-box">비밀번호</div>'
-				+ '				<input type="password" id="loginPwd" name="pwd" placeholder="비밀번호를 입력하세요"/>'
+				+ '				<input type="password" id="loginPwd" name="pwd" placeholder="비밀번호를 입력하세요" onkeyup="enterLogin(event);"/>'
 				+ '			</div>'
 				+ '			<span id="idPresenceCheck" style="color:red;"></span>'
-				+ '			<button type="button" onclick="loginCheck()" onkeyup="enterLogin();" class="btn-full btn01-reverse">로그인</button>'
+				+ '			<button type="button" onclick="loginCheck()" class="btn-full btn01-reverse">로그인</button>'
 				+ '			<div class="join-btn">'
 				+ '				<span class="gray">아직 회원이 아니신가요?</span>'
 				+ '				<span class="highlight01" onclick="openPopJoin()">회원가입</span>'
@@ -210,8 +218,8 @@ function openPopJoin() {
 		+ '			</div>'
 		+ '			<div class="input-box">'
 		+ '				<div class="label-box">성별</div>'
-		+ '				<input type="radio" name="gender" value="male" checked/><label for="male">남성</label>'
-		+ '				<input type="radio" name="gender" value="female"/><label for="female">여성</label>'
+		+ '				<input type="radio" name="gender" id="male" value="male" checked/><label for="male">남성</label>'
+		+ '				<input type="radio" name="gender" id="female" value="female"/><label for="female">여성</label>'
 		+ '			</div>'
 		+ '			<button type="button" class="btn-full btn01-reverse" onclick="inputCheck()">회원가입</button>'
 		+ '		</form>'
@@ -299,8 +307,8 @@ function openPopMyPageModify(){
 		+ '			</div>'
 		+ '			<div class="input-box">'
 		+ '				<div class="label-box">성별</div>'
-		+ '				<input type="radio" name="gender" value="male" checked/><label for="male">남성</label>'
-		+ '				<input type="radio" name="gender" value="female"/><label for="female">여성</label>'
+		+ '				<input type="radio" name="gender" id="male" value="male" checked/><label for="male">남성</label>'
+		+ '				<input type="radio" name="gender" id="female" value="female"/><label for="female">여성</label>'
 		+ '			</div>'
 		+ '			<button type="button" class="btn-full btn01-reverse" onclick="inputCheck()">수정하기</button>'
 		+ '		</form>'
@@ -397,9 +405,9 @@ function closePopMyArea(){
 
 
 /* login enter submit*/
-function enterLogin(){
+function enterLogin(event){
 	if (window.event.keyCode == 13) {
-        loginChek();
+		loginCheck()
    }
 }
 
