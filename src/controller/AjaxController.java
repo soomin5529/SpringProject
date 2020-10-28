@@ -1,11 +1,11 @@
 package controller;
 
+import java.io.File;
+import java.io.FileReader;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,9 +24,7 @@ import service.MemberDAO;
 @Controller
 @RequestMapping("/request/")
 public class AjaxController {
-
-	@Autowired
-	AreaDAO areaDB;
+	private @Autowired AreaDAO areaDB;
 	@Autowired
 	IndustryDAO industryDB;
 	@Autowired
@@ -140,5 +138,33 @@ public class AjaxController {
 			result = "사용가능합니다.";
 		}
 		return result;
+	}
+
+	@RequestMapping(value = "/findAreaToJson", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String findAreaToJson(@RequestParam("code") String areaCode, @RequestParam("dong") String dongName)
+			throws Throwable {
+		// 서울시 읍면동 json 읽어서 좌표찾기
+		ClassLoader classLoader = getClass().getClassLoader();
+		File file = new File(classLoader.getResource("json/seoul_emd.json").getFile());
+		FileReader fr = new FileReader(file);
+		Object seoulEMDObj = new JSONParser().parse(fr);
+		JSONObject seoulEMDjsonObj = (JSONObject) seoulEMDObj;
+
+		// geoJson의 동코드와 우리 DB의 코드가 차이가 있어 보정을 해준다.
+		Object key = (Integer.parseInt(areaCode) / 100) + "";
+		String tmpCoordinates = seoulEMDjsonObj.get(key).toString().substring(2,
+				seoulEMDjsonObj.get(key).toString().length() - 2);
+		String[] coordinates = tmpCoordinates.replaceAll("\\[", "").replaceAll("\\],", "/").replaceAll("\\]", "")
+				.split("/");
+		String path = "";
+		for (int i = 0; i < coordinates.length; i++) {
+			if (i == coordinates.length - 1) {
+				path += coordinates[i].split(",")[1] + "," + coordinates[i].split(",")[0];
+			} else {
+				path += coordinates[i].split(",")[1] + "," + coordinates[i].split(",")[0] + "/";
+			}
+		}
+		return path;
 	}
 }

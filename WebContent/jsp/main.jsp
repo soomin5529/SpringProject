@@ -4,6 +4,23 @@
 <script type="text/javascript"
 	src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1daef4c0ea"></script>
 <script>
+function findAreaToJson(select){
+	var id = select.getAttribute('id');
+	var text = $("#"+id + " option:checked").text();
+	var paths;
+	$.ajax({
+		type : "post",
+		url : "<%=request.getContextPath()%>/request/findAreaToJson",
+		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+		data : {
+			'dong' : text,
+			'code' : select.value
+		},
+		success : function(textStatus) {
+			drawPolygonDong(textStatus);
+		}
+	});
+}
 /* main화면에서 지역선택 시, 동적으로 다음 옵션 받아옴 */
 function sendToControllerSelectValue(select){
 	var area = select.getAttribute('id') == 'sido' ? 'sido' : 'sigungu';
@@ -79,13 +96,10 @@ function sendToControllerSelectCategoryValue(select){
 			data : {
 				'area' : area,
 				'code' : code
-
 			},
 			success : function(textStatus) {
-				var dong_name= textStatus;
-		
+				var dong_name = textStatus;
 				$('#result').append(textStatus);
-
 			}
 		});
 	}
@@ -131,9 +145,6 @@ function sendToControllerSelectCategoryValue(select){
 	<!-- communityRegPopup -->
 	<jsp:include page="board/boardWriteForm.jsp" flush="false" />
 
-
-
 </div>
-<script type="text/javascript"
-	src="<%=request.getContextPath()%>/js/map.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/map2.js"></script>
 <!-- end of main -->

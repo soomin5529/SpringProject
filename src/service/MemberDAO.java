@@ -3,25 +3,15 @@ package service;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpSession;
-
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-
-import area.DongDTO;
-import member.MemberDTO;
 
 import member.MemberDTO;
 
 @Service
 public class MemberDAO extends AbstractMybatis {
-
 	String namespace = "Member";
-
 	HashMap<String, Object> map = new HashMap<String, Object>();
 
 	public List<MemberDTO> selectMember() throws Exception {
@@ -41,7 +31,7 @@ public class MemberDAO extends AbstractMybatis {
 			map.put("email", email);
 			map.put("birthdate", birthdate.replace("-", ""));
 			map.put("gender", gender);
-			map.put("regDate", new Date());
+			map.put("regdate", new Date());
 			map.put("author", 1);
 			System.out.println(map);
 			result = sqlSession.insert(statement, map);
@@ -88,14 +78,6 @@ public class MemberDAO extends AbstractMybatis {
 		return result;
 	}
 
-//로그아웃
-	public boolean logout(HttpSession session) {
-		SqlSession sqlSession = getSqlSessionFactory().openSession();
-		boolean result = false;
-		session.invalidate();
-		return result;
-	}
-
 	public String nameMember(String userid) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
@@ -103,13 +85,11 @@ public class MemberDAO extends AbstractMybatis {
 			map.put("userid", userid);
 			String statement = namespace + ".nameMember";
 			return sqlSession.selectOne(statement, map);
-
 		} finally {
 			sqlSession.close();
 		}
 
 	}
-
 	/*
 	 * public boolean updateMember(MemberDTO bean) { Connection conn = null;
 	 * PreparedStatement pstmt = null; boolean flag = false;
@@ -190,5 +170,4 @@ public class MemberDAO extends AbstractMybatis {
 	 * (Exception e) { e.printStackTrace(); } finally { Util.close(conn, pstmt, rs);
 	 * } return result; }
 	 */
-
 }
