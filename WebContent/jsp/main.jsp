@@ -121,10 +121,10 @@ function sendToControllerSelectCategoryValue(select){
 						<option value="${sido.code}">${sido.name}</option>
 					</c:forEach>
 				</select> <select id="sigungu" name="city"
-					onchange="javascript:sendToControllerSelectValue(this); selectCity();  sendToControlerguCode(this)">
+					onchange="javascript:sendToControllerSelectValue(this); selectCity(); sendToControlerguCode(this)">
 					<option value="no" disabled selected>선택</option>
 				</select> <select id="dong" name="street"
-					onchange="javascript:selectStreet();  sendToControlerdongCode(this)">
+					onchange="javascript:sendToControlerdongCode(this); findAreaToJson(this);">
 					<option value="no" disabled selected>선택</option>
 				</select>
 			</div>
