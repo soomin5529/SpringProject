@@ -36,4 +36,17 @@
    </select>
 	
 
+	<select id="sigungu" resultType="Sigungu"
+		parameterType="hashmap">
+		select sigungu_code as code, sigungu_name as name from
+		sigungu where sigungu_code = #{sigungu_code}
+	</select>
+
+	<select id="dong" resultType="Dong" parameterType="hashmap">
+		select
+		dong_code as code, dong_name as name from dong where dong_code =
+		#{dong_code}
+	</select>
+
+
 </mapper>
