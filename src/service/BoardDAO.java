@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
@@ -14,14 +15,12 @@ import board.BoardDTO;
 public class BoardDAO extends AbstractMybatis {
 	String namespace = "Board";
 
-	HashMap<String, Object> map = new HashMap<String, Object>();
+	Map<String, Object> map = new HashMap<String, Object>();
 
 	// 동마다 게시물 수 count
 	public int getBoardCount(String dong_code) throws Exception {
 
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
-		System.out.println(sqlSession);
-		System.out.println("getArticleCount의 동코드:" + dong_code);
 		try {
 			map.put("dong_code", dong_code);
 			System.out.println(map);
@@ -33,7 +32,6 @@ public class BoardDAO extends AbstractMybatis {
 
 	public List<BoardDTO> getArticles(String dong_code) throws Exception {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
-		System.out.println("getArticles===old");
 		map.clear();
 		map.put("dong_code", dong_code);
 		try {
@@ -54,10 +52,7 @@ public class BoardDAO extends AbstractMybatis {
 			else
 				number = 1;
 			String statement = namespace + ".insertArticle";
-			/*
-			 * Date today = new Date(); SimpleDateFormat sdf = new
-			 * SimpleDateFormat("yy/MM/dd"); String regDate = sdf.format(today);
-			 */
+			
 			map.put("userid", article.getUserid());
 			map.put("boardid", number);
 			map.put("dong_code", article.getDong_code());

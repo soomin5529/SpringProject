@@ -1,7 +1,12 @@
 package controller;
 
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,10 +26,13 @@ import area.DongDTO;
 import area.SidoDTO;
 import area.SigunguDTO;
 import board.BoardDTO;
+import comment.CommentDTO;
 import industry.MainCategoryDTO;
 import member.MemberDTO;
 import service.AreaDAO;
+import service.BoardLikeDAO;
 import service.BoardDAO;
+import service.CommentDAO;
 import service.IndustryDAO;
 import service.MemberDAO;
 
@@ -43,9 +51,15 @@ public class MainController {
 
 	@Autowired
 	MemberDAO memberDB;
-	
+
 	@Autowired
 	BoardDAO boardDB;
+
+	@Autowired
+	CommentDAO commentDB;
+
+	@Autowired
+	BoardLikeDAO boardlikeDB;
 
 	@ModelAttribute
 	public void headProcess(HttpServletRequest request, HttpServletResponse res) {
@@ -79,31 +93,101 @@ public class MainController {
 		List<DongDTO> dongList = areaDB.dong("1168010100");
 		model.addAttribute("sigungu", sigunguList);
 		model.addAttribute("dong", dongList);
+		// dong코드 받아오기
+		// =================board list========================================
 		String dong_code = "";
-		for(DongDTO d : dongList) {
+		for (DongDTO d : dongList) {
 			dong_code = d.getCode();
 		}
-		
 		int count = 0;
-		List<BoardDTO> article = null;
-
+		List<BoardDTO> articles = null;
+		// board 개수 count
 		count = boardDB.getBoardCount(dong_code);
-		if(count == 0) {
-			
-		}
+
 		if (count > 0) {
-			article = boardDB.getArticles(dong_code);
-			System.out.println("article" +article);
-			model.addAttribute("articleList", article);
+			// board list 뿌려주기
+			articles = boardDB.getArticles(dong_code);
+			System.out.println("article" + articles);
+			model.addAttribute("articleList", articles);
 		}
+		// board 게시물 수
 		model.addAttribute("count", count);
-		
+		// =================comment list========================================
+		int boardid = 0;
+		int cnt = 0;
+		int boardLikecnt = 0;
+		int commentLikecnt = 0;
+		String regdate = null;
+		List<CommentDTO> comment = null;
+		// key 값: Boardid , value 값 : boardid 에 달린 댓글 list
+		Map<Integer, List<CommentDTO>> map = new HashMap<Integer, List<CommentDTO>>();
+		Map<Integer, Integer> boardLike = new HashMap<Integer, Integer>();
+		Map<Integer, String> regDatemap = new HashMap<Integer, String>();
 
-		//String name = "";
-		//name = memberDB.nameMember(userid);
+		// 댓글 list
+		for (BoardDTO b : articles) {
 
-		//model.addAttribute("name", name);
+			boardid = b.getBoardid();
+			// 날짜 계산 --------------
+			regdate = b.getRegDate();
+			regDatemap.put(boardid, regDate(regdate));
+			// 날짜 계산 --------------
+			System.out.println("boardid 값은?=====" + boardid);
+			cnt = commentDB.getCommentCount(boardid);
+			boardLikecnt = boardlikeDB.getBoardLikeCount(boardid);
+			// 댓글 개수
+			model.addAttribute("cnt", cnt);
+
+			// 댓글 list
+			comment = commentDB.getComments(boardid);
+
+			map.put(boardid, comment);
+			boardLike.put(boardid, boardLikecnt);
+			System.out.println("boardLike=====" + boardLike);
+		}
+		System.out.println("map:" + map);
+		// 댓글 리스트
+		model.addAttribute("map", map);
+		// 좋아요 수
+		model.addAttribute("boardLike", boardLike);
+
+		model.addAttribute("regDate", regDatemap);
+
 		return "main";
+	}
+
+	// 날짜 변환 메소드
+	public String regDate(String regdate) throws ParseException {
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyymmdd");
+		Date today = new Date();
+		Date startDate = null;
+		
+		startDate = sdf.parse(regdate);
+	
+		sdf.format(today);
+
+		String DateDays = null;
+
+		long calDate = today.getTime() - startDate.getTime();
+		long calDateDays = calDate / (24 * 60 * 60 * 1000);
+		calDateDays = Math.abs(calDateDays);
+		if ((calDateDays / 30) == 1) {
+			DateDays = "한달 전";
+		} else if ((calDateDays / 7) == 1) {
+			DateDays = "일주일 전";
+		} else if ((calDateDays / 60) == 1) {
+			DateDays = "두달 전";
+		} else if (calDateDays == 0) {
+			DateDays = "방금 전";
+		} else {
+			DateDays = String.valueOf(calDateDays) + "일 전";
+		}
+		System.out.println("date=====" + startDate);
+		System.out.println("today=====" + today);
+		System.out.println("두 날짜의 날짜 차이: " + DateDays);
+
+		return DateDays;
 	}
 
 	@RequestMapping("main/{code}")

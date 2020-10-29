@@ -1,10 +1,30 @@
 package comment;
 
-public class CommentDTO {
+import java.io.Serializable;
+
+public class CommentDTO implements Serializable{
 	private String userid;
-	private String boardid;
-	private String commentid;
+	private int boardid;
+	private int commentid;
 	private String content;
+	private String name;
+	private String regDate;
+
+	public String getRegDate() {
+		return regDate;
+	}
+
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public String getUserid() {
 		return userid;
@@ -14,19 +34,21 @@ public class CommentDTO {
 		this.userid = userid;
 	}
 
-	public String getBoardid() {
+	
+	public int getBoardid() {
 		return boardid;
 	}
 
-	public void setBoardid(String boardid) {
+	public void setBoardid(int boardid) {
 		this.boardid = boardid;
 	}
 
-	public String getCommentid() {
+	
+	public int getCommentid() {
 		return commentid;
 	}
 
-	public void setCommentid(String commentid) {
+	public void setCommentid(int commentid) {
 		this.commentid = commentid;
 	}
 
@@ -41,7 +63,9 @@ public class CommentDTO {
 	@Override
 	public String toString() {
 		return "CommentDTO [userid=" + userid + ", boardid=" + boardid + ", commentid=" + commentid + ", content="
-				+ content + "]";
+				+ content + ", name=" + name + ", regDate=" + regDate + "]";
 	}
+
+	
 
 }

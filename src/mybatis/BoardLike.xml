@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Like">
+   <insert id="insertBoardLike" parameterType="hashmap">
+		insert into
+		BOARD_LIKE (userid, boardid )
+		values (#{userid},#{boardid})
+	</insert>
+	
+	
+	<select id="getBoardLikeCount" parameterType="hashmap"
+		resultType="int">
+		select nvl(count(*),0) from BOARD_LIKE where boardid = #{boardid}
+	</select>
+	
+</mapper>

@@ -66,7 +66,7 @@
 	.bookmark {float:right; width:20px; height:20px; margin:4px 0; cursor:pointer;}
 	.bookmark.off .bookmark-icon {fill:none; stroke:#999; stroke-width:3px;}
 	.bookmark.on .bookmark-icon {fill:#ffd828; stroke:none;}
-	
+	.auth-icon {float:left; width:16px; fill:#aaa; margin:2px 2px 2px 0;}
 
 /* common sections */
 	/* header */
@@ -132,8 +132,13 @@
 .dashboard {top:113px; left:0; width:350px; height:calc(100% - 112px);background-color:#f2f2f2;}
 .dashboard .title-box .tit {float:left; width:calc(100% - 40px);}
 .dashboard .search-box {padding:15px; margin-bottom:10px; border-bottom:1px solid #eee; background-color:#fff;}
-.dashboard .chart-box {height:calc(100% - 192px); border-top:1px solid #eee; overflow:auto; background-color:#fff;}
-
+.dashboard .chart-box {padding:15px; height:calc(100% - 192px); border-top:1px solid #eee; overflow:auto; background-color:#fff; }
+.dashboard .chart-box .chart .tit {font-size:1.8rem; margin-bottom:15px;}
+.dashboard .chart-box .chart {margin-bottom:30px;}
+.dashboard .chart-box .chart:last-child {margin-bottom:0;}
+.dashboard .chart-box .chart ul li {padding: 10px 0;}
+.dashboard .chart-box .chart ul li .shop-icon {fill: none; stroke:#666; stroke-width:3px; width:20px; margin-right:10px; padding:1px 0;}
+.dashboard .chart-box .chart ul li span {font-size:1.5rem;}
 
 /* community */
 .community {top:113px; left:350px; width:350px; height:calc(100% - 112px);  border-right:1px solid #ddd; background-color:#f2f2f2;}
@@ -147,7 +152,7 @@
 .community .list-box .post-box .content-box .content {font-size:1.5rem; margin-bottom:10px;}
 .community .list-box .post-box .content-box .content .text {margin-bottom:15px;}
 .community .list-box .post-box .content-box .content .photo {height:200px; background-size:cover; background-color:#f3f4fc; background-position:center; background-repeat:no-repeat;}
-.community .list-box .post-box .content-box .regdate {float:left; width:50%; color:#999; font-size:1.4rem;}
+.community .list-box .post-box .content-box .regdate {float:left; color:#999; font-size:1.4rem;}
 .community .list-box .post-box .reply-list-box {padding:15px;}
 .community .list-box .post-box .reply-list-box .reply-box {padding:15px; margin-bottom:15px; background-color:#f6f6f7; border-radius:8px;}
 .community .list-box .post-box .reply-list-box .reply-box:last-child {margin-bottom:0;}
