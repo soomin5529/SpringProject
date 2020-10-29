@@ -94,11 +94,14 @@ public class BoardController {
 	}
 
 	@RequestMapping("writeUploadPro")
-	public String writeUploadPro(MultipartHttpServletRequest multipart, BoardDTO article) throws Exception {
+	public String writeUploadPro(MultipartHttpServletRequest multipart, BoardDTO article, Model m) throws Exception {
 		
-		Date today = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
-	    String regDate = sdf.format(today);
+		//Date today = new Date();
+		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+	   // String regDate = sdf.format(today);
+	    String today = null;; 
+	    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd"); 
+	    today=sdf.format(new java.util.Date());
 	    
 		MultipartFile multi = multipart.getFile("uploadfile");
 		String filename = multi.getOriginalFilename();
@@ -118,16 +121,17 @@ public class BoardController {
 		// article.setIp(remoteId);
 		// article.setBoardid(boardid);
 		article.setDong_code(dong_code);
-		article.setRegDate(regDate);
+		article.setRegDate(today);
 
-		System.out.println("전" + article);
 	     boardDB.insertArticle(article);
+	     
+	    m.addAttribute("display","block");
 		return "redirect:/view/main";
 		// jsp로 보내지 않고 바로 view 로
 	}
 	
 	@RequestMapping("commentUploadPro")
-	public String commentUploadPro(CommentDTO article, HttpServletRequest request) throws Exception {
+	public String commentUploadPro(Model m ,CommentDTO article, HttpServletRequest request) throws Exception {
 		
 		Date today = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
@@ -144,6 +148,8 @@ public class BoardController {
         article.setRegDate(regDate);
 		System.out.println("comment article------" + article);
 	    commentDB.insertComment(article);
+	    
+	    m.addAttribute("display","block");
 		return "redirect:/view/main";
 		// jsp로 보내지 않고 바로 view 로
 	}
@@ -178,6 +184,22 @@ public class BoardController {
 
 		return "board/dashBoard";
 	}
+	
+	@RequestMapping("dashBoardPro")
+	public String dashBoardPro(HttpServletRequest request, Model m) throws Exception {
+		List<MainCategoryDTO> MainList = industryDB.category_mainList();
+		m.addAttribute("main", MainList);
+		System.out.println("메인리스트 나와요" + MainList);
+
+		List<SigunguDTO> sigunguList = areaDB.sigungu(dong_code);
+		// List<DongDTO> dongList = areaDB.dong(dong_code);
+		m.addAttribute("sigungu", sigunguList);
+		System.out.println("시군구 나와요" + sigunguList);
+
+		return "board/dashBoard";
+	}
+	
+	
 
 	@RequestMapping("deletePro")
 	public String deletePro(String userid, String dong_code, String boardid, Model m) throws Exception {

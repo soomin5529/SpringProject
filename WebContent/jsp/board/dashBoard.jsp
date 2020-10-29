@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<div class="map-popup dashboard" id="dashboard" style="display: none">
+			<%
+				String display = request.getParameter("display");
+			%>
+			
+<div class="map-popup dashboard" id="dashboard" style="display:none; display:<%=display %>">
 	<div class="title-box cf">
 		<div class="back-btn" onclick="closePopDashboard();">
 			<svg viewBox="0 0 40 40" class="back-icon">
@@ -10,13 +14,15 @@
 		</div>
 		<div class="tit">
 
+			
+
 			<c:forEach var="sigungu" items="${sigungu}">
 			  ${sigungu.name}
 			</c:forEach>
 			<c:forEach var="dong" items="${dong }">
 				 ${dong.name}
 			</c:forEach>
-			
+
 		</div>
 		<!-- bookmark on/off -->
 		<div class="bookmark off" id="bookmark" onclick="bookmark()">

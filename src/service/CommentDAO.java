@@ -48,7 +48,7 @@ public class CommentDAO extends AbstractMybatis {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
 			Date today = new Date();
-			SimpleDateFormat sdf = new SimpleDateFormat("yy/MM/dd");
+			SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
 		    String regDate = sdf.format(today);
 			map.clear();
 			int number = sqlSession.selectOne(namespace + ".insertComment_new");
@@ -57,17 +57,10 @@ public class CommentDAO extends AbstractMybatis {
 			else
 				number = 1;
 			String statement = namespace + ".insertComment";
-			/*
-			 * map.put("commentid", number); map.put("userid", article.getUserid());
-			 * map.put("boardid", article.getBoardid()); map.put("content",
-			 * article.getContent());
-			 */
 			
 			article.setCommentid(number);
 			article.setRegDate(regDate);
 			
-			//article.setName(name);
-
 			System.out.println("article은??" + article);
 
 			return sqlSession.insert(statement, article);

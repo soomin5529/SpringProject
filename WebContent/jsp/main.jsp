@@ -92,21 +92,24 @@ function sendToControllerSelectCategoryValue(select){
 
 		gucode = gucode.options[gucode.selectedIndex].value;
 		dongcode = dongcode.options[dongcode.selectedIndex].value;
-		//document.street.submit();
-		$.ajax({
-			type : "post",
-			url : "<%=request.getContextPath()%>/request/selectCode",
-			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-			data : {
-				'area' : area,
-				'code' : dongcode
-			},
-			success : function(textStatus) {
-				var dong_name = textStatus;
-				$('#result').append(textStatus);
-			}
-		});
-	}
+		
+	//	document.street.submit();
+    }
+//		$.ajax({
+//			type : "post",
+//		
+//	/request/selectCode",
+//			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+//			data : {
+//				'area' : area,
+//				'code' : dongcode
+//			},
+//			success : function(textStatus) {
+//				var dong_name = textStatus;
+//				$('#result').append(textStatus);
+//			}
+//		});
+	
 </script>
 <div class="page main" id="page">
 	<!-- map -->
@@ -125,16 +128,14 @@ function sendToControllerSelectCategoryValue(select){
 						<option value="${sido.code}">${sido.name}</option>
 					</c:forEach>
 				</select>
-				<!--  	<form method="post" name="sendDashboard"
-					action="<%=request.getContextPath()%>/board/dashBoardPro">-->
-				<select id="sigungu" name="city"
-					onchange="javascript:sendToControllerSelectValue(this); selectCity(); sendToControlerguCode(this)">
-					<option value="no" disabled selected>선택</option>
-				</select> <select id="dong" name="street"
-					onchange="javascript:sendToControlerdongCode(this); findAreaToJson(this); selectStreet();">
-					<option value="no" disabled selected>선택</option>
-				</select>
-				<!--  </form> -->
+				
+					<select id="sigungu" name="city"
+						onchange="javascript:sendToControllerSelectValue(this); selectCity(); sendToControlerguCode(this)">
+						<option value="no" disabled selected>선택</option>
+					</select> <select id="dong" name="street"
+						onchange="javascript: findAreaToJson(this); selectStreet();">
+						<option value="no" disabled selected>선택</option>
+					</select>
 			</div>
 		</div>
 		<!-- 검색버튼 -->
