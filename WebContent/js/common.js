@@ -275,46 +275,46 @@ function closePopPush(){
 /* myPageModify */
 function openPopMyPageModify(){
 	if (!myPageModify.firstChild){
-		myPageModify.innerHTML = 
-			'<div class="deemed" onclick="closePopMyPageModify()"></div>'
-		+ '<span class="close-btn" onclick="closePopMyPageModify()">x</span>'
-		+ '<div class="pop-box" style="width:400px; height:645px;">'
-		+ '	<div class="title-box">'
-		+ '		<div class="tit">내 정보 수정</div>'
-		+ '	</div>'
-		+ '	<div class="content-box">'
-		+ '		<form name = "regForm">'
-		+ '			<div class="input-box">'
-		+ '				<div class="label-box">아이디</div>'
-		+ '				<input type="text" id="userid" name="userid" placeholder="아이디를 입력하세요" value="김윤민" readonly/>'
-		+ '             <span id="idOverlapCheck"></span>'				
-		+ '			</div>'
-		+ '			<div class="input-box">'
-		+ '				<div class="label-box">비밀번호</div>'
-		+ '				<input type="password" id="pwd" name="pwd" placeholder="비밀번호를 입력하세요"/>'
-		+ '			</div>'
-		+ '			<div class="input-box">'
-		+ '				<div class="label-box">이름</div>'
-		+ '				<input type="text" id="name" name="name" placeholder="이름(닉네임)을 입력하세요" value="값넣어쥬세요"/>'
-		+ '			</div>'
-		+ '			<div class="input-box">'
-		+ '				<div class="label-box">이메일</div>'
-		+ '				<input type="email" id="email" name="email" placeholder="이메일을 입력하세요" value="값넣어쥬세요"/>'
-		+ '			</div>'
-		+ '			<div class="input-box">'
-		+ '				<div class="label-box">생일</div>'
-		+ '				<input type="date" id="birthdate" name="birthdate" placeholder="생일을 입력하세요" value="값넣어쥬세요"/>'
-		+ '			</div>'
-		+ '			<div class="input-box">'
-		+ '				<div class="label-box">성별</div>'
-		+ '				<input type="radio" name="gender" id="male" value="male" checked/><label for="male">남성</label>'
-		+ '				<input type="radio" name="gender" id="female" value="female"/><label for="female">여성</label>'
-		+ '			</div>'
-		+ '			<button type="button" class="btn-full btn01-reverse" onclick="inputCheck()">수정하기</button>'
-		+ '		</form>'
-		+ '	</div>'
-		+ '</div>';
-		myPageModify.style.display="block";
+	 myPageModify.innerHTML = 
+         '<div class="deemed" onclick="closePopMyPageModify()"></div>'
+      + '<span class="close-btn" onclick="closePopMyPageModify()">x</span>'
+      + '<div class="pop-box" style="width:400px; height:645px;">'
+      + '   <div class="title-box">'
+      + '      <div class="tit">내 정보 수정</div>'
+      + '   </div>'
+      + '   <div class="content-box">'
+      + '      <form name = "regForm" >'
+      + '         <div class="input-box">'
+      + '            <div class="label-box">아이디</div>'
+      + '            <input type="hidden" id="userid" name="userid" readonly/>'
+      + '             <span id="idOverlapCheck"></span>'            
+      + '         </div>'
+      + '         <div class="input-box">'
+      + '            <div class="label-box">비밀번호</div>'
+      + '            <input type="password" id="pwd" name="pwd" placeholder="비밀번호를 입력하세요"/>'
+      + '         </div>'
+      + '         <div class="input-box">'
+      + '            <div class="label-box">이름</div>'
+      + '            <input type="text" id="name" name="name" placeholder="이름(닉네임)을 입력하세요" />'
+      + '         </div>'
+      + '         <div class="input-box">'
+      + '            <div class="label-box">이메일</div>'
+      + '            <input type="email" id="email" name="email" placeholder="이메일을 입력하세요" value="값넣어쥬세요"/>'
+      + '         </div>'
+      + '         <div class="input-box">'
+      + '            <div class="label-box">생일</div>'
+      + '            <input type="date" id="birthdate" name="birthdate" placeholder="생일을 입력하세요" value="값넣어쥬세요"/>'
+      + '         </div>'
+      + '         <div class="input-box">'
+      + '            <div class="label-box">성별</div>'
+      + '            <input type="radio" name="gender" id="male" value="male" checked/><label for="male">남성</label>'
+      + '            <input type="radio" name="gender" id="female" value="female"/><label for="female">여성</label>'
+      + '         </div>'
+      + '         <button type="button" class="btn-full btn01-reverse" onclick="inputCheck()">수정하기</button>'
+      + '      </form>'
+      + '   </div>'
+      + '</div>';
+      myPageModify.style.display="block";
 	}
 }
 function closePopMyPageModify(){
@@ -327,22 +327,22 @@ function closePopMyPageModify(){
 /* pwdModify */
 function openPopPwd(){
 	if (!pwdModify.firstChild){
-		pwdModify.innerHTML = 
-			'	<div class="title-box cf">'
-			+ '		<div class="close-btn" onclick="closePopPwd();">'
-			+ '			<svg viewBox="0 0 40 40" class="close-icon">'
-			+ '				<line x1="4.9" y1="4.9" x2="35.1" y2="35.1"/>'
-			+ '				<line x1="35.1" y1="4.9" x2="4.9" y2="35.1"/>'
-			+ '			</svg>'
-			+ '		</div>'
-			+ '		<div class="tit">비밀번호 변경</div>'
-			+ '	</div>'
-			+ '	<form action="">'
-			+ '	<input type="password" name="oldpwd" id="oldpwd" placeholder="기존 비밀번호를 입력하세요"/>'
-			+ '	<input type="password" name="pwd" id="pwd" placeholder="새 비밀번호를 입력하세요"/>'
-			+ '	<input type="password" name="repwd" id="repwd" placeholder="새 비밀번호를 다시 입력하세요"/>'
-			+ '	<button type="submit" class="btn-full btn01">비밀번호 변경</button>'
-			+ '	</form>';
+		 pwdModify.innerHTML = 
+         '   <div class="title-box cf">'
+         + '      <div class="close-btn" onclick="closePopPwd();">'
+         + '         <svg viewBox="0 0 40 40" class="close-icon">'
+         + '            <line x1="4.9" y1="4.9" x2="35.1" y2="35.1"/>'
+         + '            <line x1="35.1" y1="4.9" x2="4.9" y2="35.1"/>'
+         + '         </svg>'
+         + '      </div>'
+         + '      <div class="tit">비밀번호 변경</div>'
+         + '   </div>'
+         + '   <form name = "pwdForm">'
+         + '   <input type="password" name="oldpwd" id="oldpwd" placeholder="기존 비밀번호를 입력하세요"/>'
+         + '   <input type="password" name="pwd" id="pwd" placeholder="새 비밀번호를 입력하세요"/>'
+         + '   <input type="password" name="repwd" id="repwd" placeholder="새 비밀번호를 다시 입력하세요"/>'
+         + '   <button type="button" class="btn-full btn01" onclick="pwdCheck()">비밀번호 변경</button>'
+         + '   </form>';
 	}pwdModify.style.right=0;
 }
 function closePopPwd(){
@@ -352,21 +352,21 @@ function closePopPwd(){
 /* userDelete */
 function openPopUserDelete(){
 	if (!userDelete.firstChild){
-		userDelete.innerHTML = 
-			'	<div class="title-box cf">'
-			+ '		<div class="close-btn" onclick="closePopUserDelete();">'
-			+ '			<svg viewBox="0 0 40 40" class="close-icon">'
-			+ '				<line x1="4.9" y1="4.9" x2="35.1" y2="35.1"/>'
-			+ '				<line x1="35.1" y1="4.9" x2="4.9" y2="35.1"/>'
-			+ '			</svg>'
-			+ '		</div>'
-			+ '		<div class="tit">회원탈퇴</div>'
-			+ '	</div>'
-			+ '	<form action="">'
-			+ '	<input type="password" name="pwd" id="pwd" placeholder="비밀번호를 입력하세요"/>'
-			+ '	<button type="submit" class="btn-full btn01">탈퇴하기</button>'
-			+ '<span>정말 가실거에요오?( Ĭ ^ Ĭ )</span>'
-			+ '	</form>';
+		 userDelete.innerHTML = 
+         '   <div class="title-box cf">'
+         + '      <div class="close-btn" onclick="closePopUserDelete();">'
+         + '         <svg viewBox="0 0 40 40" class="close-icon">'
+         + '            <line x1="4.9" y1="4.9" x2="35.1" y2="35.1"/>'
+         + '            <line x1="35.1" y1="4.9" x2="4.9" y2="35.1"/>'
+         + '         </svg>'
+         + '      </div>'
+         + '      <div class="tit">회원탈퇴</div>'
+         + '   </div>'
+         + '   <form name="deleteForm" action="/SpringTeamProject/member/deletemember" method="post">'
+         + '   <input type="password" name="pwd" id="deletePwd" placeholder="비밀번호를 입력하세요"/>'
+         + '   <button type="submit" class="btn-full btn01">탈퇴하기</button>'
+         + '<span>정말 가실거에요오?( Ĭ ^ Ĭ )</span>'
+         + '   </form>';
 	}userDelete.style.right=0;
 }
 function closePopUserDelete(){
