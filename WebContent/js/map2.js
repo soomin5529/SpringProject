@@ -1,7 +1,7 @@
 /* 최초 지도 생성 */
 var mapOptions = {
 	center : new naver.maps.LatLng(37.5642135, 127.0016985),
-	zoom : 12,
+	zoom : 10,
 	zoomControl : true,
 	zoomControlOptions : {
 		style : naver.maps.ZoomControlStyle.SMALL,

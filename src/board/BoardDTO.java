@@ -72,7 +72,9 @@ public class BoardDTO implements Serializable {
 	@Override
 	public String toString() {
 		return "BoardDTO [userid=" + userid + ", boardid=" + boardid + ", dong_code=" + dong_code + ", writer=" + writer
-				+ ", content=" + content + ", regdate=" + regDate + ", filename=" + filename + "]";
+				+ ", content=" + content + ", regDate=" + regDate + ", filename=" + filename + "]";
 	}
+
+	
 
 }

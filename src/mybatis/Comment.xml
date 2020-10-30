@@ -5,4 +5,39 @@
 <!-- 연결을 namespace로 한다.(대소문자 구분함) -->
 <mapper namespace="Comment">
 
+	<select id="getCommentCount" resultType="int">
+		select nvl(count(*),0) from board_comment where boardid =
+		#{boardid}
+	</select>
+
+	<select id="getComments" parameterType="hashmap"
+		resultType="Comment">
+		select * from board_comment where boardid = #{boardid} order by commentid desc
+	</select>
+
+	<!-- commentid 값에 고유값 insert 해주기 -->
+	<select id="insertComment_new" resultType="int">
+		select
+		commentNum.nextval from dual
+
+	</select>
+
+	<!-- commentuploadform insert -->
+	<insert id="insertComment" parameterType="hashmap">
+		insert into
+		board_comment
+		(userid, boardid , commentid, content , name, regDate)
+		values
+		(#{userid},#{boardid},#{commentid},#{content},#{name},#{regDate})
+	</insert>
+
+	<!-- 삭제 기능 -->
+	<delete id="deleteComment" parameterType="hashmap">
+		delete from board_comment where
+		dong_code=#{dong_code} and commentid =
+		#{commentid} and userid = #{userid}
+	</delete>
+
+
+
 </mapper>

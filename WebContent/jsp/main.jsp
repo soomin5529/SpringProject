@@ -103,10 +103,21 @@ function sendToControllerSelectCategoryValue(select){
 	   $.ajax({
 	        type: "post", 
 	        url: "<%=request.getContextPath()%>/request/selectCode",
+    function sendToControlerdongCode(select) {
+		var area = select.getAttribute('id') == 'sigungu' ? 'sigungu' : 'dong';
+		var gucode = document.getElementById("sigungu");
+		var dongcode = document.getElementById("dong");
+
+		gucode = gucode.options[gucode.selectedIndex].value;
+		dongcode = dongcode.options[dongcode.selectedIndex].value;
+		//document.street.submit();
+		$.ajax({
+			type : "post",
+			url : "<%=request.getContextPath()%>/request/selectCode",
 			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 			data : {
 				'area' : area,
-				'code' : code
+				'code' : dongcode
 			},
 			success : function(textStatus) {
 				var dong_name = textStatus;
@@ -135,7 +146,7 @@ function sendToControllerSelectCategoryValue(select){
 					onchange="javascript:sendToControllerSelectValue(this); sendToControllerguCode(this); selectCity()">
 					<option value="no" disabled selected>선택</option>
 				</select> <select id="dong" name="street"
-					onchange="javascript:findAreaToJson(this); sendToControllerdongCode(this)">
+					onchange="javascript:sendToControlerdongCode(this); findAreaToJson(this); selectStreet();">
 					<option value="no" disabled selected>선택</option>
 				</select>
 			</div>

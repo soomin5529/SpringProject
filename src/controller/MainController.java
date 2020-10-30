@@ -1,7 +1,9 @@
 package controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,23 +13,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import area.AreaDTO;
 import area.DongDTO;
-import area.SelectedAreaDTO;
 import area.SidoDTO;
 import area.SigunguDTO;
 import board.BoardDTO;
+import comment.CommentDTO;
 import industry.MainCategoryDTO;
 import service.AreaDAO;
 import service.BoardDAO;
+import service.CommentDAO;
 import service.IndustryDAO;
 import service.MemberDAO;
-import service.StoreDAO;
-import store.StoreDTO;
 
 @Controller
 @RequestMapping("/view/")
@@ -45,7 +45,7 @@ public class MainController {
 	@Autowired
 	BoardDAO boardDB;
 	@Autowired
-	StoreDAO storeDB;
+	CommentDAO commentDB;
 
 	@ModelAttribute
 	public void headProcess(HttpServletRequest request, HttpServletResponse res) {
@@ -74,7 +74,7 @@ public class MainController {
 		List<AreaDTO> sigunguList = areaDB.sigunguList("11");
 		model.addAttribute("sigunguList", sigunguList);
 		System.out.println(sigunguList + "------------> 시군구 리스트");
-		
+
 		List<MainCategoryDTO> MainList = industryDB.category_mainList();
 		model.addAttribute("main", MainList);
 
@@ -88,21 +88,38 @@ public class MainController {
 		}
 
 		int count = 0;
-		List<BoardDTO> article = null;
-
+		List<BoardDTO> articles = null;
+		// board 개수 count
 		count = boardDB.getBoardCount(dong_code);
-		if (count == 0) {
-
-		}
 		if (count > 0) {
-			article = boardDB.getArticles(dong_code);
-			System.out.println("article" + article);
-			model.addAttribute("articleList", article);
+			// board list
+			articles = boardDB.getArticles(dong_code);
+			System.out.println("article" + articles);
+			model.addAttribute("articleList", articles);
 		}
 		model.addAttribute("count", count);
-		// String name = "";
-		// name = memberDB.nameMember(userid);
-		// model.addAttribute("name", name);
+		int boardid = 0;
+		int cnt = 0;
+		List<CommentDTO> comment = null;
+		// List<BoardDTO> boardidList = boardDB.getBoardid(dong_code);
+		System.out.println("boardid 값은???" + articles);
+		Map<Integer, List<CommentDTO>> map = new HashMap<Integer, List<CommentDTO>>();
+		// 댓글 list
+		for (BoardDTO b : articles) {
+
+			boardid = b.getBoardid();
+			System.out.println("boardid 값은?=====" + boardid);
+			System.out.println("===========================여기냐?");
+			cnt = commentDB.getCommentCount(boardid);
+			System.out.println(cnt + "-----cnt count 수");
+			model.addAttribute("cnt", cnt);
+
+			comment = commentDB.getComments(boardid);
+			map.put(boardid, comment);
+		}
+		System.out.println(map.values());
+		System.out.println("map:" + map);
+		model.addAttribute("map", map);
 		return "main";
 	}
 
