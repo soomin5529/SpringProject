@@ -19,7 +19,6 @@ public class BoardDAO extends AbstractMybatis {
 	// 동마다 게시물 수 count
 	public int getBoardCount(String dong_code) throws Exception {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
-		System.out.println(sqlSession);
 		try {
 			map.put("dong_code", dong_code);
 			System.out.println(map);

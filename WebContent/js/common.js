@@ -127,7 +127,8 @@ function openPopMyPage() {
 		}
 	} else {
 		if (!login.firstChild) {
-			login.innerHTML = '<div class="deemed" onclick="closePopLogin()"></div>'
+			login.innerHTML = 
+					'<div class="deemed" onclick="closePopLogin()"></div>'
 					+ '<span class="close-btn" onclick="closePopLogin()">x</span>'
 					+ '<div class="pop-box" style="width:400px; height:360px;">'
 					+ '	<div class="title-box">'
@@ -148,7 +149,10 @@ function openPopMyPage() {
 					+ '			<div class="join-btn">'
 					+ '				<span class="gray">아직 회원이 아니신가요?</span>'
 					+ '				<span class="highlight01" onclick="openPopJoin()">회원가입</span>'
-					+ '			</div>' + '		</form>' + '	</div>' + '</div>';
+					+ '			</div>' 
+					+ '		</form>' 
+					+ '	</div>' 
+					+ '</div>';
 			login.style.display = "block";
 		}
 	}
@@ -221,8 +225,7 @@ function openPopJoin() {
 function closePopJoin() {
 	while (join.firstChild) {
 		join.removeChild(join.firstChild);
-	}
-	;
+	};
 	join.style.display = "none";
 }
 
@@ -256,8 +259,7 @@ function openPopPush() {
 function closePopPush() {
 	while (push.firstChild) {
 		push.removeChild(push.firstChild);
-	}
-	;
+	};
 	push.style.display = "none";
 }
 

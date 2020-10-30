@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-  <meta http-equiv="Refresh" content="0;url=<%=request.getContextPath() %>/view/main">
+
+  <meta http-equiv="Refresh" content="0;url=<%=request.getContextPath() %>/view/main?board=${display}">
 </body>
 </html>

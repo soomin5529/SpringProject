@@ -103,5 +103,4 @@ public class AreaDAO extends AbstractMybatis {
 			sqlSession.close();
 		}
 	}
-
 }
