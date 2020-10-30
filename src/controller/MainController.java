@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import area.AreaDTO;
 import area.DongDTO;
+import area.SelectedAreaDTO;
 import area.SidoDTO;
 import area.SigunguDTO;
 import board.BoardDTO;
@@ -24,6 +26,8 @@ import service.AreaDAO;
 import service.BoardDAO;
 import service.IndustryDAO;
 import service.MemberDAO;
+import service.StoreDAO;
+import store.StoreDTO;
 
 @Controller
 @RequestMapping("/view/")
@@ -40,6 +44,8 @@ public class MainController {
 	MemberDAO memberDB;
 	@Autowired
 	BoardDAO boardDB;
+	@Autowired
+	StoreDAO storeDB;
 
 	@ModelAttribute
 	public void headProcess(HttpServletRequest request, HttpServletResponse res) {
@@ -65,13 +71,16 @@ public class MainController {
 
 		List<SidoDTO> sidoList = areaDB.sidoList();
 		model.addAttribute("sido", sidoList);
-
+		List<AreaDTO> sigunguList = areaDB.sigunguList("11");
+		model.addAttribute("sigunguList", sigunguList);
+		System.out.println(sigunguList + "------------> 시군구 리스트");
+		
 		List<MainCategoryDTO> MainList = industryDB.category_mainList();
 		model.addAttribute("main", MainList);
 
-		List<SigunguDTO> sigunguList = areaDB.sigungu("11680");
+		List<SigunguDTO> sigungu = areaDB.sigungu("11680");
 		List<DongDTO> dongList = areaDB.dong("1168010100");
-		model.addAttribute("sigungu", sigunguList);
+		model.addAttribute("sigungu", sigungu);
 		model.addAttribute("dong", dongList);
 		String dong_code = "";
 		for (DongDTO d : dongList) {
@@ -91,29 +100,9 @@ public class MainController {
 			model.addAttribute("articleList", article);
 		}
 		model.addAttribute("count", count);
-
 		// String name = "";
 		// name = memberDB.nameMember(userid);
-
 		// model.addAttribute("name", name);
-		return "main";
-	}
-
-	@RequestMapping("main/{code}")
-	public String main(Model model, @PathVariable("code") String code, Model m) throws Throwable {
-		List<SidoDTO> sidoList = areaDB.sidoList();
-		model.addAttribute("sido", sidoList);
-
-		List<MainCategoryDTO> MainList = industryDB.category_mainList();
-		model.addAttribute("main", MainList);
-		if (code.length() == 5) {
-			List<SigunguDTO> sigunguList = areaDB.sigungu(code);
-			model.addAttribute("sigungu", sigunguList);
-		}
-		if (code.length() == 10) {
-			List<DongDTO> dongList = areaDB.dong(code);
-			model.addAttribute("dong", dongList);
-		}
 		return "main";
 	}
 
@@ -140,4 +129,5 @@ public class MainController {
 	public String intro() throws Throwable {
 		return "/jsp_nohead/intro.jsp";
 	}
+
 }

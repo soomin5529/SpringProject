@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-   <meta http-equiv="Refresh" content="0;url=<%=request.getContextPath() %>/view/main">
+	<meta http-equiv="Refresh" content="0;url=<%=request.getContextPath()%>/view/main">
 </body>
 </html>

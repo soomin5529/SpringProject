@@ -2,22 +2,32 @@ package controller;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import area.AreaDTO;
 import area.DongDTO;
 import area.SigunguDTO;
 import industry.IndustryDTO;
+import oracle.net.aso.l;
 import service.AreaDAO;
 import service.IndustryDAO;
 import service.MemberDAO;
@@ -181,5 +191,14 @@ public class AjaxController {
 			@RequestParam("dong") String requestDongName, Model model) {
 		List<StoreDTO> stores = storeDB.storeList(requestDongCode);
 		return "";
+	}
+
+	@RequestMapping(value = "/currentPageStore", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public List<StoreDTO> currentPageStore(@RequestBody Map<String, Object> params, HttpServletResponse response)
+			throws IOException {
+		List<StoreDTO> stores = storeDB.allStoreList(params);
+		System.out.println(stores.size() + "--------> 검색된 상점수");
+		return stores;
 	}
 }

@@ -1,9 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1daef4c0ea"></script>
+<script type="text/javascript"
+	src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1daef4c0ea"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script>
+var sigungu = new Array();
+<c:forEach var="sigungu" items="${sigunguList}">
+	sigungu.push(
+			{code:"${sigungu.code}",
+			name: "${sigungu.name}",
+			lat: "${sigungu.latitude}",
+			lng: "${sigungu.longitude}"}
+	)
+</c:forEach>
+
 function findAreaToJson(select){
 	var id = select.getAttribute('id');
 	var text = $("#"+id + " option:checked").text();
@@ -146,6 +157,8 @@ function sendToControllerSelectCategoryValue(select){
 	<jsp:include page="board/boardWriteForm.jsp" flush="false" />
 
 </div>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/map2.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/chart.js"></script>
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/js/map2.js"></script>
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/js/chart.js"></script>
 <!-- end of main -->

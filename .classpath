@@ -30,5 +30,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-web-4.0.4.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-webmvc-4.0.4.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/validation-api-1.0.0.GA.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jackson-all-1.9.9.jar" sourcepath="WebContent/WEB-INF/lib/jackson-all-1.9.9.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

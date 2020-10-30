@@ -4,15 +4,15 @@ import java.io.Serializable;
 
 public class StoreDTO implements Serializable {
 	private String storeNum;
-	private String stroreName;
+	private String storeName;
 	private String branchName;
 	// 업종코드
 	private String mainCategoryCode;
 	private String middleCategoryCode;
 	private String smallCategoryCode;
 	// 지역코드
-	//private String sidoCode;
-	//private String sigunguCode;
+	// private String sidoCode;
+	// private String sigunguCode;
 	private String dongCode;
 	// 지번, 도로명 주소
 	private String lotNumAddress;
@@ -30,11 +30,11 @@ public class StoreDTO implements Serializable {
 	}
 
 	public String getStroreName() {
-		return stroreName;
+		return storeName;
 	}
 
 	public void setStroreName(String stroreName) {
-		this.stroreName = stroreName;
+		this.storeName = stroreName;
 	}
 
 	public String getBranchName() {
@@ -123,6 +123,14 @@ public class StoreDTO implements Serializable {
 
 	public void setLatitude(String latitude) {
 		this.latitude = latitude;
+	}
+
+	public String getStoreName() {
+		return storeName;
+	}
+
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
 	}
 
 }

@@ -1,7 +1,5 @@
 package service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,7 +17,6 @@ public class BoardDAO extends AbstractMybatis {
 
 	// 동마다 게시물 수 count
 	public int getBoardCount(String dong_code) throws Exception {
-
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		System.out.println(sqlSession);
 		System.out.println("getArticleCount의 동코드:" + dong_code);

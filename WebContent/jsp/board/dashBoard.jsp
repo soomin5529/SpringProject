@@ -5,8 +5,7 @@
 	<div class="title-box cf">
 		<div class="back-btn" onclick="closePopDashboard();">
 			<svg viewBox="0 0 40 40" class="back-icon">
-					<path d="M18 35L3 20 18 5" />
-				</svg>
+				<path d="M18 35L3 20 18 5" /></svg>
 		</div>
 		<div class="tit">
 
@@ -16,7 +15,7 @@
 			<c:forEach var="dong" items="${dong }">
 				 ${dong.name}
 			</c:forEach>
-			
+
 		</div>
 		<!-- bookmark on/off -->
 		<div class="bookmark off" id="bookmark" onclick="bookmark()">
@@ -48,36 +47,35 @@
 
 	<!-- 통계자료 묶음 -->
 	<div class="chart-box">
-			<div class="chart">
-				<div class="tit">대분류 업종 Top3</div>
-				<canvas id="chart01"></canvas>
-			</div>
-			<div class="chart">
-				<div class="tit">중분류 업종 Top5</div>
-				<canvas id="chart02"></canvas>
-			</div>
-			<div class="chart">
-				<div class="tit">주요 생활시설 개수</div>
-				<ul>
-					<li>
-						<svg viewBox="0 0 40 40" class="shop-icon float-l"><path d="M16.5 20.5h17v14h-17zM7 5.5h26l3.5 8.5v6.5h-33V14zm4.5 9.5v6m-5 0v15m22-21v6m-8-6v6"></path></svg>
-						<span>맘스터치</span>
-						<span class="float-r"><b>40</b>개</span>
-					</li>
-					<li>
-						<svg viewBox="0 0 40 40" class="shop-icon float-l"><path class="st0" d="M31.5,11.4c-1.8,0-3.5,0.9-4.5,2.2c-0.9-3-3.7-5.2-6.9-5.2s-6.1,2.2-6.9,5.2c-1.1-1.3-2.7-2.2-4.5-2.2c-3.2,0-5.7,2.6-5.7,5.7v16.4h10h1.5h11.5h1.5h10V17.2C37.2,14,34.6,11.4,31.5,11.4z"/><line class="st0" x1="13.1" y1="13.7" x2="13.1" y2="19.3"/><line class="st0" x1="26.9" y1="13.7" x2="26.9" y2="19.3"/></svg>
-						<span>파리바게트</span>
-						<span class="float-r"><b>40</b>개</span>
-					</li>
-					<li>
-						<svg viewBox="0 0 40 40" class="shop-icon float-l"><path d="M4 15h25v15a6 6 0 01-6 6H10a6 6 0 01-6-6V15zm25 0h2a6 6 0 110 12h-2V15zM14 3c0 2 1 3.5 3 4.4 2 1.1 3 2.6 3 4.6"></path></svg>
-						<span>스타벅스</span>
-						<span class="float-r"><b>40</b>개</span>
-					</li>
-				</ul>
-				
-			</div>
+		<div class="chart">
+			<div class="tit">대분류 업종 Top3</div>
+			<canvas id="chart01"></canvas>
 		</div>
+		<div class="chart">
+			<div class="tit">중분류 업종 Top5</div>
+			<canvas id="chart02"></canvas>
+		</div>
+		<div class="chart">
+			<div class="tit">주요 생활시설 개수</div>
+			<ul>
+				<li><svg viewBox="0 0 40 40" class="shop-icon float-l">
+						<path
+							d="M16.5 20.5h17v14h-17zM7 5.5h26l3.5 8.5v6.5h-33V14zm4.5 9.5v6m-5 0v15m22-21v6m-8-6v6"></path></svg>
+					<span>맘스터치</span> <span class="float-r"><b>40</b>개</span></li>
+				<li><svg viewBox="0 0 40 40" class="shop-icon float-l">
+						<path class="st0"
+							d="M31.5,11.4c-1.8,0-3.5,0.9-4.5,2.2c-0.9-3-3.7-5.2-6.9-5.2s-6.1,2.2-6.9,5.2c-1.1-1.3-2.7-2.2-4.5-2.2c-3.2,0-5.7,2.6-5.7,5.7v16.4h10h1.5h11.5h1.5h10V17.2C37.2,14,34.6,11.4,31.5,11.4z" />
+						<line class="st0" x1="13.1" y1="13.7" x2="13.1" y2="19.3" />
+						<line class="st0" x1="26.9" y1="13.7" x2="26.9" y2="19.3" /></svg> <span>파리바게트</span>
+					<span class="float-r"><b>40</b>개</span></li>
+				<li><svg viewBox="0 0 40 40" class="shop-icon float-l">
+						<path
+							d="M4 15h25v15a6 6 0 01-6 6H10a6 6 0 01-6-6V15zm25 0h2a6 6 0 110 12h-2V15zM14 3c0 2 1 3.5 3 4.4 2 1.1 3 2.6 3 4.6"></path></svg>
+					<span>스타벅스</span> <span class="float-r"><b>40</b>개</span></li>
+			</ul>
+
+		</div>
+	</div>
 	<!-- 떠들썩 커뮤니티 버튼 -->
 	<button type="button" class="btn-full btn01-reverse"
 		onclick="openPopCommunity()">떠들썩</button>

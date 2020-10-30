@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="area.SigunguDTO" alias="Sigungu" />
 		<typeAlias type="area.DongDTO" alias="Dong" />
 		<typeAlias type="area.AreaDTO" alias="Area" />
+		<typeAlias type="area.SelectedAreaDTO" alias="SelectedArea" />
 		<typeAlias type="industry.MainCategoryDTO"
 			alias="MainCategory" />
 		<typeAlias type="industry.MiddleCategoryDTO"
@@ -38,5 +39,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="mybatis/Area.xml" />
 		<mapper resource="mybatis/Industry.xml" />
 		<mapper resource="mybatis/Board.xml" />
+		<mapper resource="mybatis/Store.xml" />
 	</mappers>
 </configuration>

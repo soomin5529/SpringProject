@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import area.AreaDTO;
 import area.DongDTO;
+import area.SelectedAreaDTO;
 import area.SidoDTO;
 import area.SigunguDTO;
 import mybatis.AbstractMybatis;
@@ -58,7 +59,6 @@ public class AreaDAO extends AbstractMybatis {
 		} finally {
 			sqlSession.close();
 		}
-
 	}
 
 	public List<DongDTO> dong(String dongCode) {
@@ -71,7 +71,37 @@ public class AreaDAO extends AbstractMybatis {
 		} finally {
 			sqlSession.close();
 		}
+	}
 
+	public List<SelectedAreaDTO> selectedArea(String dongCode) {
+		Map<String, Object> dong_code = new HashMap<String, Object>();
+		dong_code.put("dong_code1", dongCode);
+		dong_code.put("dong_code2", dongCode);
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			return sqlSession.selectList(namespace + ".selectedArea", dong_code);
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	public List<AreaDTO> areaCoordinate(String areaCode) {
+		Map<String, Object> areaCodeMap = new HashMap<String, Object>();
+
+		String areaTable = areaCode.length() == 2 ? "SIDO" : areaCode.length() == 5 ? "SIGUNGU" : "DONG";
+		areaCodeMap.put("areaTable", areaTable);
+
+		String areaCodeName = areaCode.length() == 2 ? "SIDO_CODE"
+				: areaCode.length() == 5 ? "SIGUNGU_CODE" : "DONG_CODE";
+		areaCodeMap.put("areaCode", areaCodeName);
+
+		areaCodeMap.put("areaCode", areaCode);
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			return sqlSession.selectList(namespace + ".areaCoordinate", areaCodeMap);
+		} finally {
+			sqlSession.close();
+		}
 	}
 
 }
