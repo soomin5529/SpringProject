@@ -106,7 +106,7 @@ public class MainController {
 		Map<Integer, List<CommentDTO>> map = new HashMap<Integer, List<CommentDTO>>();
 		// 댓글 list
 		for (BoardDTO b : articles) {
-
+			
 			boardid = b.getBoardid();
 			System.out.println("boardid 값은?=====" + boardid);
 			System.out.println("===========================여기냐?");
