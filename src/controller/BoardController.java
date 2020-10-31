@@ -175,4 +175,6 @@ public class BoardController {
 		m.addAttribute("delete_ok", delete_ok);
 		return "board/deletePro";
 	}
+	
+	
 }

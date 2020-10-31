@@ -26,5 +26,9 @@
 	<select  id="nameMember" parameterType="hashmap"
 		resultType="String">select name from Member where userid = #{userid} </select>
 		
-
+	<delete id="deletemember" parameterType="hashmap">
+		DELETE FROM member WHERE userid = #{userid} and pwd = #{pwd}
+	</delete>
+	
+	
 </mapper>

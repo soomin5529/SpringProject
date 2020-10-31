@@ -33,4 +33,6 @@ public class StoreDAO extends AbstractMybatis {
 			sqlSession.close();
 		}
 	}
+	
+	
 }
