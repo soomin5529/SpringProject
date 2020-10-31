@@ -51,7 +51,8 @@ function sendToControllerSelectCategoryValue(select){
 				},
 				success : function(textStatus) {
 					var gu_name = textStatus;
-					 $('#result').empty().append(textStatus);
+					 //$('#result').empty().append(textStatus);
+					  document.getElementById("sigunguName").innerHTML = gu_name;
 				}
 			});
    }
@@ -74,10 +75,35 @@ function sendToControllerSelectCategoryValue(select){
 			},
 			success : function(textStatus) {
 				var dong_name = textStatus;
-				$('#result').append(textStatus);
+				//$('#result').append(textStatus);
+				document.getElementById("dongName").innerHTML = dong_name;
 			}
 		});
 	}
+   
+function sendLike(board){ 
+	var boardid = board.parentNode.parentNode.id;
+	var status = "insert";
+	var postLikeBtn = document.getElementById(boardid);
+	var userid = document.getElementById("userid").value; 
+	if (postLikeBtn.classList.contains('on')) {
+   		status = "delete";}
+   
+   	$.ajax({
+		type : "post",
+		url : "<%=request.getContextPath()%>/request/insertLike",
+		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+		data : {
+			'userid' : userid,
+			'boardid': boardid,
+			'status'  : status
+		},
+		success : function(textStatus) {
+			postLike(boardid+"u");
+		}
+	});	
+} 
+	   	
 </script>
 <div class="page main" id="page">
 	<!-- map -->

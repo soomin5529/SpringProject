@@ -24,6 +24,7 @@ import area.DongDTO;
 import area.SigunguDTO;
 import industry.IndustryDTO;
 import service.AreaDAO;
+import service.BoardLikeDAO;
 import service.IndustryDAO;
 import service.MemberDAO;
 import service.StoreDAO;
@@ -41,7 +42,9 @@ public class AjaxController {
 	MemberDAO memberDB;
 	@Autowired
 	StoreDAO storeDB;
-	
+	@Autowired
+	BoardLikeDAO boardlikeDB;
+
 	// produces -> encoding문제 해결/안해주면 한글깨짐
 	@RequestMapping(value = "/areaOption", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
