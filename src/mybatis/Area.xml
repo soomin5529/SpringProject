@@ -13,8 +13,10 @@
 
 	<select id="sigunguList" resultType="Area"
 		parameterType="hashmap">
-		select sigungu_code as code, sigungu_name as name, latitude, longitude from sigungu
-		where sido_code = #{sido_code} order by sigungu_name
+		select sigungu_code as code, sigungu_name as name,
+		latitude, longitude from sigungu
+		where sido_code = #{sido_code} order
+		by sigungu_name
 	</select>
 
 	<select id="dongList" resultType="Area" parameterType="hashmap">
@@ -60,8 +62,22 @@
 		${areaCodeName} = #{areaCode}
 	</select>
 
-	<select id="allStore" resultType="Area" parameterType="hashMap">
-		SELECT *
-		FROM STORE
+	<select id="sigunguListInMapBound" resultType="Area"
+		parameterType="hashmap">
+		SELECT
+		sigungu_code as code, sigungu_name as name,
+		latitude, longitude
+		FROM SIGUNGU WHERE TO_NUMBER(LATITUDE) BETWEEN
+		${lat1} and ${lat2}
+		AND TO_NUMBER(LONGITUDE) BETWEEN ${lng1} and
+		${lng2}
+	</select>
+
+	<select id="dongListInMapBound" resultType="Area"
+		parameterType="hashmap">
+		SELECT
+		dong_code as code, dong_name as name, latitude,longitude
+		FROM DONG WHERE TO_NUMBER(LATITUDE) BETWEEN ${lat1} and ${lat2}
+		AND TO_NUMBER(LONGITUDE) BETWEEN ${lng1} and ${lng2}
 	</select>
 </mapper>

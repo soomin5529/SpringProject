@@ -13,6 +13,7 @@ import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -175,21 +176,31 @@ public class AjaxController {
 		}
 		return path;
 	}
-
-	@RequestMapping(value = "/extractStoreFromDong", method = RequestMethod.POST, produces = "application/text; charset=utf8")
-	@ResponseBody
-	public String extractStoreFromDong(@RequestParam("code") String requestDongCode,
-			@RequestParam("dong") String requestDongName, Model model) {
-		List<StoreDTO> stores = storeDB.storeList(requestDongCode);
-		return "";
-	}
-
+	
+	// 화면에 보여지는 지도의 상점들 출력
 	@RequestMapping(value = "/currentPageStore", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public List<StoreDTO> currentPageStore(@RequestBody Map<String, Object> params, HttpServletResponse response)
 			throws IOException {
 		List<StoreDTO> stores = storeDB.allStoreList(params);
-		System.out.println(stores.size() + "--------> 검색된 상점수");
+		System.out.println(stores.size() + "--------> 검색된 시군구수");
 		return stores;
+	}
+	
+	// 화면에 보여지는 지도의 행정구역(시군구, 읍면동) 출력
+	@RequestMapping(value = "/currentPageDistrict/{type}", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public List<AreaDTO> currentPageDistrict(@RequestBody Map<String, Object> params, @PathVariable("type") String type, HttpServletResponse response)
+			throws IOException {
+		System.out.println(type + "------>행정구역은?");
+		List<AreaDTO> districts = null;
+		if(type.contains("sigungu")) {
+			districts = areaDB.sigunguListInMapBound(params);
+			System.out.println(districts.size() + "--------> 검색된 시군구 수");
+		}else {
+			districts = areaDB.dongListInMapBound(params);
+			System.out.println(districts.size() + "--------> 검색된 동 수");
+		}
+		return districts;
 	}
 }

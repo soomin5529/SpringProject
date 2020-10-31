@@ -13,6 +13,7 @@ import area.SelectedAreaDTO;
 import area.SidoDTO;
 import area.SigunguDTO;
 import mybatis.AbstractMybatis;
+import store.StoreDTO;
 
 @Service
 public class AreaDAO extends AbstractMybatis {
@@ -99,6 +100,23 @@ public class AreaDAO extends AbstractMybatis {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
 			return sqlSession.selectList(namespace + ".areaCoordinate", areaCodeMap);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	public List<AreaDTO> sigunguListInMapBound(Map<String, Object> lanlng) {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			return sqlSession.selectList(namespace + ".sigunguListInMapBound", lanlng);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	public List<AreaDTO> dongListInMapBound(Map<String, Object> lanlng) {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			return sqlSession.selectList(namespace + ".dongListInMapBound", lanlng);
 		} finally {
 			sqlSession.close();
 		}

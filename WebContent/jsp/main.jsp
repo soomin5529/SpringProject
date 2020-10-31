@@ -5,7 +5,7 @@
 	src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1daef4c0ea"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script>
-var sigungu = new Array();
+/* var sigungu = new Array();
 <c:forEach var="sigungu" items="${sigunguList}">
 	sigungu.push(
 			{code:"${sigungu.code}",
@@ -13,7 +13,7 @@ var sigungu = new Array();
 			lat: "${sigungu.latitude}",
 			lng: "${sigungu.longitude}"}
 	)
-</c:forEach>
+</c:forEach> */
 
 // main화면에서 업종분류 선택시, 다음 하위 옵션의 카테고리 동적으로 받아옴
 function sendToControllerSelectCategoryValue(select){

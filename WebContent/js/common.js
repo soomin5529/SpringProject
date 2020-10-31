@@ -14,7 +14,7 @@ window.onload = function() {
 	if (url[url.length - 1] == "startupWeather") {
 		menu03.className += "on";
 	}
-	pinSigungu(sigungu);
+	//pinSigungu(sigungu);
 }
 
 /* jQuery onload */
