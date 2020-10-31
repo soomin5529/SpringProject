@@ -226,5 +226,5 @@ function drawPolygonDong(coordinates) {
 
 // 동 polygon 선택하면 dashboard 오픈
 naver.maps.Event.addListener(polygon, 'click', function() {
-	openPopDashboard();
+	sendChart();
 });

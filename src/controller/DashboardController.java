@@ -1,21 +1,15 @@
 package controller;
 
-import java.util.HashMap;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.ModelAndView;
 
-import board.BoardDTO;
 import dashboard.IndustryCountDTO;
 import service.DashboardDAO;
 
@@ -23,17 +17,17 @@ import service.DashboardDAO;
 @RequestMapping("/dashboard/")
 public class DashboardController {
 	String dong_code;
-	
+
 	@Autowired
 	DashboardDAO dashboardDB;
-	
-	/*대분류 업종 top3*/
-	@RequestMapping("mainCategoryTop3")
+
+	/* 대분류 업종 top3, 중분류 업종 top5, 주요시설 수 */
+	@RequestMapping(value = "chart", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
-	public List<IndustryCountDTO> mainCategoryTop3(MultipartHttpServletRequest multipart) throws Throwable {
-		dong_code = multipart.getParameter("dongCode");
-		List<IndustryCountDTO> MainCount = dashboardDB.getMainCategoryCount(dong_code);
-		
-		return MainCount;
+	public List<IndustryCountDTO> chart(@RequestBody Map<String, String> dong_code) throws Throwable {
+		List<IndustryCountDTO> result = dashboardDB.getMainCategoryCount(dong_code);
+		result.addAll(dashboardDB.getMiddleCategoryCount(dong_code));
+		result.addAll(dashboardDB.getFacilityCount(dong_code));
+		return result;
 	}
 }

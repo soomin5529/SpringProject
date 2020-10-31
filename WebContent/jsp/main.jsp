@@ -18,7 +18,6 @@ function findAreaToJson(select){
 		},
 		success : function(textStatus) {
 			drawPolygonDong(textStatus);
-			openPopDashboard();
 		}
 	});
 }
@@ -123,7 +122,7 @@ function sendToControllerSelectCategoryValue(select){
 					</c:forEach>
 				</select> <select id="sigungu" name="city" onchange="javascript:sendToControllerSelectValue(this); selectCity();  sendToControlerguCode(this)">
 					<option value="no" disabled selected>선택</option>
-				</select> <select id="dong" name="street" onchange="javascript:sendToControlerdongCode(this); findAreaToJson(this);">
+				</select> <select id="dong" name="street" onchange="javascript:sendToControlerdongCode(this); findAreaToJson(this); sendChart();">
 					<option value="no" disabled selected>선택</option>
 				</select>
 			</div>
@@ -146,5 +145,4 @@ function sendToControllerSelectCategoryValue(select){
 
 </div>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/map2.js"></script>
-<%-- <script type="text/javascript" src="<%=request.getContextPath()%>/js/chart.js"></script> --%>
 <!-- end of main -->

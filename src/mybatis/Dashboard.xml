@@ -5,29 +5,29 @@
 <!-- 연결을 namespace로 한다.(대소문자 구분함) -->
 <mapper namespace="Dashboard">
 	<!-- 대분류 업종 top3 -->
-	<select id="getMainCategoryCount" parameterType="String" resultType="IndustryCount">
-		select * from (select nvl(count(area.store_num),0) as count, cm.MAINCATEGORY_NAME as name
-		from seoul area, category_main cm
-		where (dong_code = #{dong_code} and area.maincategory_code = cm.maincategory_code)
+	<select id="getMainCategoryCount" parameterType="hashmap" resultType="IndustryCount">
+		select * from (select nvl(count(store.store_num),0) as industryCount, cm.MAINCATEGORY_NAME as industryName
+		from store, category_main cm
+		where (dong_code = #{dong_code} and store.maincategory_code = cm.maincategory_code)
 		group by cm.MAINCATEGORY_NAME 
 		order by 1 desc) <![CDATA[where rownum <= 3]]>
 	</select>
 	
 	<!-- 중분류 업종  top5-->
-	<select id="getMiddleCategoryCount" parameterType="String" resultType="IndustryCount">
-		select * from (select nvl(count(area.middlecategory_code),0) as count, cm.middlecategory_name as name
-		from seoul area, category_middle cm
-		where (dong_code = #{dong_code} and area.middlecategory_code = cm.middlecategory_code)
+	<select id="getMiddleCategoryCount" parameterType="hashmap" resultType="IndustryCount">
+		select * from (select nvl(count(store.middlecategory_code),0) as industryCount, cm.middlecategory_name as industryName
+		from store, category_middle cm
+		where (dong_code = #{dong_code} and store.middlecategory_code = cm.middlecategory_code)
 		group by cm.middlecategory_name 
 		order by 1 desc) where <![CDATA[rownum <=5]]>
 	</select>
 	
 	<!-- 주요시설 -->
-	<select id="getFacilityCount" parameterType="String" resultType="IndustryCount">
-		select count(*) count, '스타벅스' facility from seoul where store_name like '%스타벅스%' and dong_code = #{dong_code}
-		union all
-		select count(*), '파리바게트' from seoul where store_name like '%파리바게트%' and dong_code = #{dong_code}
-		union all
-		select count(*), '맘스터치' from seoul where store_name like '%맘스터치%' and dong_code = #{dong_code};
+	<select id="getFacilityCount" parameterType="hashmap" resultType="IndustryCount">
+		select nvl(count(*),0) as industryCount, '스타벅스' as industryName from store where store_name like '%스타벅스%' and dong_code = #{dong_code}
+		union
+		select nvl(count(*),0) as industryCount, '파리바게트' as industryName from store where store_name like '%리바게%' and dong_code = #{dong_code}
+		union
+		select nvl(count(*),0) as industryCount, '맘스터치' as industryName from store where store_name like '%맘스터치%' and dong_code = #{dong_code}
 	</select>
 </mapper>

@@ -44,6 +44,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="mybatis/Board.xml" />
 		<mapper resource="mybatis/Comment.xml" />
 		<mapper resource="mybatis/BoardLike.xml" />
-		<mapper resource="mybatis/Dashaboard.xml" />
+		<mapper resource="mybatis/Dashboard.xml" />
 	</mappers>
 </configuration>
