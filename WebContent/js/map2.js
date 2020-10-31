@@ -66,9 +66,9 @@ var storeMarkers = [];
 naver.maps.Event.addListener(map, 'mousewheel dragend', function(e) {
 	console.log(storeMarkers.length);
 	
-	deleteStroeMarkers();
+	deleteStoreMarkers();
 
-	if (map.getZoom() > 16) {
+	if (map.getZoom() >= 18) {
 		var bound = mapBound();
 		var bounts = {
 			'lng2' : bound.getNE().x,
@@ -78,9 +78,17 @@ naver.maps.Event.addListener(map, 'mousewheel dragend', function(e) {
 		}
 		findStoreInMapBound(bounts);
 	} else {
-		deleteStroeMarkers();
+		deleteStoreMarkers();
 	}
 });
+
+function deleteStoreMarkers(){
+	// 모든 마커 지우기
+	for(var i in storeMarkers){
+		storeMarkers[i].setMap(null);
+	}
+	storeMarkers = [];
+}
 
 function deleteStroeMarkers(){
 	// 모든 마커 지우기
@@ -147,4 +155,13 @@ function choiceArea(area){
 	lng = area.longitude;
 	var selected_city = new naver.maps.LatLng(lat, lng); 
 	map.setCenter(selected_city);
+	if(areaCode.length <= 5){
+		map.setOptions({
+			zoom : 14
+		})
+	}else{
+		map.setOptions({
+			zoom : 16
+		})
+	}
 }
