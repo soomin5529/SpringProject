@@ -94,7 +94,7 @@ function sendToControllerSelectCategoryValue(select){
 	   code = code.options[code.selectedIndex].value;
 	   $.ajax({
 	        type: "post", 
-	        url: "<%=request.getContextPath()%>/request/selectCode",
+	        url: "<%=request.getContextPath()%>/rest/selectCode",
 			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 			data : {
 				'area' : area,
