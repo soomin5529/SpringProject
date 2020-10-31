@@ -28,6 +28,6 @@
 		union
 		select nvl(count(*),0) as industryCount, '파리바게트' as industryName from store where store_name like '%리바게%' and dong_code = #{dong_code}
 		union
-		select nvl(count(*),0) as industryCount, '맘스터치' as industryName from store where store_name like '%맘스터치%' and dong_code = #{dong_code}
+		select nvl(count(*),0) as industryCount, '올리브영' as industryName from store where store_name like '%올리브영%' and dong_code = #{dong_code}
 	</select>
 </mapper>

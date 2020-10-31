@@ -63,7 +63,7 @@ var myArea = document.getElementById("myArea");
 var myCommunity = document.getElementById("myCommunity");
 
 /* dashboard */
-function openPopDashboard() {
+function openPopDashboard(data) {
 	dashboard.style.display = "block";
 	if (community.style.display == "block") {
 		community.style.left = "350px";
@@ -74,7 +74,6 @@ function openPopDashboard() {
 function sendChart(){
 	var dongcode = document.getElementById("dong");
 	var code = { "dong_code" : dongcode.value };
-	console.log(dongcode);
 	$.ajax({
 		type : "post",
 		url : "/SpringTeamProject/dashboard/chart",

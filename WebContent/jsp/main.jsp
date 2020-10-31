@@ -148,5 +148,4 @@ function sendLike(board){
 
 </div>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/map2.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/chart.js"></script>
 <!-- end of main -->
