@@ -31,4 +31,23 @@
 	</delete>
 	
 	
+
+
+	<update id="upadatemember" parameterType="hashmap">
+		UPDATE MEMBER
+		SET name = #{name}, email = #{email}, birthdate = #{birthdate}
+		WHERE userid =
+		#{userid}
+	</update>
+
+	<update id="updatepassword" parameterType="hashmap">
+		UPDATE MEMBER
+		SET pwd = #{pwd}
+		WHERE userid = #{userid}
+	</update>
+
+
+
+	<!-- <select id="userInfo" resultType="hashmap"> SELECT userid, pwd, name,email,birthdate,gender 
+		FROM MEMBER WHERE userid = #{userid} </select> -->
 </mapper>
