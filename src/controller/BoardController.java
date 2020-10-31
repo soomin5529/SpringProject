@@ -153,7 +153,8 @@ public class BoardController {
 		return "redirect:/view/main";
 		// jsp로 보내지 않고 바로 view 로
 	}
-
+	
+	
 	@RequestMapping("boardList")
 	public ModelAndView list() throws Exception {
 		int count = 0;

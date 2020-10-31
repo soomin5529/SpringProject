@@ -25,5 +25,6 @@
 
 	<select  id="nameMember" parameterType="hashmap"
 		resultType="String">select name from Member where userid = #{userid} </select>
+		
 
 </mapper>

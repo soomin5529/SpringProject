@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1daef4c0ea"></script>
+<script type="text/javascript"
+	src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1daef4c0ea"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script>
 function findAreaToJson(select){
@@ -81,9 +82,10 @@ function sendToControllerSelectCategoryValue(select){
 				},
 				success : function(textStatus) {
 					var gu_name = textStatus;
-					 $('#result').empty().append(textStatus);
+				 document.getElementById("sigunguName").innerHTML = gu_name;
 				}
 			});
+	   
    }
    
    function sendToControlerdongCode(select) {
@@ -100,10 +102,35 @@ function sendToControllerSelectCategoryValue(select){
 			},
 			success : function(textStatus) {
 				var dong_name = textStatus;
-				$('#result').append(textStatus);
+				document.getElementById("dongName").innerHTML = dong_name;
 			}
 		});
+	 
 	}
+   
+function sendLike(board){ 
+	var boardid = board.parentNode.parentNode.id;
+	var status = "insert";
+	var postLikeBtn = document.getElementById(boardid);
+	var userid = document.getElementById("userid").value; 
+	if (postLikeBtn.classList.contains('on')) {
+   		status = "delete";}
+   
+   	$.ajax({
+		type : "post",
+		url : "<%=request.getContextPath()%>/request/insertLike",
+		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+		data : {
+			'userid' : userid,
+			'boardid': boardid,
+			'status'  : status
+		},
+		success : function(textStatus) {
+			postLike(boardid+"u");
+		}
+	});	
+} 
+	   	
 </script>
 <div class="page main" id="page">
 	<!-- map -->
@@ -121,9 +148,11 @@ function sendToControllerSelectCategoryValue(select){
 					<c:forEach var="sido" items="${sido }">
 						<option value="${sido.code}">${sido.name}</option>
 					</c:forEach>
-				</select> <select id="sigungu" name="city" onchange="javascript:sendToControllerSelectValue(this); selectCity();  sendToControlerguCode(this)">
+				</select> <select id="sigungu" name="city"
+					onchange="javascript:sendToControllerSelectValue(this); selectCity();  sendToControlerguCode(this)">
 					<option value="no" disabled selected>선택</option>
-				</select> <select id="dong" name="street" onchange="javascript:sendToControlerdongCode(this); findAreaToJson(this);">
+				</select> <select id="dong" name="street"
+					onchange="javascript:sendToControlerdongCode(this); findAreaToJson(this); ">
 					<option value="no" disabled selected>선택</option>
 				</select>
 			</div>
@@ -145,6 +174,8 @@ function sendToControllerSelectCategoryValue(select){
 	<jsp:include page="board/boardWriteForm.jsp" flush="false" />
 
 </div>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/map2.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/chart.js"></script>
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/js/map2.js"></script>
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/js/chart.js"></script>
 <!-- end of main -->

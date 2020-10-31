@@ -16,4 +16,10 @@
 		select nvl(count(*),0) from BOARD_LIKE where boardid = #{boardid}
 	</select>
 	
+	
+	 <delete id="deleteBoardLike" parameterType="hashmap">
+		delete from
+		BOARD_LIKE 
+		where userid = #{userid} and boardid = #{boardid}
+	</delete>
 </mapper>

@@ -33,12 +33,29 @@ public class BoardLikeDAO extends AbstractMybatis {
 			String statement = namespace + ".insertBoardLike";
 			BoardLikeDTO article = new BoardLikeDTO();
 
-			article.setBoardid(boardid);
-			article.setUserid(userid);
+			map.put("userid", userid);
+			map.put("boardid", boardid);
+			System.out.println("insertBoardLike article??===" + map);
 
-			System.out.println("insertBoardLike article??===" + article);
+			return sqlSession.insert(statement, map);
+		} finally {
+			sqlSession.commit();
+			sqlSession.close();
+		}
 
-			return sqlSession.insert(statement, article);
+	}
+	
+	public int deleteBoardLike(int boardid, String userid) throws Exception {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			map.clear();
+			String statement = namespace + ".deleteBoardLike";
+
+			map.put("boardid", boardid);
+			map.put("userid", userid);
+
+			System.out.println("deleteBoardLike article??===" + map);
+			return sqlSession.delete(statement, map);
 		} finally {
 			sqlSession.commit();
 			sqlSession.close();

@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-			<%
-				String display = request.getParameter("display");
-			%>
+			<%		String display = request.getParameter("display");%>
 			
 <div class="map-popup dashboard" id="dashboard" style="display:none; display:<%=display %>">
 	<div class="title-box cf">
@@ -13,16 +11,13 @@
 				</svg>
 		</div>
 		<div class="tit">
-
-			
-
-			<c:forEach var="sigungu" items="${sigungu}">
+			<!--<c:forEach var="sigungu" items="${sigungu}">
 			  ${sigungu.name}
 			</c:forEach>
 			<c:forEach var="dong" items="${dong }">
 				 ${dong.name}
-			</c:forEach>
-
+			</c:forEach>-->
+			<span id="sigunguName" ></span>&nbsp;<span id="dongName" ></span>
 		</div>
 		<!-- bookmark on/off -->
 		<div class="bookmark off" id="bookmark" onclick="bookmark()">
