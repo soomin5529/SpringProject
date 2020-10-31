@@ -21,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import area.DongDTO;
 import area.SigunguDTO;
 import board.BoardDTO;
 import comment.CommentDTO;
@@ -53,13 +52,12 @@ public class BoardController {
 
 	@Autowired
 	IndustryDAO industryDB;
-	
+
 	@Autowired
 	CommentDAO commentDB;
 
 	@ModelAttribute
 	public void headProcess(HttpServletRequest request, HttpServletResponse res) {
-
 		try {
 			request.setCharacterEncoding("utf-8");
 		} catch (UnsupportedEncodingException e) {
@@ -67,89 +65,65 @@ public class BoardController {
 		}
 		HttpSession session = request.getSession();
 		remoteId = request.getRemoteAddr();
-
-		/*
-		 * if (request.getParameter("dong_code") != null) {
-		 * session.setAttribute("dong_code", request.getParameter("dong_code")); }
-		 */
-		if (request.getParameter("boardid") != null) {
-			session.setAttribute("boardid", request.getParameter("boardid"));
-		}
 		if (request.getParameter("userid") != null) {
 			session.setAttribute("userid", request.getParameter("userid"));
 		}
-
-		
 		userid = (String) session.getAttribute("userid");
-
 	}
 
 	@RequestMapping("boardwriteForm")
 	public String writeUploadForm(BoardDTO article, Model m) throws Exception {
 		m.addAttribute("userid", userid);
-	//	m.addAttribute("dong_code", dong_code);
-		
-
 		return "board/writeUploadForm";
 	}
 
 	@RequestMapping("writeUploadPro")
 	public String writeUploadPro(MultipartHttpServletRequest multipart, BoardDTO article, Model m) throws Exception {
-		
-		//Date today = new Date();
-		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
-	   // String regDate = sdf.format(today);
-	    String today = null;; 
-	    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd"); 
-	    today=sdf.format(new java.util.Date());
-	    
+		String today = null;
+		;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		today = sdf.format(new java.util.Date());
+
 		MultipartFile multi = multipart.getFile("uploadfile");
 		String filename = multi.getOriginalFilename();
 		dong_code = multipart.getParameter("dongCode");
-		System.out.println("동코드가 나오니???---------------" + dong_code);
 
 		if (filename != null && !filename.equals("")) {
 			String uploadpath = multipart.getRealPath("/") + "/uploadFile";
 			FileCopyUtils.copy(multi.getInputStream(),
 					new FileOutputStream(uploadpath + "/" + multi.getOriginalFilename()));
 			article.setFilename(filename);
-			// article.setFilesize((int) multi.getSize());
 		} else {
 			article.setFilename("");
-			// article.setFilesize(0);
 		}
-		// article.setIp(remoteId);
-		// article.setBoardid(boardid);
 		article.setDong_code(dong_code);
 		article.setRegDate(today);
-
-	     boardDB.insertArticle(article);
-	     
-	    m.addAttribute("display","block");
+		boardDB.insertArticle(article);
+		m.addAttribute("display", "block");
 		return "redirect:/view/main";
 		// jsp로 보내지 않고 바로 view 로
 	}
-	
+
 	@RequestMapping("commentUploadPro")
-	public String commentUploadPro(Model m ,CommentDTO article, HttpServletRequest request) throws Exception {
-		
+	public String commentUploadPro(Model m, CommentDTO article, HttpServletRequest request) throws Exception {
+
 		Date today = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
-	    String regDate = sdf.format(today);
-		
-        String userid= request.getParameter("userid");
-        String name = request.getParameter("name");
-        int boardid = Integer.parseInt(request.getParameter("boardid"));
-        String content = request.getParameter("content");
-        article.setBoardid(boardid);
-        article.setContent(content);
-        article.setName(name);
-        article.setUserid(userid);
-        article.setRegDate(regDate);
+		String regDate = sdf.format(today);
+
+		String userid = request.getParameter("userid");
+		String name = request.getParameter("name");
+		int boardid = Integer.parseInt(request.getParameter("boardid"));
+		String content = request.getParameter("content");
+		article.setBoardid(boardid);
+		article.setContent(content);
+		article.setName(name);
+		article.setUserid(userid);
+		article.setRegDate(regDate);
 		System.out.println("comment article------" + article);
-	    commentDB.insertComment(article);
-	    
-	    m.addAttribute("display","block");
+		commentDB.insertComment(article);
+
+		m.addAttribute("display", "block");
 		return "redirect:/view/main";
 		// jsp로 보내지 않고 바로 view 로
 	}
@@ -184,22 +158,16 @@ public class BoardController {
 
 		return "board/dashBoard";
 	}
-	
+
 	@RequestMapping("dashBoardPro")
 	public String dashBoardPro(HttpServletRequest request, Model m) throws Exception {
 		List<MainCategoryDTO> MainList = industryDB.category_mainList();
 		m.addAttribute("main", MainList);
-		System.out.println("메인리스트 나와요" + MainList);
-
 		List<SigunguDTO> sigunguList = areaDB.sigungu(dong_code);
-		// List<DongDTO> dongList = areaDB.dong(dong_code);
 		m.addAttribute("sigungu", sigunguList);
-		System.out.println("시군구 나와요" + sigunguList);
 
 		return "board/dashBoard";
 	}
-	
-	
 
 	@RequestMapping("deletePro")
 	public String deletePro(String userid, String dong_code, String boardid, Model m) throws Exception {
@@ -207,15 +175,4 @@ public class BoardController {
 		m.addAttribute("delete_ok", delete_ok);
 		return "board/deletePro";
 	}
-
-	/*
-	 * @RequestMapping("content/{num}") public String content(@PathVariable("num")
-	 * int num, Model m) throws Exception { BoardDTO article =
-	 * boardDB.getArticle(num, boardid, true);
-	 * 
-	 * m.addAttribute("article", article);
-	 * 
-	 * return "board/content"; }
-	 */
-
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import area.SidoDTO;
 import area.SigunguDTO;
+import mybatis.AbstractMybatis;
 import board.BoardDTO;
 import comment.CommentDTO;
 

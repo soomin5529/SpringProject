@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,47 +71,45 @@ public class MemberController {
 		session.invalidate();
 		return "okmain";
 	}
-	
+
 	// 회원 탈퇴
-	   @RequestMapping(value = "/deletemember", method = RequestMethod.POST, produces = "application/text; charset=utf8")
-	   public String deletemember(HttpServletRequest request, HttpServletResponse response) throws Throwable {
-	      HttpSession session = request.getSession();
-	      String userid = (String) session.getAttribute("userid");
-	      String pwd = request.getParameter("pwd");
-	      boolean result = memberDB.loginMember(userid, pwd);
-	      String message = null;
+	@RequestMapping(value = "/deletemember", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	public String deletemember(HttpServletRequest request, HttpServletResponse response) throws Throwable {
+		HttpSession session = request.getSession();
+		String userid = (String) session.getAttribute("userid");
+		String pwd = request.getParameter("pwd");
+		boolean result = memberDB.loginMember(userid, pwd);
+		String message = null;
 
-	      if (result) { // 성공시
-	         memberDB.deleteMember(userid, pwd);
-	         session.invalidate();
-	         message = "ok";
-	      } else { // 실패시
-	         message = "fail";
-	      }
-	      return "okmain";
+		if (result) { // 성공시
+			memberDB.deleteMember(userid, pwd);
+			session.invalidate();
+			message = "ok";
+		} else { // 실패시
+			message = "fail";
+		}
+		return "okmain";
 
-	   }
+	}
 
-	   @RequestMapping(value = "/updatepassword", method = RequestMethod.POST, produces = "application/text; charset=utf8")
-	   @ResponseBody
-	   public String updatepassword(HttpServletRequest request, HttpServletResponse response) throws Throwable {
-	      HttpSession session = request.getSession();
-	      String userid = (String) session.getAttribute("userid");
-	      String oldpwd = request.getParameter("oldpwd");
-	      String pwd = request.getParameter("pwd");
-	      System.out.println("====================="+ oldpwd);
-	      System.out.println("=========================비번"+pwd);
-	      String message = null;
-	      
+	@RequestMapping(value = "/updatepassword", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String updatepassword(HttpServletRequest request, HttpServletResponse response) throws Throwable {
+		HttpSession session = request.getSession();
+		String userid = (String) session.getAttribute("userid");
+		String oldpwd = request.getParameter("oldpwd");
+		String pwd = request.getParameter("pwd");
+		System.out.println("=====================" + oldpwd);
+		System.out.println("=========================비번" + pwd);
+		String message = null;
 
-	      int result=0;
-	      if (result == 1) { // 성공시
-	         memberDB.updatePassword(pwd);
-	         message = "수정완료";
-	      } else { // 실패시
-	         message = "실패";
-	      }
-	      return message;
-	   }
-
+		int result = 0;
+		if (result == 1) { // 성공시
+			memberDB.updatePassword(pwd);
+			message = "수정완료";
+		} else { // 실패시
+			message = "실패";
+		}
+		return message;
+	}
 }
