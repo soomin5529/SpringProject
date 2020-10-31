@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1daef4c0ea"></script>
+<script type="text/javascript"
+	src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1daef4c0ea"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script>
 var sigungu = new Array();
@@ -13,46 +14,6 @@ var sigungu = new Array();
 			lng: "${sigungu.longitude}"}
 	)
 </c:forEach>
-
-function findAreaToJson(select){
-	var id = select.getAttribute('id');
-	var text = $("#"+id + " option:checked").text();
-	var paths;
-	$.ajax({
-		type : "post",
-		url : "<%=request.getContextPath()%>/request/findAreaToJson",
-		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-		data : {
-			'dong' : text,
-			'code' : select.value
-		},
-		success : function(textStatus) {
-			drawPolygonDong(textStatus);
-			openPopDashboard();
-		}
-	});
-}
-/* main화면에서 지역선택 시, 동적으로 다음 옵션 받아옴 */
-function sendToControllerSelectValue(select){
-	var area = select.getAttribute('id') == 'sido' ? 'sido' : 'sigungu';
-	
-	$.ajax({
-        type: "post", 
-        url: "<%=request.getContextPath()%>/request/areaOption",
-			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-			data : {
-				'area' : area,
-				'code' : select.value
-			},
-			success : function(textStatus) {
-				if(area == 'sido'){
-					$("#sigungu").empty().append(textStatus);	
-				}else{
-					$("#dong").empty().append(textStatus);
-				}
-			}
-		});
-	}
 
 // main화면에서 업종분류 선택시, 다음 하위 옵션의 카테고리 동적으로 받아옴
 function sendToControllerSelectCategoryValue(select){
@@ -94,14 +55,7 @@ function sendToControllerSelectCategoryValue(select){
 				}
 			});
    }
-   
-   function sendToControllerdongCode(select) {
-	   var area = select.getAttribute('id') == 'sigungu' ? 'sigungu' : 'dong';
-	   var code =  document.getElementById("dong");
-	   code = code.options[code.selectedIndex].value;
-	   $.ajax({
-	        type: "post", 
-	        url: "<%=request.getContextPath()%>/request/selectCode",
+
     function sendToControlerdongCode(select) {
 		var area = select.getAttribute('id') == 'sigungu' ? 'sigungu' : 'dong';
 		var gucode = document.getElementById("sigungu");
@@ -136,16 +90,16 @@ function sendToControllerSelectCategoryValue(select){
 			<div class="input-box">
 				<!-- <div class="label-box">구역 선택</div> -->
 				<select id="sido" name="state"
-					onchange="javascript:sendToControllerSelectValue(this);">
+					onchange="javascript:choiceAdministrativeDistrict(this);">
 					<option value="no" disabled selected>선택</option>
 					<c:forEach var="sido" items="${sido }">
 						<option value="${sido.code}">${sido.name}</option>
 					</c:forEach>
 				</select> <select id="sigungu" name="city"
-					onchange="javascript:sendToControllerSelectValue(this); sendToControllerguCode(this); selectCity()">
+					onchange="javascript:choiceAdministrativeDistrict(this); sendToControllerguCode(this);">
 					<option value="no" disabled selected>선택</option>
 				</select> <select id="dong" name="street"
-					onchange="javascript:sendToControlerdongCode(this); findAreaToJson(this); selectStreet();">
+					onchange="javascript:sendToControlerdongCode(this); choiceAdministrativeDistrict(this); findAreaToJson(this);">
 					<option value="no" disabled selected>선택</option>
 				</select>
 			</div>

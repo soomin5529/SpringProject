@@ -68,11 +68,13 @@ public class MainController {
 	}
 
 	// main화면 실행 시 시도 selectBox에 값 생성
+	@SuppressWarnings("finally")
 	@RequestMapping("main")
 	public String main(Model model) throws Exception {
+		// 처음 시도 목록을 받아 지역 시도선택에 뿌려준다.
 		List<SidoDTO> sidoList = areaDB.sidoList();
 		model.addAttribute("sido", sidoList);
-
+		// 
 		List<AreaDTO> sigunguList = areaDB.sigunguList("11");
 		model.addAttribute("sigunguList", sigunguList);
 		System.out.println(sigunguList + "------------> 시군구 리스트");
@@ -111,37 +113,40 @@ public class MainController {
 		Map<Integer, List<CommentDTO>> map = new HashMap<Integer, List<CommentDTO>>();
 		Map<Integer, Integer> boardLike = new HashMap<Integer, Integer>();
 		Map<Integer, String> regDatemap = new HashMap<Integer, String>();
-
-		// 댓글 list
-		for (BoardDTO b : articles) {
-
-			boardid = b.getBoardid();
-			// 날짜 계산 --------------
-			regdate = b.getRegDate();
-			regDatemap.put(boardid, regDate(regdate));
-			// 날짜 계산 --------------
-			System.out.println("boardid 값은?=====" + boardid);
-			cnt = commentDB.getCommentCount(boardid);
-			boardLikecnt = boardlikeDB.getBoardLikeCount(boardid);
-			// 댓글 개수
-			model.addAttribute("cnt", cnt);
-
+		try {
 			// 댓글 list
-			comment = commentDB.getComments(boardid);
+			for (BoardDTO b : articles) {
 
-			map.put(boardid, comment);
-			boardLike.put(boardid, boardLikecnt);
-			System.out.println("boardLike=====" + boardLike);
+				boardid = b.getBoardid();
+				// 날짜 계산 --------------
+				regdate = b.getRegDate();
+				regDatemap.put(boardid, regDate(regdate));
+				// 날짜 계산 --------------
+				System.out.println("boardid 값은?=====" + boardid);
+				cnt = commentDB.getCommentCount(boardid);
+				boardLikecnt = boardlikeDB.getBoardLikeCount(boardid);
+				// 댓글 개수
+				model.addAttribute("cnt", cnt);
+
+				// 댓글 list
+				comment = commentDB.getComments(boardid);
+
+				map.put(boardid, comment);
+				boardLike.put(boardid, boardLikecnt);
+				System.out.println("boardLike=====" + boardLike);
+			}
+			System.out.println("map:" + map);
+			// 댓글 리스트
+			model.addAttribute("map", map);
+			// 좋아요 수
+			model.addAttribute("boardLike", boardLike);
+
+			model.addAttribute("regDate", regDatemap);
+		} catch (NullPointerException e) {
+			// TODO: handle exception
+		}finally {
+			return "main";
 		}
-		System.out.println("map:" + map);
-		// 댓글 리스트
-		model.addAttribute("map", map);
-		// 좋아요 수
-		model.addAttribute("boardLike", boardLike);
-
-		model.addAttribute("regDate", regDatemap);
-
-		return "main";
 	}
 
 	// 날짜 변환 메소드

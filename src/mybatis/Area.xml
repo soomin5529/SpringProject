@@ -13,14 +13,14 @@
 
 	<select id="sigunguList" resultType="Area"
 		parameterType="hashmap">
-		select sigungu_code as code, sigungu_name as name, latitude, longitude from
-		sigungu where sido_code = #{sido_code} order by sigungu_name
+		select sigungu_code as code, sigungu_name as name, latitude, longitude from sigungu
+		where sido_code = #{sido_code} order by sigungu_name
 	</select>
 
 	<select id="dongList" resultType="Area" parameterType="hashmap">
 		select
-		dong_code as code, dong_name as name from dong where sigungu_code =
-		#{sigungu_code} order by dong_name
+		dong_code as code, dong_name as name, latitude, longitude from dong
+		where sigungu_code = #{sigungu_code} order by dong_name
 	</select>
 
 	<select id="sigungu" resultType="Sigungu"
@@ -34,28 +34,34 @@
 		dong_code as code, dong_name as name from dong where dong_code =
 		#{dong_code}
 	</select>
-	
+
 	<!-- 선택한 동의 시도, 시군구, 동의 이름을 받아온다. -->
-	<select id="selectedArea" resultType="SelectedArea" parameterType="hashMap">
+	<select id="selectedArea" resultType="SelectedArea"
+		parameterType="hashMap">
 		Select
 		c.sido_name as si,
 		b.sigungu_name as sig,
 		a.dong_name as emd
 		from dong a,
 		sigungu b, sido c
-		where c.SIDO_CODE = b.SIDO_CODE
+		where c.SIDO_CODE =
+		b.SIDO_CODE
 		and
 		b.SIGUNGU_CODE =
-		(select sigungu_code from dong where dong_code =
+		(select sigungu_code from dong where
+		dong_code =
 		#{dong_code1}) and
 		a.DONG_CODE = #{dong_code2}
 	</select>
-	
-	<select id="areaCoordinate" resultType="Area" parameterType="hashMap">
-		SELECT latitude, longitude FROM ${areaTable} WHERE ${areaCodeName} = #{areaCode}
+
+	<select id="areaCoordinate" resultType="Area"
+		parameterType="hashMap">
+		SELECT latitude, longitude FROM ${areaTable} WHERE
+		${areaCodeName} = #{areaCode}
 	</select>
-	
+
 	<select id="allStore" resultType="Area" parameterType="hashMap">
-		SELECT * FROM STORE
+		SELECT *
+		FROM STORE
 	</select>
 </mapper>

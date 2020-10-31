@@ -41,30 +41,23 @@ public class AjaxController {
 	MemberDAO memberDB;
 	@Autowired
 	StoreDAO storeDB;
-
+	
 	// produces -> encoding문제 해결/안해주면 한글깨짐
-	@RequestMapping(value = "/areaOption", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@RequestMapping(value = "/areaOption", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	// main화면에서 지역 선택 시 다음 옵션 동적으로 받아오기.
-	public String mainOption(@RequestParam("area") String requestArea, @RequestParam("code") String requestCode)
+	public List<AreaDTO> mainOption(@RequestBody Map<String, String> areaArray)
 			throws Throwable {
-
-		String resultOption = "<option value=\"no\" disabled selected>선택</option>";
 		List<AreaDTO> areaList = null;
-
-		if (requestArea.contains("sido")) {
-			areaList = areaDB.sigunguList(requestCode);
+		System.out.println(areaArray+"----------->");
+		if (areaArray.get("type").contains("sido")) {
+			areaList = areaDB.sigunguList(areaArray.get("code"));
 		}
-		if (requestArea.contains("sigungu")) {
-			areaList = areaDB.dongList(requestCode);
+		if (areaArray.get("type").contains("sigungu")) {
+			areaList = areaDB.dongList(areaArray.get("code"));
 		}
-
 		System.out.println("지역리스트------>" + areaList);
-		for (AreaDTO area : areaList) {
-			resultOption += "<option value=\"" + area.getCode() + "\">" + area.getName() + "</option>\n";
-		}
-
-		return resultOption;
+		return areaList;
 	}
 
 	@RequestMapping(value = "/categoryOption", method = RequestMethod.POST, produces = "application/text; charset=utf8")

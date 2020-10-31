@@ -127,8 +127,7 @@ function openPopMyPage() {
 		}
 	} else {
 		if (!login.firstChild) {
-			login.innerHTML = 
-					'<div class="deemed" onclick="closePopLogin()"></div>'
+			login.innerHTML = '<div class="deemed" onclick="closePopLogin()"></div>'
 					+ '<span class="close-btn" onclick="closePopLogin()">x</span>'
 					+ '<div class="pop-box" style="width:400px; height:360px;">'
 					+ '	<div class="title-box">'
@@ -149,10 +148,7 @@ function openPopMyPage() {
 					+ '			<div class="join-btn">'
 					+ '				<span class="gray">아직 회원이 아니신가요?</span>'
 					+ '				<span class="highlight01" onclick="openPopJoin()">회원가입</span>'
-					+ '			</div>' 
-					+ '		</form>' 
-					+ '	</div>' 
-					+ '</div>';
+					+ '			</div>' + '		</form>' + '	</div>' + '</div>';
 			login.style.display = "block";
 		}
 	}
@@ -259,7 +255,8 @@ function openPopPush() {
 function closePopPush() {
 	while (push.firstChild) {
 		push.removeChild(push.firstChild);
-	};
+	}
+	;
 	push.style.display = "none";
 }
 
@@ -308,8 +305,7 @@ function openPopMyPageModify() {
 function closePopMyPageModify() {
 	while (myPageModify.firstChild) {
 		myPageModify.removeChild(myPageModify.firstChild);
-	}
-	;
+	};
 	myPageModify.style.display = "none";
 }
 
@@ -417,10 +413,98 @@ function postLike() {
 				+ '</svg>' + '<span class="like-txt">좋아요</span>';
 	}
 }
-// 지역 클릭 시 다음 선택 지역 리스트를 담고, 선택된 지역의 중심으로 이동
-var areaList = [];
-function choiceArea(areaCode){
+// 동 선택 시, 동 면적을 json에서 찾아와 표시한다.
+function findAreaToJson(select) {
+	var id = select.getAttribute('id');
+	var text = $("#" + id + " option:checked").text();
+	var paths;
 	$.ajax({
-		
-	})
+		type : "post",
+		url : "/SpringTeamProject/request/findAreaToJson",
+		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+		data : {
+			'dong' : text,
+			'code' : select.value
+		},
+		success : function(textStatus) {
+			drawPolygonDong(textStatus);
+			openPopDashboard();
+		}
+	});
+}
+
+// main화면에서 행정구역을 선택하면 동적으로 하위의 행정구역을 받아옵니다.
+// 전역변수 Array
+var sigunguArray = new Array();
+var dongArray = new Array();
+function choiceAdministrativeDistrict(select) {
+	// 시도 선택 -> 시군구리스트 출력 및 담기
+	// 시군구 선택 -> 동리스트 출력 및 담기
+	// 동 선택 -> 중심으로 이동 및 대쉬 펼치기
+	if (select.getAttribute('id') == 'sido') {
+		console.log("-----------------시도선택")
+		sigunguArray = [];
+		returnAreaArray('sido', select.value);
+		console.log(sigunguArray);
+	}
+	if (select.getAttribute('id') == 'sigungu') {
+		closePopDashboard();
+		console.log("-----------------시군구선택")
+		dongArray = [];
+		returnAreaArray('sigungu', select.value);
+		console.log(dongArray);
+		for ( var i in sigunguArray) {
+			if (sigunguArray[i].code == select.value) {
+				console.log(sigunguArray[i]);
+				choiceArea(sigunguArray[i]);
+			}
+		}
+		//selectOption(sigunguArray, select);
+	}
+	if (select.getAttribute('id') == 'dong') {
+		console.log("-----------------동선택")
+		for ( var i in dongArray) {
+			if (dongArray[i].code == select.value) {
+				console.log(dongArray[i]);
+				choiceArea(dongArray[i]);
+			}
+		}
+		//selectOption(dongArray, select);
+	}
+}
+function returnAreaArray(districtType, districtCode){
+	$.ajax({
+		type : "post",
+		url : "/SpringTeamProject/request/areaOption",
+		dataType : 'json',
+		contentType : "application/json; charset=UTF-8",
+		data : JSON.stringify({
+			'type' : districtType,
+			'code' : districtCode
+		}),
+		success : function(areaList) {
+			var options = '<option value=\"no\" disabled selected>선택</option>';
+			for ( var i in areaList) {
+				if (districtType.includes('sido')) {
+					sigunguArray.push(areaList[i]);
+				}
+				if(districtType.includes('sigungu')){
+					dongArray.push(areaList[i]);
+				}
+				options += '<option value=' + areaList[i].code + '>' + areaList[i].name + '</option>\n'
+			}
+			var areaId = districtType == 'sido' ? 'sigungu' : 'dong';
+			$("#" + areaId).empty().append(options);
+		}
+	});
+}
+// 행정구역(시군구, 동)을 선택하면 areaArray[]에서 선택된 구역을 찾아 choiceArea()에 보내어 실행시킨다.
+function selectOption(array, option) {
+	console.log("selectOption() 실행-->" + array[i] +", " +option)
+	for ( var i in array) {
+		if (array[i].code == option.value) {
+			console.log(array[i]);
+			choiceArea(array[i]);
+		}
+	}
 }
