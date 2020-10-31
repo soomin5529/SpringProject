@@ -1,13 +1,13 @@
 package service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import board.BoardLikeDTO;
+import mybatis.AbstractMybatis;
 
 @Service
 public class BoardLikeDAO extends AbstractMybatis {

@@ -27,8 +27,10 @@
 	<!-- writeuploadform insert -->
 	<insert id="insertArticle" parameterType="hashmap">
 		insert into
-		board (userid, boardid , dong_code, writer, content , regDate ,filename)
-		values (#{userid},#{boardid},#{dong_code},#{writer},#{content},#{regDate},#{filename})
+		board
+		(userid, boardid , dong_code, writer, content , regDate ,filename)
+		values
+		(#{userid},#{boardid},#{dong_code},#{writer},#{content},#{regDate},#{filename})
 	</insert>
 
 	<!-- 삭제 기능 -->

@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import area.AreaDTO;
 import area.DongDTO;
+import area.SelectedAreaDTO;
 import area.SidoDTO;
 import area.SigunguDTO;
+import mybatis.AbstractMybatis;
 
 @Service
 public class AreaDAO extends AbstractMybatis {
@@ -47,30 +49,58 @@ public class AreaDAO extends AbstractMybatis {
 			sqlSession.close();
 		}
 	}
-	
+
 	public List<SigunguDTO> sigungu(String sigunguCode) {
-		Map<String, Object> sigungucode = new HashMap<String, Object>();
-		sigungucode.put("sigungu_code", sigunguCode);
+		Map<String, Object> sigungu_code = new HashMap<String, Object>();
+		sigungu_code.put("sigungu_code", sigunguCode);
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
-			return sqlSession.selectList(namespace + ".sigungu", sigungucode);
+			return sqlSession.selectList(namespace + ".sigungu", sigungu_code);
 		} finally {
 			sqlSession.close();
 		}
-
 	}
 
 	public List<DongDTO> dong(String dongCode) {
 		Map<String, Object> dong_code = new HashMap<String, Object>();
 		dong_code.put("dong_code", dongCode);
-		System.out.println("동코드가 머냐" +dongCode);
+		System.out.println("동코드가 머냐" + dongCode);
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
 			return sqlSession.selectList(namespace + ".dong", dong_code);
 		} finally {
 			sqlSession.close();
 		}
-
 	}
 
+	public List<SelectedAreaDTO> selectedArea(String dongCode) {
+		Map<String, Object> dong_code = new HashMap<String, Object>();
+		dong_code.put("dong_code1", dongCode);
+		dong_code.put("dong_code2", dongCode);
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			return sqlSession.selectList(namespace + ".selectedArea", dong_code);
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	public List<AreaDTO> areaCoordinate(String areaCode) {
+		Map<String, Object> areaCodeMap = new HashMap<String, Object>();
+
+		String areaTable = areaCode.length() == 2 ? "SIDO" : areaCode.length() == 5 ? "SIGUNGU" : "DONG";
+		areaCodeMap.put("areaTable", areaTable);
+
+		String areaCodeName = areaCode.length() == 2 ? "SIDO_CODE"
+				: areaCode.length() == 5 ? "SIGUNGU_CODE" : "DONG_CODE";
+		areaCodeMap.put("areaCode", areaCodeName);
+
+		areaCodeMap.put("areaCode", areaCode);
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			return sqlSession.selectList(namespace + ".areaCoordinate", areaCodeMap);
+		} finally {
+			sqlSession.close();
+		}
+	}
 }

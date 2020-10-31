@@ -2,18 +2,22 @@ package controller;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import area.AreaDTO;
 import area.DongDTO;
@@ -23,47 +27,40 @@ import service.AreaDAO;
 import service.BoardLikeDAO;
 import service.IndustryDAO;
 import service.MemberDAO;
+import service.StoreDAO;
+import store.StoreDTO;
 
 @Controller
 @RequestMapping("/request/")
 public class AjaxController {
-	public ModelAndView mv = new ModelAndView();
 
 	@Autowired
 	AreaDAO areaDB;
-
 	@Autowired
 	IndustryDAO industryDB;
-
 	@Autowired
 	MemberDAO memberDB;
-
+	@Autowired
+	StoreDAO storeDB;
 	@Autowired
 	BoardLikeDAO boardlikeDB;
 
 	// produces -> encoding문제 해결/안해주면 한글깨짐
-	@RequestMapping(value = "/areaOption", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@RequestMapping(value = "/areaOption", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	// main화면에서 지역 선택 시 다음 옵션 동적으로 받아오기.
-	public String mainOption(@RequestParam("area") String requestArea, @RequestParam("code") String requestCode)
+	public List<AreaDTO> mainOption(@RequestBody Map<String, String> areaArray)
 			throws Throwable {
-
-		String resultOption = "<option value=\"no\" disabled selected>선택</option>";
 		List<AreaDTO> areaList = null;
-
-		if (requestArea.contains("sido")) {
-			areaList = areaDB.sigunguList(requestCode);
+		System.out.println(areaArray+"----------->");
+		if (areaArray.get("type").contains("sido")) {
+			areaList = areaDB.sigunguList(areaArray.get("code"));
 		}
-		if (requestArea.contains("sigungu")) {
-			areaList = areaDB.dongList(requestCode);
+		if (areaArray.get("type").contains("sigungu")) {
+			areaList = areaDB.dongList(areaArray.get("code"));
 		}
-
 		System.out.println("지역리스트------>" + areaList);
-		for (AreaDTO area : areaList) {
-			resultOption += "<option value=\"" + area.getCode() + "\">" + area.getName() + "</option>\n";
-		}
-
-		return resultOption;
+		return areaList;
 	}
 
 	@RequestMapping(value = "/categoryOption", method = RequestMethod.POST, produces = "application/text; charset=utf8")
@@ -179,19 +176,20 @@ public class AjaxController {
 		return path;
 	}
 
-	@RequestMapping(value = "/insertLike", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@RequestMapping(value = "/extractStoreFromDong", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody
-	public String selectCode(@RequestParam("userid") String userid, @RequestParam("boardid") int boardid,
-			@RequestParam("status") String status) throws Throwable {
-		String resultOption = "";
-		int num = 10;
-		if (status.equals("insert")) {
-			num = boardlikeDB.insertBoardLike(boardid, userid);
-			resultOption = "들어감";
-		} else if (status.equals("delete")) {
-			num = boardlikeDB.deleteBoardLike(boardid, userid);
-			resultOption = "빼기 성공";
-		}
-		return resultOption;
+	public String extractStoreFromDong(@RequestParam("code") String requestDongCode,
+			@RequestParam("dong") String requestDongName, Model model) {
+		List<StoreDTO> stores = storeDB.storeList(requestDongCode);
+		return "";
+	}
+
+	@RequestMapping(value = "/currentPageStore", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public List<StoreDTO> currentPageStore(@RequestBody Map<String, Object> params, HttpServletResponse response)
+			throws IOException {
+		List<StoreDTO> stores = storeDB.allStoreList(params);
+		System.out.println(stores.size() + "--------> 검색된 상점수");
+		return stores;
 	}
 }

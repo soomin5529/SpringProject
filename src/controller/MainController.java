@@ -11,13 +11,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,7 +26,6 @@ import area.SigunguDTO;
 import board.BoardDTO;
 import comment.CommentDTO;
 import industry.MainCategoryDTO;
-import member.MemberDTO;
 import service.AreaDAO;
 import service.BoardLikeDAO;
 import service.BoardDAO;
@@ -45,56 +42,50 @@ public class MainController {
 
 	@Autowired
 	AreaDAO areaDB;
-
 	@Autowired
 	IndustryDAO industryDB;
-
 	@Autowired
 	MemberDAO memberDB;
-
 	@Autowired
 	BoardDAO boardDB;
-
 	@Autowired
 	CommentDAO commentDB;
-
 	@Autowired
 	BoardLikeDAO boardlikeDB;
 
 	@ModelAttribute
 	public void headProcess(HttpServletRequest request, HttpServletResponse res) {
-
 		try {
 			request.setCharacterEncoding("utf-8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 		HttpSession session = request.getSession();
-
 		if (request.getParameter("userid") != null) {
 			session.setAttribute("userid", request.getParameter("userid"));
 		}
-
 		userid = (String) session.getAttribute("userid");
-
 	}
 
 	// main화면 실행 시 시도 selectBox에 값 생성
+	@SuppressWarnings("finally")
 	@RequestMapping("main")
 	public String main(Model model) throws Exception {
-
+		// 처음 시도 목록을 받아 지역 시도선택에 뿌려준다.
 		List<SidoDTO> sidoList = areaDB.sidoList();
 		model.addAttribute("sido", sidoList);
+		// 
+		List<AreaDTO> sigunguList = areaDB.sigunguList("11");
+		model.addAttribute("sigunguList", sigunguList);
+		System.out.println(sigunguList + "------------> 시군구 리스트");
 
 		List<MainCategoryDTO> MainList = industryDB.category_mainList();
 		model.addAttribute("main", MainList);
 
-		List<SigunguDTO> sigunguList = areaDB.sigungu("11680");
+		List<SigunguDTO> sigungu = areaDB.sigungu("11680");
+		model.addAttribute("sigungu", sigungu);
 		List<DongDTO> dongList = areaDB.dong("1168010100");
-		model.addAttribute("sigungu", sigunguList);
 		model.addAttribute("dong", dongList);
-		// dong코드 받아오기
-		// =================board list========================================
 		String dong_code = "";
 		for (DongDTO d : dongList) {
 			dong_code = d.getCode();
@@ -103,7 +94,6 @@ public class MainController {
 		List<BoardDTO> articles = null;
 		// board 개수 count
 		count = boardDB.getBoardCount(dong_code);
-
 		if (count > 0) {
 			// board list 뿌려주기
 			articles = boardDB.getArticles(dong_code);
@@ -123,37 +113,40 @@ public class MainController {
 		Map<Integer, List<CommentDTO>> map = new HashMap<Integer, List<CommentDTO>>();
 		Map<Integer, Integer> boardLike = new HashMap<Integer, Integer>();
 		Map<Integer, String> regDatemap = new HashMap<Integer, String>();
-
-		// 댓글 list
-		for (BoardDTO b : articles) {
-
-			boardid = b.getBoardid();
-			// 날짜 계산 --------------
-			regdate = b.getRegDate();
-			regDatemap.put(boardid, regDate(regdate));
-			// 날짜 계산 --------------
-			System.out.println("boardid 값은?=====" + boardid);
-			cnt = commentDB.getCommentCount(boardid);
-			boardLikecnt = boardlikeDB.getBoardLikeCount(boardid);
-			// 댓글 개수
-			model.addAttribute("cnt", cnt);
-
+		try {
 			// 댓글 list
-			comment = commentDB.getComments(boardid);
+			for (BoardDTO b : articles) {
 
-			map.put(boardid, comment);
-			boardLike.put(boardid, boardLikecnt);
-			System.out.println("boardLike=====" + boardLike);
+				boardid = b.getBoardid();
+				// 날짜 계산 --------------
+				regdate = b.getRegDate();
+				regDatemap.put(boardid, regDate(regdate));
+				// 날짜 계산 --------------
+				System.out.println("boardid 값은?=====" + boardid);
+				cnt = commentDB.getCommentCount(boardid);
+				boardLikecnt = boardlikeDB.getBoardLikeCount(boardid);
+				// 댓글 개수
+				model.addAttribute("cnt", cnt);
+
+				// 댓글 list
+				comment = commentDB.getComments(boardid);
+
+				map.put(boardid, comment);
+				boardLike.put(boardid, boardLikecnt);
+				System.out.println("boardLike=====" + boardLike);
+			}
+			System.out.println("map:" + map);
+			// 댓글 리스트
+			model.addAttribute("map", map);
+			// 좋아요 수
+			model.addAttribute("boardLike", boardLike);
+
+			model.addAttribute("regDate", regDatemap);
+		} catch (NullPointerException e) {
+			// TODO: handle exception
+		}finally {
+			return "main";
 		}
-		System.out.println("map:" + map);
-		// 댓글 리스트
-		model.addAttribute("map", map);
-		// 좋아요 수
-		model.addAttribute("boardLike", boardLike);
-
-		model.addAttribute("regDate", regDatemap);
-
-		return "main";
 	}
 
 	// 날짜 변환 메소드
@@ -162,9 +155,9 @@ public class MainController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyymmdd");
 		Date today = new Date();
 		Date startDate = null;
-		
+
 		startDate = sdf.parse(regdate);
-	
+
 		sdf.format(today);
 
 		String DateDays = null;
@@ -190,25 +183,6 @@ public class MainController {
 		return DateDays;
 	}
 
-	@RequestMapping("main/{code}")
-	public String main(Model model, @PathVariable("code") String code, Model m) throws Throwable {
-		List<SidoDTO> sidoList = areaDB.sidoList();
-		model.addAttribute("sido", sidoList);
-
-		List<MainCategoryDTO> MainList = industryDB.category_mainList();
-		model.addAttribute("main", MainList);
-		if (code.length() == 5) {
-			List<SigunguDTO> sigunguList = areaDB.sigungu(code);
-			model.addAttribute("sigungu", sigunguList);
-		}
-		if (code.length() == 10) {
-			List<DongDTO> dongList = areaDB.dong(code);
-			model.addAttribute("dong", dongList);
-		}
-
-		return "main";
-	}
-
 	// main화면 실행 시 카테고리 selectBox에 값 생성
 	@RequestMapping("mainCategory")
 	public String mainCategory(Model model) throws Throwable {
@@ -232,4 +206,5 @@ public class MainController {
 	public String intro() throws Throwable {
 		return "/jsp_nohead/intro.jsp";
 	}
+
 }

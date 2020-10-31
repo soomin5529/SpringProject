@@ -1,7 +1,5 @@
 package service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import board.BoardDTO;
+import mybatis.AbstractMybatis;
 
 @Service
 public class BoardDAO extends AbstractMybatis {
@@ -19,7 +18,6 @@ public class BoardDAO extends AbstractMybatis {
 
 	// 동마다 게시물 수 count
 	public int getBoardCount(String dong_code) throws Exception {
-
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
 			map.put("dong_code", dong_code);
@@ -52,7 +50,10 @@ public class BoardDAO extends AbstractMybatis {
 			else
 				number = 1;
 			String statement = namespace + ".insertArticle";
-			
+			/*
+			 * Date today = new Date(); SimpleDateFormat sdf = new
+			 * SimpleDateFormat("yy/MM/dd"); String regDate = sdf.format(today);
+			 */
 			map.put("userid", article.getUserid());
 			map.put("boardid", number);
 			map.put("dong_code", article.getDong_code());
