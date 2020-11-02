@@ -63,14 +63,28 @@ var myArea = document.getElementById("myArea");
 var myCommunity = document.getElementById("myCommunity");
 
 /* dashboard */
-function openPopDashboard() {
+function openPopDashboard(data) {
 	dashboard.style.display = "block";
 	if (community.style.display == "block") {
 		community.style.left = "350px";
 	}
-	drawChart();
+	drawChart(data);
 }
 
+function sendChart(){
+	var dongcode = document.getElementById("dong");
+	var code = { "dong_code" : dongcode.value };
+	$.ajax({
+		type : "post",
+		url : "/SpringTeamProject/dashboard/chart",
+		dataType : "json",
+		contentType : "application/json; charset=UTF-8",
+		data : JSON.stringify(code),
+		success : function(data) {
+			openPopDashboard(data);
+		}
+	});
+}
 function closePopDashboard() {
 	dashboard.style.display = "none";
 	if (community.style.display == "block") {
@@ -430,7 +444,7 @@ function findAreaToJson(select) {
 		},
 		success : function(textStatus) {
 			drawPolygonDong(textStatus);
-			openPopDashboard();
+			sendChart();
 		}
 	});
 }

@@ -147,8 +147,5 @@ function sendLike(board){
 	<jsp:include page="board/boardWriteForm.jsp" flush="false" />
 
 </div>
-<script type="text/javascript"
-	src="<%=request.getContextPath()%>/js/map2.js"></script>
-<script type="text/javascript"
-	src="<%=request.getContextPath()%>/js/chart.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/map2.js"></script>
 <!-- end of main -->
