@@ -89,22 +89,26 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView();
 
 		AreaDTO dongList = areaDB.dong(code);
-		System.out.println(dongList);
 		mav.addObject("dong", dongList);
 		String dong_code = "";
 		
 		dong_code = dongList.getCode();
 	
-		System.out.println("dong_code------"+dong_code);
 		int count = 0;
 		List<BoardDTO> articles = null;
 		// board 개수 count
 		count = boardDB.getBoardCount(dong_code);
+		if(count == 0) {
+			
+			mav.addObject("count", count);
+			mav.addObject("userid", userid);
+			mav.addObject("name", name);
+			mav.setViewName("jsp_nohead/boardList");
+		}
+		System.out.println("count 수는------????????" +count);
 		if (count > 0) {
 			// board list 뿌려주기
 			articles = boardDB.getArticles(dong_code);
-			System.out.println("articles-----"+articles);
-			System.out.println("article" + articles);
 			mav.addObject("articleList", articles);
 
 		}
@@ -122,8 +126,9 @@ public class BoardController {
 		Map<Integer, Integer> boardLike = new HashMap<Integer, Integer>();
 		Map<Integer, String> regDatemap = new HashMap<Integer, String>();
          
-		if(count !=0) {
+		
 		// 댓글 list
+		if(count != 0  ) {
 		for (BoardDTO b : articles) {
 
 			boardid = b.getBoardid();
@@ -131,7 +136,6 @@ public class BoardController {
 			regdate = b.getRegDate();
 			regDatemap.put(boardid, regDate(regdate));
 			// 날짜 계산 --------------
-			System.out.println("boardid 값은?=====" + boardid);
 			cnt = commentDB.getCommentCount(boardid);
 			boardLikecnt = boardlikeDB.getBoardLikeCount(boardid);
 			// 댓글 개수
@@ -142,7 +146,6 @@ public class BoardController {
 
 			map.put(boardid, comment);
 			boardLike.put(boardid, boardLikecnt);
-			System.out.println("boardLike=====" + boardLike);
 		}
 		System.out.println("map:" + map);
 		// 댓글 리스트
@@ -150,10 +153,11 @@ public class BoardController {
 		// 좋아요 수
 		mav.addObject("boardLike", boardLike);
 		mav.addObject("regDate", regDatemap);
+		}
 		mav.addObject("userid", userid);
 		mav.addObject("name", name);
 		mav.setViewName("jsp_nohead/boardList");
-		}
+		
 		return mav;
 	}
 
