@@ -1,5 +1,5 @@
 eclipse.preferences.version=1
-encoding//WebContent/jsp/board/boardList.jsp=UTF-8
-encoding//WebContent/jsp/board/boardWriteForm.jsp=UTF-8
-encoding//WebContent/jsp/board/dashBoard.jsp=UTF-8
+encoding//WebContent/jsp/jsp_nohead/boardList.jsp=UTF-8
+encoding//WebContent/jsp/jsp_nohead/boardWriteForm.jsp=UTF-8
+encoding//WebContent/jsp/jsp_nohead/dashBoard.jsp=UTF-8
 encoding/<project>=UTF-8

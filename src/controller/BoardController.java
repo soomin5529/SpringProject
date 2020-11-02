@@ -2,9 +2,12 @@ package controller;
 
 import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,16 +20,20 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import area.AreaDTO;
+import area.DongDTO;
 import area.SigunguDTO;
 import board.BoardDTO;
 import comment.CommentDTO;
 import industry.MainCategoryDTO;
 import service.AreaDAO;
 import service.BoardDAO;
+import service.BoardLikeDAO;
 import service.CommentDAO;
 import service.IndustryDAO;
 import service.MemberDAO;
@@ -37,6 +44,7 @@ public class BoardController {
 	public String boardid = "";
 	public String userid = "";
 	public String dong_code = "";
+	public String name = "";
 	// boardid, userid, dong_code 는 view 에서 값 받아야함
 	public String remoteId = "";
 	public ModelAndView mv = new ModelAndView();
@@ -56,6 +64,9 @@ public class BoardController {
 	@Autowired
 	CommentDAO commentDB;
 
+	@Autowired
+	BoardLikeDAO boardlikeDB;
+
 	@ModelAttribute
 	public void headProcess(HttpServletRequest request, HttpServletResponse res) {
 		try {
@@ -69,12 +80,115 @@ public class BoardController {
 			session.setAttribute("userid", request.getParameter("userid"));
 		}
 		userid = (String) session.getAttribute("userid");
+		name = (String) session.getAttribute("name");
 	}
 
-	@RequestMapping("boardwriteForm")
-	public String writeUploadForm(BoardDTO article, Model m) throws Exception {
-		m.addAttribute("userid", userid);
-		return "board/writeUploadForm";
+	@RequestMapping(value = "/boardList/{code}", produces = "application/text; charset=utf8")
+	@ResponseBody
+	public ModelAndView boardList(@PathVariable("code") String code, BoardDTO article, Model model) throws Exception {
+		ModelAndView mav = new ModelAndView();
+
+		AreaDTO dongList = areaDB.dong(code);
+		System.out.println(dongList);
+		mav.addObject("dong", dongList);
+		String dong_code = "";
+		
+		dong_code = dongList.getCode();
+	
+		System.out.println("dong_code------"+dong_code);
+		int count = 0;
+		List<BoardDTO> articles = null;
+		// board 개수 count
+		count = boardDB.getBoardCount(dong_code);
+		if (count > 0) {
+			// board list 뿌려주기
+			articles = boardDB.getArticles(dong_code);
+			System.out.println("articles-----"+articles);
+			System.out.println("article" + articles);
+			mav.addObject("articleList", articles);
+
+		}
+		// board 게시물 수
+		mav.addObject("count", count);
+		// =================comment list========================================
+		int boardid = 0;
+		int cnt = 0;
+		int boardLikecnt = 0;
+		int commentLikecnt = 0;
+		String regdate = null;
+		List<CommentDTO> comment = null;
+		// key 값: Boardid , value 값 : boardid 에 달린 댓글 list
+		Map<Integer, List<CommentDTO>> map = new HashMap<Integer, List<CommentDTO>>();
+		Map<Integer, Integer> boardLike = new HashMap<Integer, Integer>();
+		Map<Integer, String> regDatemap = new HashMap<Integer, String>();
+         
+		if(count !=0) {
+		// 댓글 list
+		for (BoardDTO b : articles) {
+
+			boardid = b.getBoardid();
+			// 날짜 계산 --------------
+			regdate = b.getRegDate();
+			regDatemap.put(boardid, regDate(regdate));
+			// 날짜 계산 --------------
+			System.out.println("boardid 값은?=====" + boardid);
+			cnt = commentDB.getCommentCount(boardid);
+			boardLikecnt = boardlikeDB.getBoardLikeCount(boardid);
+			// 댓글 개수
+			mav.addObject("cnt", cnt);
+
+			// 댓글 list
+			comment = commentDB.getComments(boardid);
+
+			map.put(boardid, comment);
+			boardLike.put(boardid, boardLikecnt);
+			System.out.println("boardLike=====" + boardLike);
+		}
+		System.out.println("map:" + map);
+		// 댓글 리스트
+		mav.addObject("map", map);
+		// 좋아요 수
+		mav.addObject("boardLike", boardLike);
+		mav.addObject("regDate", regDatemap);
+		mav.addObject("userid", userid);
+		mav.addObject("name", name);
+		mav.setViewName("jsp_nohead/boardList");
+		}
+		return mav;
+	}
+
+	// 날짜 변환 메소드
+	public String regDate(String regdate) throws ParseException {
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyymmdd");
+		Date today = new Date();
+		Date startDate = null;
+
+		startDate = sdf.parse(regdate);
+
+		sdf.format(today);
+
+		String DateDays = null;
+
+		long calDate = today.getTime() - startDate.getTime();
+		long calDateDays = calDate / (24 * 60 * 60 * 1000);
+		calDateDays = Math.abs(calDateDays);
+		if ((calDateDays / 30) == 1) {
+			DateDays = "한달 전";
+		} else if ((calDateDays / 7) == 1) {
+			DateDays = "일주일 전";
+		} else if ((calDateDays / 60) == 1) {
+			DateDays = "두달 전";
+		} else if (calDateDays == 0) {
+			DateDays = "방금 전";
+		} else {
+			DateDays = String.valueOf(calDateDays) + "일 전";
+		}
+		System.out.println("date=====" + startDate);
+		System.out.println("today=====" + today);
+		System.out.println("두 날짜의 날짜 차이: " + DateDays);
+
+		return DateDays;
 	}
 
 	@RequestMapping("writeUploadPro")
@@ -128,47 +242,8 @@ public class BoardController {
 		// jsp로 보내지 않고 바로 view 로
 	}
 
-	@RequestMapping("boardList")
-	public ModelAndView list() throws Exception {
-		int count = 0;
-		List<BoardDTO> article = null;
 
-		count = boardDB.getBoardCount(dong_code);
-		if (count > 0) {
-			article = boardDB.getArticles(dong_code);
-		}
-		mv.clear();
-		mv.addObject("count", count);
-		mv.addObject("articleList", article);
-		mv.setViewName("board/boardList");
-
-		return mv;
-	}
-
-	@RequestMapping("dashBoard/{dong_code}")
-	public String dashBoard(@PathVariable("dong_code") String dong_code, Model m) throws Exception {
-		List<MainCategoryDTO> MainList = industryDB.category_mainList();
-		m.addAttribute("main", MainList);
-		System.out.println("메인리스트 나와요" + MainList);
-
-		List<SigunguDTO> sigunguList = areaDB.sigungu(dong_code);
-		// List<DongDTO> dongList = areaDB.dong(dong_code);
-		m.addAttribute("sigungu", sigunguList);
-		System.out.println("시군구 나와요" + sigunguList);
-
-		return "board/dashBoard";
-	}
-
-	@RequestMapping("dashBoardPro")
-	public String dashBoardPro(HttpServletRequest request, Model m) throws Exception {
-		List<MainCategoryDTO> MainList = industryDB.category_mainList();
-		m.addAttribute("main", MainList);
-		List<SigunguDTO> sigunguList = areaDB.sigungu(dong_code);
-		m.addAttribute("sigungu", sigunguList);
-
-		return "board/dashBoard";
-	}
-
+	
 	@RequestMapping("deletePro")
 	public String deletePro(String userid, String dong_code, String boardid, Model m) throws Exception {
 		int delete_ok = boardDB.deleteArticle(userid, dong_code, boardid);

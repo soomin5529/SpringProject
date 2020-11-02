@@ -31,7 +31,7 @@ $(document).ready(function() {
 		} else {
 			$.each(_over_g, function(index, item) {
 				item.setAttribute("fill", "#584de4")
-			});
+			});da
 		}
 	}).mouseout(function(event) {
 		var cls = $(this).attr('class');
@@ -65,6 +65,7 @@ var myCommunity = document.getElementById("myCommunity");
 /* dashboard */
 function openPopDashboard(data) {
 	dashboard.style.display = "block";
+	var community = document.getElementById("community");
 	if (community.style.display == "block") {
 		community.style.left = "350px";
 	}
@@ -73,7 +74,8 @@ function openPopDashboard(data) {
 
 function sendChart(){
 	var dongcode = document.getElementById("dong");
-	var code = { "dong_code" : dongcode.value };
+	var code = { "dong_code" : dongcode.options[dongcode.selectedIndex].value };
+	
 	$.ajax({
 		type : "post",
 		url : "/SpringTeamProject/dashboard/chart",
@@ -87,17 +89,24 @@ function sendChart(){
 }
 function closePopDashboard() {
 	dashboard.style.display = "none";
-	if (community.style.display == "block") {
-		community.style.left = 0;
+		if(community != null){
+			if (community.style.display == "block") {
+			community.style.left = 0;
+		}
 	}
+	
 }
 
 /* community */
 function openPopCommunity() {
+	var code = document.getElementById("dong").value;
+	sendToboardList(code);
 	community.style.display = "block";
+	
 	if (dashboard.style.display == "block") {
 		community.style.left = "350px";
 	}
+	
 }
 function closePopCommunity() {
 	community.style.display = "none";
@@ -105,6 +114,9 @@ function closePopCommunity() {
 
 /* communityRegist */
 function openPopCommunityReg() {
+	
+	var code = document.getElementById("dong").value;
+	sendToboardWriteForm(code);
 	communityReg.style.display = "block";
 }
 function closePopCommunityReg() {
