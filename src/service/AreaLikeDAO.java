@@ -58,8 +58,9 @@ public class AreaLikeDAO extends AbstractMybatis {
 
 	}
 
-	public List selectAreaLike(String userid) throws Exception {
+	public List<Object> selectAreaLike(String userid) throws Exception {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		List<Object> areaLike = null;
 		try {
 			map.clear();
 			String statement = namespace + ".selectAreaLike";
@@ -67,11 +68,14 @@ public class AreaLikeDAO extends AbstractMybatis {
 			map.put("userid", userid);
 
 			System.out.println("selectAreaLike article??===" + map);
-			return sqlSession.selectList(statement, map);
+			areaLike = sqlSession.selectList(statement, map);
+
 		} finally {
 			sqlSession.commit();
 			sqlSession.close();
 		}
+		System.out.println("areaLike---" + areaLike);
+		return areaLike;
 
 	}
 

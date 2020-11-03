@@ -69,8 +69,8 @@
 
 		<!-- user menu -->
 		<ul class="user-menu">
-			<li onclick="openPopPush()"><img src="<%=request.getContextPath()%>/images/ic_bell.png" alt="push" /></li>
-			<li onclick="openPopMyPage()"><img src="<%=request.getContextPath()%>/images/ic_user.png" alt="user" /></li>
+			<li id="push" value="<%=userid %>" onclick="openPopPush()"><img src="<%=request.getContextPath()%>/images/ic_bell.png" alt="push" /></li>
+			<li id="page" value="<%=userid %>" onclick="openPopMyPage()"><img src="<%=request.getContextPath()%>/images/ic_user.png" alt="user" /></li>
 		</ul>
 	</div>
 	

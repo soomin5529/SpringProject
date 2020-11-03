@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,11 +20,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import area.AreaDTO;
+import area.AreaLikeDTO;
 import area.DongDTO;
 import area.SigunguDTO;
 import dashboard.IndustryCountDTO;
 import industry.MainCategoryDTO;
 import service.AreaDAO;
+import service.AreaLikeDAO;
 import service.BoardLikeDAO;
 import service.DashboardDAO;
 import service.IndustryDAO;
@@ -45,6 +48,8 @@ public class DashboardController {
 	
 	@Autowired
 	IndustryDAO industryDB;
+	@Autowired
+	AreaLikeDAO arealikeDB;
 	
 	@ModelAttribute
 	public void headProcess(HttpServletRequest request, HttpServletResponse res) {
@@ -125,6 +130,35 @@ public class DashboardController {
 		mv.addObject("dongName", dongName);
 		mv.addObject("sigunguName", sigunguName);
 		mv.addObject("dongCode", dongCode);
+		mv.addObject("userid", userid);
+		mv.addObject("name", name);
+		mv.setViewName("jsp_nohead/boardWriteForm");
+		return mv;
+			
+	}
+	
+	@RequestMapping(value = "myArea/{userid}" , produces = "application/text; charset=utf8")
+	@ResponseBody
+	public ModelAndView myArea(@PathVariable("userid") String userid) throws Throwable {
+		mv = new ModelAndView();
+		String dongName = "";
+		String sigunguName = "";
+		AreaDTO sigungu = null;
+		AreaDTO dong=null;
+
+		List<Object> areaLike = arealikeDB.selectAreaLike(userid);
+		
+		/*String sigunguCode = dong.substring(0, 5);
+		
+		sigungu = areaDB.sigungu(sigunguCode);
+		dong = areaDB.dong(dong);
+		
+		sigunguName = sigungu.getName();
+		dongName = dong.getName();*/
+		
+		mv.addObject("dongName", dongName);
+		mv.addObject("sigunguName", sigunguName);
+		mv.addObject("dongCode", dong);
 		mv.addObject("userid", userid);
 		mv.addObject("name", name);
 		mv.setViewName("jsp_nohead/boardWriteForm");

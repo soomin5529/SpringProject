@@ -385,18 +385,18 @@ function closePopUserDelete() {
 
 /* myArea */
 function openPopMyArea() {
+	var userid = document.getElementById("push").value;
+	alert(userid);
 	if (!myArea.firstChild) {
-		/*myArea.innerHTML = '	<div class="title-box cf">'
-				+ '		<div class="close-btn" onclick="closePopMyArea();">'
-				+ '			<svg viewBox="0 0 40 40" class="close-icon">'
-				+ '				<line x1="4.9" y1="4.9" x2="35.1" y2="35.1"/>'
-				+ '				<line x1="35.1" y1="4.9" x2="4.9" y2="35.1"/>'
-				+ '			</svg>' + '		</div>' + '		<div class="tit">관심지역</div>'
-				+ '	</div>' + '	<ul>' + '		<li>'
-				+ '			<div class="area">강남구 역삼동</div>'
-				+ '			<div class="delete-btn">x</div>' + '		</li>' + '		<li>'
-				+ '			<div class="area">강남구 역삼동</div>'
-				+ '			<div class="delete-btn">x</div>' + '		</li>' + '</ul>'*/
+	$.ajax({
+		type : "post",
+		url : "<%=request.getContextPath()%>/dashboard/myArea/" + userid,
+		contentType : "application/json; charset=UTF-8",
+		success : function(data) {
+			   $("#myArea").html(data);
+		}
+	});
+		
 	}
 	myArea.style.right = 0;
 }
