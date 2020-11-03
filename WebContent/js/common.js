@@ -102,13 +102,43 @@ function sendToboardList(code){
 /* community */
 function openPopCommunity() {
 	var community = document.getElementById("community");
+	sessionStorage.setItem("userid","soomin");
+	var idcheck = sessionStorage.getItem("userid");
+	alert(idcheck);
+	if(idcheck == null){
+	community.style.display = "none";
+	login.innerHTML = '<div class="deemed" onclick="closePopLogin()"></div>'
+					+ '<span class="close-btn" onclick="closePopLogin()">x</span>'
+					+ '<div class="pop-box" style="width:400px; height:360px;">'
+					+ '	<div class="title-box">'
+					+ '		<div class="tit">로그인</div>'
+					+ '	</div>'
+					+ '<div class="content-box">'
+					+ '		<form name="loginFrm" action="/SpringTeamProject/member/login">'
+					+ '			<div class="input-box">'
+					+ '				<div class="label-box">아이디</div>'
+					+ '				<input type="text" id="loginId" name="userid" placeholder="아이디를 입력하세요" onkeyup="enterLogin(event);"/>'
+					+ '			</div>'
+					+ '			<div class="input-box">'
+					+ '				<div class="label-box">비밀번호</div>'
+					+ '				<input type="password" id="loginPwd" name="pwd" placeholder="비밀번호를 입력하세요" onkeyup="enterLogin(event);"/>'
+					+ '			</div>'
+					+ '			<span id="idPresenceCheck" style="color:red;"></span>'
+					+ '			<button type="button" onclick="loginCheck()" class="btn-full btn01-reverse">로그인</button>'
+					+ '			<div class="join-btn">'
+					+ '				<span class="gray">아직 회원이 아니신가요?</span>'
+					+ '				<span class="highlight01" onclick="openPopJoin()">회원가입</span>'
+					+ '			</div>' + '		</form>' + '	</div>' + '</div>';
+			login.style.display = "block";
+	}else {
+		community.style.display = "block";
 	var code = document.getElementById("dong").value;
-	community.style.display = "block";
+	
 	sendToboardList(code);
 	var dashboard = document.getElementById("dashboard");
 	if (dashboard.style.display == "block") {
 		community.style.left = "350px";
-	}
+	}}
 }
 function closePopCommunity() {
 	community.style.display = "none";
@@ -593,6 +623,7 @@ function dashBoardSetSession(data, code){
 	sessionStorage.setItem("categry", data.getAttribute('id'));
 	sessionStorage.setItem("categryCode", data.value);
 }
+
 
 function clickPinDistrict(code){
 	changeDistrictSelectBox(code);

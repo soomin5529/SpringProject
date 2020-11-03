@@ -25,6 +25,7 @@ function loginCheck() {
          success : function(textStatus) {
             if (textStatus.includes("ok")) {
                document.loginFrm.submit();
+               sessionStorage.setItem("userid", id);
             } else {
                idcheck.innerHTML = textStatus;
             }
