@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 연결을 namespace로 한다.(대소문자 구분함) -->
+<mapper namespace="Dashboard">
+	<!-- 대분류 업종 top3 -->
+	<select id="getMainCategoryCount" parameterType="hashmap" resultType="IndustryCount">
+		select * from (select nvl(count(store.store_num),0) as industryCount, cm.MAINCATEGORY_NAME as industryName
+		from store, category_main cm
+		where (dong_code = #{dong_code} and store.maincategory_code = cm.maincategory_code)
+		group by cm.MAINCATEGORY_NAME 
+		order by 1 desc) <![CDATA[where rownum <= 3]]>
+	</select>
+	
+	<!-- 중분류 업종  top5-->
+	<select id="getMiddleCategoryCount" parameterType="hashmap" resultType="IndustryCount">
+		select * from (select nvl(count(store.middlecategory_code),0) as industryCount, cm.middlecategory_name as industryName
+		from store, category_middle cm
+		where (dong_code = #{dong_code} and store.middlecategory_code = cm.middlecategory_code)
+		group by cm.middlecategory_name 
+		order by 1 desc) where <![CDATA[rownum <=5]]>
+	</select>
+	
+	<!-- 주요시설 -->
+	<select id="getFacilityCount" parameterType="hashmap" resultType="IndustryCount">
+		select nvl(count(*),0) as industryCount, '스타벅스' as industryName from store where store_name like '%스타벅스%' and dong_code = #{dong_code}
+		union
+		select nvl(count(*),0) as industryCount, '파리바게트' as industryName from store where store_name like '%리바게%' and dong_code = #{dong_code}
+		union
+		select nvl(count(*),0) as industryCount, '올리브영' as industryName from store where store_name like '%올리브영%' and dong_code = #{dong_code}
+	</select>
+</mapper>

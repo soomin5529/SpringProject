@@ -202,4 +202,21 @@ public class AjaxController {
 		}
 		return districts;
 	}
+	
+
+	@RequestMapping(value = "/insertLike", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String selectCode(@RequestParam("userid") String userid, @RequestParam("boardid") int boardid,
+			@RequestParam("status") String status) throws Throwable {
+		String resultOption = "";
+		int num = 10;
+		if (status.equals("insert")) {
+			num = boardlikeDB.insertBoardLike(boardid, userid);
+			resultOption = "들어감";
+		} else if (status.equals("delete")) {
+			num = boardlikeDB.deleteBoardLike(boardid, userid);
+			resultOption = "빼기 성공";
+		}
+		return resultOption;
+	}
 }

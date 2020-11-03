@@ -228,8 +228,7 @@ function openPopJoin() {
 function closePopJoin() {
 	while (join.firstChild) {
 		join.removeChild(join.firstChild);
-	}
-	;
+	};
 	join.style.display = "none";
 }
 

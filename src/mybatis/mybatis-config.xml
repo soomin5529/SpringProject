@@ -27,6 +27,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		
 		<typeAlias type="board.BoardDTO" alias="Board" />
 		<typeAlias type="board.BoardLikeDTO" alias="BoardLike" />
+		<typeAlias type="dashboard.IndustryCountDTO" alias="IndustryCount" />
 		
 		<typeAlias type="comment.CommentDTO" alias="Comment" />
 		
@@ -54,5 +55,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="mybatis/Store.xml" />
 		<mapper resource="mybatis/Comment.xml" />
 		<mapper resource="mybatis/BoardLike.xml" />
+		<mapper resource="mybatis/Dashboard.xml" />
 	</mappers>
 </configuration>

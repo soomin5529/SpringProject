@@ -53,9 +53,8 @@
 		<div class="like-btn off" id="${article.boardid }u"  onclick="javascript:sendLike(this);">
 			<!-- 좋아요 아이콘 -->
 			<svg viewBox="0 0 40 40" class="like-icon">
-                        <path
-					d="M25 15V8c.4-2.4-1.5-4.7-4-5h-2a2 2 0 00-2 1.5v.2l-1.3 8.2-3 7.1H2v18h24.4C36 38 38 32.4 38 27.6V20c.2-2.6-1.6-5-4-4.9-.5-.4-.8-.4-1 0h-8zM12 38H9V20h3v18z"></path>
-                     </svg>
+				<path d="M20 4.5h.8c.9.1 1.6.5 2.1 1.2.5.6 	.8 1.4.6 2.2v8.6H34c.7 0 1.4.3 1.8.9.5.6.8 1.5.7 2.4v7.8c0 2.3-.5 4.9-2.5 6.7-1.5 1.3-4 2.2-7.6 2.2H3.5v-15h7.6l5.2-8 1.3-8.6.1-.3zm-9.5 17v15"></path>
+			</svg>
 			<span class="like-txt">좋아요</span>
 		</div>
 	</div>
