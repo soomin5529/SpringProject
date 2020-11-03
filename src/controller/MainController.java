@@ -197,11 +197,6 @@ public class MainController {
 		return "startupKeyword";
 	}
 
-	@RequestMapping("startupWeather")
-	public String startupWeather() throws Throwable {
-		return "startupWeather";
-	}
-
 	@RequestMapping("intro")
 	public String intro() throws Throwable {
 		return "/jsp_nohead/intro.jsp";

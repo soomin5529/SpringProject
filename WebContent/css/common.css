@@ -105,7 +105,7 @@
 		.content-body .search-box {padding:15px; border:1px solid #d2d2d2;}
 		.content-body .search-box .input-box {margin-bottom:20px;}
 		.content-body .search-box .input-box .label-box {margin-bottom:10px; font-weight:500; font-size:2rem;}
-		.content-body .search-box .input-box .label-box .value {font-size:1.4rem; color:var(--point-color); float:right; line-height: 2.9rem;}
+		.content-body .search-box .input-box .label-box .value {float:right; font-size:1.4rem; color:var(--point-color); float:right; line-height: 2.9rem;}
 		.content-body .search-box .input-box input {margin-bottom:10px;}
 		.content-body .search-box .input-box input:last-child {margin-bottom:0;}
 		.content-body .search-box .input-box .check-box {margin-bottom:5px;}
@@ -221,11 +221,38 @@ li.readed .msg, li.readed .msg .highlight01 {color:#999;}
 .content-body .content .tbl .bar-graph div {height:6px; border-radius:3px; background-color:var(--main-color);;}
 
 /* svg map */
-.svg-map-box {padding: 20px calc((100% - 600px)/2)}
-.svg-map-box .svg-map {fill:#fff ;fill-opacity:1; stroke:#666;}
-.svg-map-box .svg-map .area-text {fill:#333; stroke:none; pointer-events:none}
+.svg-map-box {position:relative; padding: 20px calc((100% - 600px)/2);}
+.svg-map-box .svg-map {fill:#fff ;fill-opacity:1; stroke:#999;}
+.svg-map-box .svg-map .area-text {fill:#999; stroke:none; pointer-events:none}
 .svg-map-box .svg-map .area-text text {font-size:16px;}
-
-
-
+.emoticon-container {position: absolute; top:0; left: calc((100% - 600px)/2); width:500px; height:720px}
+.emoticon-box {position: absolute; width:80px; height:80px; padding: 5px 10px; border-radius:10px; border:2px solid #333; background-color:rgba(255,255,255,0.8); cursor:pointer;}
+.emoticon-box#icSeoul {top:150px; left:120px;}
+.emoticon-box#icDaejeon {top:330px; left:170px;}
+.emoticon-box#icGwangju {top:510px; left:90px;}
+.emoticon-box#icDaegu {top:410px; right:110px;}
+.emoticon-box#icBusan {top:510px; right:40px;}
+.emoticon-box#icSigungu {top:100px; left:calc((100% - 600px)/2);}
+.emoticon-box:hover {background-color:var(--main-color);}
+.emoticon-box .txt {font-size:1.4rem; text-align:center; margin-bottom:5px;}
+.emoticon-box:hover .txt {color:#fff;}
+.emoticon-box svg {margin:0 9px;}
+.score01 .bg,
+.score02 .bg {fill:#F9CE66;}
+.score03 .bg {fill:#22C4A1;}
+.score04 .bg {fill:#E56255;}
+.score05 .bg {fill:#7DC0F1;}
+.score01 .eye {fill-rule:evenodd;clip-rule:evenodd;fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+.score02 .eye, 
+.score03 .eye,
+.score04 .eye,
+.score05 .eye {fill:#000;}
+.score01 .cheek,
+.score02 .cheek {fill:#F98118;}
+.score03 .cheek {fill:#1FA384;}
+.score01 .mouth,
+.score02 .mouth,
+.score05 .mouth {fill:#E65866;stroke:#000000;stroke-linejoin:round;stroke-miterlimit:10;}
+.score03 .mouth {fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+.score04 .mouth {fill:#FFFFFF;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 
