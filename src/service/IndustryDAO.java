@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import industry.IndustryDTO;
+import industry.IndustryRankDTO;
 import industry.MainCategoryDTO;
 import industry.MiddleCategoryDTO;
 import industry.SmallCategoryDTO;
@@ -47,5 +48,58 @@ public class IndustryDAO extends AbstractMybatis {
 			sqlSession.close();
 		}
 	}
-
+	
+	public List<IndustryDTO> maincategory(String dongCode){
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			return sqlSession.selectList(namespace + ".maincategory", dongCode);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	public List<IndustryDTO> middlecategory(Map<String, String> data){
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			return sqlSession.selectList(namespace + ".middlecategory", data);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	public List<IndustryDTO> smallcategory(Map<String, String> data){
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			return sqlSession.selectList(namespace + ".smallcategory", data);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	public List<IndustryRankDTO> maincategoryRank(String dongCode){
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			return sqlSession.selectList(namespace + ".maincategoryRank", dongCode);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	public List<IndustryRankDTO> middlecategoryRank(String dongCode){
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			return sqlSession.selectList(namespace + ".middlecategoryRank", dongCode);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	public List<IndustryRankDTO> frenchiseRank(String dongCode){
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			return sqlSession.selectList(namespace + ".frenchiseRank", dongCode);
+		} finally {
+			sqlSession.close();
+		}
+	}
 }

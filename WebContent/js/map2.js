@@ -54,7 +54,7 @@ function pinSigungu(array) {
 					map : map,
 					icon : {
 						content : [
-								'<div style="text-align:center; background-color:#4d55b2; padding:2px;">',
+								'<div class="" style="text-align:center; background-color:#4d55b2; padding:2px;">',
 								'<div style="color:white;"> ',
 								'<p>' + name + '</p>',
 								'<span>' + code + '</span>', '</div>', '</div>' ]

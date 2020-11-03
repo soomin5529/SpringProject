@@ -8,18 +8,10 @@
 		<form method="post" name="writeform" enctype="multipart/form-data"
 			action="<%=request.getContextPath()%>/board/writeUploadPro">
 			<div class="title-box">
-				<c:forEach var="dong" items="${dong }">
 					<input type="hidden" name="dongCode" value="${dong.code }">
-				</c:forEach>
-
 				<input type="hidden" name="userid" value="<%=userid%>" />
 				<div class="tit">
-					<c:forEach var="sigungu" items="${sigungu}">
-			  ${sigungu.name}
-			</c:forEach>
-					<c:forEach var="dong" items="${dong }">
-				 ${dong.name}
-			</c:forEach>
+			  ${sigungu.name}  ${dong.name}
 				</div>
 			</div>
 			<div class="content-box">

@@ -10,11 +10,14 @@
 		select sido_code as code,
 		sido_name as name from sido
 	</select>
-
+	
+	<!--  -->
 	<select id="sigunguList" resultType="Area"
 		parameterType="hashmap">
-		select sigungu_code as code, sigungu_name as name, latitude, longitude from sigungu
-		where sido_code = #{sido_code} order by sigungu_name
+		select sigungu_code as code, sigungu_name as name,
+		latitude, longitude from sigungu
+		where sido_code = #{sido_code} order
+		by sigungu_name
 	</select>
 
 	<select id="dongList" resultType="Area" parameterType="hashmap">
@@ -23,15 +26,15 @@
 		where sigungu_code = #{sigungu_code} order by dong_name
 	</select>
 
-	<select id="sigungu" resultType="Sigungu"
+	<select id="sigungu" resultType="Area"
 		parameterType="hashmap">
-		select sigungu_code as code, sigungu_name as name from
+		select sigungu_code as code, sigungu_name as name, latitude, longitude from
 		sigungu where sigungu_code = #{sigungu_code}
 	</select>
 
-	<select id="dong" resultType="Dong" parameterType="hashmap">
+	<select id="dong" resultType="Area" parameterType="hashmap">
 		select
-		dong_code as code, dong_name as name from dong where dong_code =
+		dong_code as code, dong_name as name, latitude, longitude from dong where dong_code =
 		#{dong_code}
 	</select>
 
@@ -60,8 +63,29 @@
 		${areaCodeName} = #{areaCode}
 	</select>
 
-	<select id="allStore" resultType="Area" parameterType="hashMap">
-		SELECT *
-		FROM STORE
+	<select id="sigunguListInMapBound" resultType="AreaInMapBound"
+		parameterType="hashmap">
+		SELECT
+			SIG.SIGUNGU_CODE as code, SIG.SIGUNGU_NAME as name,
+			SIG.LATITUDE as latitude, SIG.LONGITUDE as longitude, COUNT(*) as storeNum
+		FROM SIGUNGU SIG, STORE STR
+		WHERE
+			SIG.SIGUNGU_CODE = STR.SIGUNGU_CODE and
+			TO_NUMBER(SIG.LATITUDE) BETWEEN ${lat1} and ${lat2} AND
+			TO_NUMBER(SIG.LONGITUDE) BETWEEN ${lng1} and ${lng2}
+		GROUP by SIG.SIGUNGU_CODE, SIG.SIGUNGU_NAME, SIG.LATITUDE, SIG.LONGITUDE
+	</select>
+
+	<select id="dongListInMapBound" resultType="AreaInMapBound"
+		parameterType="hashmap">
+		SELECT
+			DNG.DONG_CODE as code, DNG.DONG_NAME as name,
+			DNG.LATITUDE as latitude, DNG.LONGITUDE as longitude, COUNT(*) as storeNum
+		FROM DONG DNG, STORE STR 
+		WHERE
+			DNG.DONG_CODE = STR.DONG_CODE and
+			TO_NUMBER(DNG.LATITUDE) BETWEEN ${lat1} and ${lat2} AND
+			TO_NUMBER(DNG.LONGITUDE) BETWEEN ${lng1} and ${lng2}
+		GROUP by DNG.DONG_CODE, DNG.DONG_NAME, DNG.LATITUDE, DNG.LONGITUDE
 	</select>
 </mapper>

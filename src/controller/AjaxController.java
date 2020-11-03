@@ -8,11 +8,12 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,8 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import area.AreaDTO;
-import area.DongDTO;
-import area.SigunguDTO;
+import area.AreaInMapBoundDTO;
 import industry.IndustryDTO;
 import service.AreaDAO;
 import service.BoardLikeDAO;
@@ -49,10 +49,9 @@ public class AjaxController {
 	@RequestMapping(value = "/areaOption", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	// main화면에서 지역 선택 시 다음 옵션 동적으로 받아오기.
-	public List<AreaDTO> mainOption(@RequestBody Map<String, String> areaArray)
-			throws Throwable {
+	public List<AreaDTO> mainOption(@RequestBody Map<String, String> areaArray) throws Throwable {
 		List<AreaDTO> areaList = null;
-		System.out.println(areaArray+"----------->");
+		System.out.println(areaArray + "----------->");
 		if (areaArray.get("type").contains("sido")) {
 			areaList = areaDB.sigunguList(areaArray.get("code"));
 		}
@@ -81,39 +80,6 @@ public class AjaxController {
 		System.out.println("상업리스트------>" + industryList);
 		for (IndustryDTO industry : industryList) {
 			resultOption += "<option value=\"" + industry.getCode() + "\">" + industry.getName() + "</option>\n";
-		}
-
-		return resultOption;
-	}
-
-	@RequestMapping(value = "/selectCode", method = RequestMethod.POST, produces = "application/text; charset=utf8")
-	@ResponseBody
-	// 카테고리 selectBox에서 옵션을 받기위한 bean
-	public String selectCode(@RequestParam("area") String requestArea, @RequestParam("code") String requestCode)
-			throws Throwable {
-		List<SigunguDTO> areaList = null;
-		List<DongDTO> areaList2 = null;
-		String resultOption = "";
-
-		if (requestArea.contains("sigungu")) {
-			areaList = areaDB.sigungu(requestCode);
-			System.out.println("구코드 이름------>" + areaList);
-
-			for (SigunguDTO area : areaList) {
-				resultOption += area.getName();
-				System.out.println("resultOption구---" + resultOption);
-
-			}
-		}
-
-		if (requestArea.contains("dong")) {
-			areaList2 = areaDB.dong(requestCode);
-			System.out.println("동코드 이름------>" + areaList2);
-
-			for (DongDTO area : areaList2) {
-				resultOption += area.getName();
-				System.out.println("resultOption동---" + resultOption);
-			}
 		}
 
 		return resultOption;
@@ -148,10 +114,9 @@ public class AjaxController {
 		return result;
 	}
 
-	@RequestMapping(value = "/findAreaToJson", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@RequestMapping(value = "/findDongToJson", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody
-	public String findAreaToJson(@RequestParam("code") String areaCode, @RequestParam("dong") String dongName)
-			throws Throwable {
+	public String findDongToJson(@RequestParam("code") String areaCode) throws Throwable {
 		// 서울시 읍면동 json 읽어서 좌표찾기
 		ClassLoader classLoader = getClass().getClassLoader();
 		File file = new File(classLoader.getResource("json/seoul_emd.json").getFile());
@@ -165,7 +130,8 @@ public class AjaxController {
 				seoulEMDjsonObj.get(key).toString().length() - 2);
 		String[] coordinates = tmpCoordinates.replaceAll("\\[", "").replaceAll("\\],", "/").replaceAll("\\]", "")
 				.split("/");
-		String path = "";
+		AreaDTO dong = (AreaDTO) areaDB.dong(areaCode);
+		String path = dong.getLatitude() + "," + dong.getLongitude() + ":";
 		for (int i = 0; i < coordinates.length; i++) {
 			if (i == coordinates.length - 1) {
 				path += coordinates[i].split(",")[1] + "," + coordinates[i].split(",")[0];
@@ -176,23 +142,68 @@ public class AjaxController {
 		return path;
 	}
 
-	@RequestMapping(value = "/extractStoreFromDong", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@RequestMapping(value = "/findSigunguToJson", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody
-	public String extractStoreFromDong(@RequestParam("code") String requestDongCode,
-			@RequestParam("dong") String requestDongName, Model model) {
-		List<StoreDTO> stores = storeDB.storeList(requestDongCode);
-		return "";
+	public String findSigunguToJson(@RequestParam("code") String areaCode) throws Throwable {
+		// 시군구 json 읽어서 좌표찾기
+		ClassLoader classLoader = getClass().getClassLoader();
+		File file = new File(classLoader.getResource("json/seoul_sgg.geojson").getFile());
+		FileReader fr = new FileReader(file);
+		Object sggObj = new JSONParser().parse(fr);
+		JSONObject sggJsonObj = (JSONObject) sggObj;
+		JSONArray arr = (JSONArray) sggJsonObj.get("features");
+		String[] coordinates = null;
+		for (int i = 0; i < arr.size(); i++) {
+			JSONObject tmpObj = (JSONObject) arr.get(i);
+			JSONObject properties = (JSONObject) tmpObj.get("properties");
+			if (properties.get("ADM_SECT_C").toString().equals(areaCode)) {
+				JSONObject geometry = (JSONObject) tmpObj.get("geometry");
+				JSONArray coordinatesJson = (JSONArray) geometry.get("coordinates");
+				coordinates = coordinatesJson.toString().substring(3, coordinatesJson.toString().length() - 3)
+						.replaceAll("\\[", "").replaceAll("\\],", "/").replaceAll("\\]", "").split("/");
+			}
+		}
+		AreaDTO sigungu = (AreaDTO) areaDB.sigungu(areaCode);
+		String path = sigungu.getLatitude() + "," + sigungu.getLongitude() + ":";
+		for (int i = 0; i < coordinates.length; i++) {
+			if (i == coordinates.length - 1) {
+				path += coordinates[i].split(",")[1] + "," + coordinates[i].split(",")[0];
+			} else {
+				path += coordinates[i].split(",")[1] + "," + coordinates[i].split(",")[0] + "/";
+			}
+		}
+		
+		return path;
 	}
 
+	// 화면에 보여지는 지도의 상점들 출력
 	@RequestMapping(value = "/currentPageStore", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public List<StoreDTO> currentPageStore(@RequestBody Map<String, Object> params, HttpServletResponse response)
 			throws IOException {
 		List<StoreDTO> stores = storeDB.allStoreList(params);
-		System.out.println(stores.size() + "--------> 검색된 상점수");
+		System.out.println(stores.size() + "--------> 검색된 상점 수");
 		return stores;
 	}
+
+	// 화면에 보여지는 지도의 행정구역(시군구, 읍면동) 출력
+	@RequestMapping(value = "/currentPageDistrict/{type}", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public List<AreaInMapBoundDTO> currentPageDistrict(@RequestBody Map<String, Object> params, @PathVariable("type") String type,
+			HttpServletResponse response) throws IOException {
+		System.out.println("행정구역은?------>" + type);
+		List<AreaInMapBoundDTO> districts = null;
+		if (type.contains("sigungu")) {
+			districts = areaDB.sigunguListInMapBound(params);
+			System.out.println(districts.size() + "--------> 검색된 시군구 수");
+		} else {
+			districts = areaDB.dongListInMapBound(params);
+			System.out.println(districts.size() + "--------> 검색된 읍면동 수");
+		}
+		return districts;
+	}
 	
+
 	@RequestMapping(value = "/insertLike", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody
 	public String selectCode(@RequestParam("userid") String userid, @RequestParam("boardid") int boardid,

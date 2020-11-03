@@ -14,11 +14,18 @@ window.onload = function() {
 	if (url[url.length - 1] == "startupWeather") {
 		menu03.className += "on";
 	}
-	pinSigungu(sigungu);
 }
 
 /* jQuery onload */
 $(document).ready(function() {
+	
+	/* 화면이 로드되면 시군구를 보여준다 */
+	var bound = mapBound();
+	/* 시군구가 보여지는 줌 레벨 */
+	if (map.getZoom() >= 11 && map.getZoom() <= 14) {
+		findDistrictInMapBound('sigungu');
+	}
+	
 	$("#svgMap01 g").mouseover(function(event) {
 		var cls = $(this).attr('class');
 		var _path = event.target;
@@ -63,28 +70,14 @@ var myArea = document.getElementById("myArea");
 var myCommunity = document.getElementById("myCommunity");
 
 /* dashboard */
-function openPopDashboard(data) {
+function openPopDashboard() {
 	dashboard.style.display = "block";
 	if (community.style.display == "block") {
 		community.style.left = "350px";
 	}
-	drawChart(data);
+	drawChart();
 }
 
-function sendChart(){
-	var dongcode = document.getElementById("dong");
-	var code = { "dong_code" : dongcode.value };
-	$.ajax({
-		type : "post",
-		url : "/SpringTeamProject/dashboard/chart",
-		dataType : "json",
-		contentType : "application/json; charset=UTF-8",
-		data : JSON.stringify(code),
-		success : function(data) {
-			openPopDashboard(data);
-		}
-	});
-}
 function closePopDashboard() {
 	dashboard.style.display = "none";
 	if (community.style.display == "block") {
@@ -319,7 +312,8 @@ function openPopMyPageModify() {
 function closePopMyPageModify() {
 	while (myPageModify.firstChild) {
 		myPageModify.removeChild(myPageModify.firstChild);
-	};
+	}
+	;
 	myPageModify.style.display = "none";
 }
 
@@ -420,31 +414,36 @@ function postLike(bdid) {
 		postLike.innerHTML = '<svg viewBox="0 0 40 40" class="like-icon">'
 				+ '<path d="M20 4.5h.8c.9.1 1.6.5 2.1 1.2.5.6 	.8 1.4.6 2.2v8.6H34c.7 0 1.4.3 1.8.9.5.6.8 1.5.7 2.4v7.8c0 2.3-.5 4.9-2.5 6.7-1.5 1.3-4 2.2-7.6 2.2H3.5v-15h7.6l5.2-8 1.3-8.6.1-.3zm-9.5 17v15"></path>'
 				+ '</svg>' + '<span class="like-txt">좋아요</span>';
-				
+
 	} else if (postLike.classList.contains('off')) {
 		postLike.className = postLike.className.replace("off", "on");
 		postLike.innerHTML = '<svg viewBox="0 0 40 40" class="like-icon">'
 				+ '<path d="M25 15V8c.4-2.4-1.5-4.7-4-5h-2a2 2 0 00-2 1.5v.2l-1.3 8.2-3 7.1H2v18h24.4C36 38 38 32.4 38 27.6V20c.2-2.6-1.6-5-4-4.9-.5-.4-.8-.4-1 0h-8zM12 38H9V20h3v18z"></path>'
 				+ '</svg>' + '<span class="like-txt">좋아요</span>';
 	}
-
 }
-// 동 선택 시, 동 면적을 json에서 찾아와 표시한다.
-function findAreaToJson(select) {
-	var id = select.getAttribute('id');
-	var text = $("#" + id + " option:checked").text();
-	var paths;
+// 행정구역(시군군, 읍면동) 선택 시, 행정구역 면적을 json에서 찾아와 표시한다.
+function findAreaToJson(districtCode) {
+	var code = districtCode+"";
+	var url;
+	if (code.length==5) {
+		url = "/SpringTeamProject/request/findSigunguToJson";
+	} else {
+		url = "/SpringTeamProject/request/findDongToJson";
+	}
 	$.ajax({
 		type : "post",
-		url : "/SpringTeamProject/request/findAreaToJson",
+		url : url,
 		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 		data : {
-			'dong' : text,
-			'code' : select.value
+			'code' : code
 		},
-		success : function(textStatus) {
-			drawPolygonDong(textStatus);
-			sendChart();
+		success : function(paths) {
+			var centerPath = paths.split(':')[0];
+			var area = { code : code, latitude : centerPath.split(',')[0], longitude : centerPath.split(',')[1]}
+			choiceArea(area);
+			var borderPaths = paths.split(':')[1];
+			drawPolygonDong(borderPaths);
 		}
 	});
 }
@@ -454,41 +453,37 @@ function findAreaToJson(select) {
 var sigunguArray = new Array();
 var dongArray = new Array();
 function choiceAdministrativeDistrict(select) {
+
+	deleteDistrictMarkers();
 	// 시도 선택 -> 시군구리스트 출력 및 담기
-	// 시군구 선택 -> 동리스트 출력 및 담기
-	// 동 선택 -> 중심으로 이동 및 대쉬 펼치기
 	if (select.getAttribute('id') == 'sido') {
-		console.log("-----------------시도선택")
 		sigunguArray = [];
 		returnAreaArray('sido', select.value);
-		console.log(sigunguArray);
+		if (select.value == '11') {
+			map.setOptions({
+				zoom : 12,
+				center : new naver.maps.LatLng(37.5642135, 127.0016985)
+			})
+			findDistrictInMapBound('sigungu');
+		}
 	}
+	// 시군구 선택 -> 동리스트 출력 및 담기
 	if (select.getAttribute('id') == 'sigungu') {
-		closePopDashboard();
-		console.log("-----------------시군구선택")
+
+		//closePopDashboard();
+		$('#dash-board').empty();
+
 		dongArray = [];
 		returnAreaArray('sigungu', select.value);
-		console.log(dongArray);
-		for ( var i in sigunguArray) {
-			if (sigunguArray[i].code == select.value) {
-				console.log(sigunguArray[i]);
-				choiceArea(sigunguArray[i]);
-			}
-		}
-		//selectOption(sigunguArray, select);
+
+		findDistrictInMapBound('sigungu');
 	}
+	// 동 선택 -> 중심으로 이동 및 대쉬 펼치기
 	if (select.getAttribute('id') == 'dong') {
-		console.log("-----------------동선택")
-		for ( var i in dongArray) {
-			if (dongArray[i].code == select.value) {
-				console.log(dongArray[i]);
-				choiceArea(dongArray[i]);
-			}
-		}
-		//selectOption(dongArray, select);
+		findDistrictInMapBound('dong');
 	}
 }
-function returnAreaArray(districtType, districtCode){
+function returnAreaArray(districtType, districtCode) {
 	$.ajax({
 		type : "post",
 		url : "/SpringTeamProject/request/areaOption",
@@ -504,23 +499,79 @@ function returnAreaArray(districtType, districtCode){
 				if (districtType.includes('sido')) {
 					sigunguArray.push(areaList[i]);
 				}
-				if(districtType.includes('sigungu')){
+				if (districtType.includes('sigungu')) {
 					dongArray.push(areaList[i]);
 				}
-				options += '<option value=' + areaList[i].code + '>' + areaList[i].name + '</option>\n'
+				options += '<option value=' + areaList[i].code + '>'
+						+ areaList[i].name + '</option>\n'
 			}
 			var areaId = districtType == 'sido' ? 'sigungu' : 'dong';
 			$("#" + areaId).empty().append(options);
 		}
 	});
 }
-// 행정구역(시군구, 동)을 선택하면 areaArray[]에서 선택된 구역을 찾아 choiceArea()에 보내어 실행시킨다.
-function selectOption(array, option) {
-	console.log("selectOption() 실행-->" + array[i] +", " +option)
-	for ( var i in array) {
-		if (array[i].code == option.value) {
-			console.log(array[i]);
-			choiceArea(array[i]);
-		}
+/* DashBoard에서 검색된 산업분류에 따라 지도에 상점을 표시해주기위하여 세션에 정보를 저장해 놓는다. */
+function dashBoardSetSession(data, code){
+	sessionStorage.setItem("code", code);
+	sessionStorage.setItem("categry", data.getAttribute('id'));
+	sessionStorage.setItem("categryCode", data.value);
+}
+
+function clickPinDistrict(code){
+	changeDistrictSelectBox(code);
+	if((code+"").length > 5){
+		openDashBoard(code);
 	}
+}
+/* 핀 클릭 시 행정구역(시도, 시군구, 읍면동) 셀렉트 박스를 생성하고 클릭한 행정구역에 위치 시킨다. */
+function changeDistrictSelectBox(code){
+	var code = code+"";
+	if(code.length == 5){
+		var sidoCode = code.substr(0,2);
+		returnAreaArrayByClickPin('sido', Number(sidoCode), code);
+		$("#sido option[value="+sidoCode+"]").attr('selected','selected');
+		findDistrictInMapBound('sigungu');
+	}else{
+		var sigunguCode = code.substr(0,5);
+		returnAreaArrayByClickPin('sigungu', Number(sigunguCode), code);
+		findDistrictInMapBound('dong');
+	}
+}
+function returnAreaArrayByClickPin(districtType, highDistrictCode, lowDistrictCode) {
+	if(lowDistrictCode > 5){
+		$("#sigungu option[value="+highDistrictCode+"]").attr('selected','selected');
+	}else{
+		$("#sido option[value="+highDistrictCode+"]").attr('selected','selected');
+	}
+	
+	$.ajax({
+		type : "post",
+		url : "/SpringTeamProject/request/areaOption",
+		dataType : 'json',
+		contentType : "application/json; charset=UTF-8",
+		data : JSON.stringify({
+			'type' : districtType,
+			'code' : highDistrictCode
+		}),
+		success : function(areaList) {
+			var options = '<option value=\"no\" disabled>선택</option>';
+			for ( var i in areaList) {
+				if (districtType.includes('sido')) {
+					sigunguArray.push(areaList[i]);
+				}
+				if (districtType.includes('sigungu')) {
+					dongArray.push(areaList[i]);
+				}
+				if(areaList[i].code == lowDistrictCode){
+					options += '<option value=' + areaList[i].code + ' selected>'
+					+ areaList[i].name + '</option>\n'
+				}else{
+					options += '<option value=' + areaList[i].code + '>'
+							+ areaList[i].name + '</option>\n'
+				}
+			}
+			var areaId = districtType == 'sido' ? 'sigungu' : 'dong';
+			$("#" + areaId).empty().append(options);
+		}
+	});
 }

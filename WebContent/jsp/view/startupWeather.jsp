@@ -19,15 +19,26 @@
 				<div class="input-box">
 					<div class="label-box">선호지역</div>
 					<div class="half">
-						<select id="sido" name="state" onchange="javascript:choiceAdministrativeDistrict(this);">
-							<option value="no" disabled selected>선택</option>
-							<<%-- c:forEach var="sido" items="${sido }">
-								<option value="${sido.code}">${sido.name}</option>
-							</c:forEach> --%>
-						</select>
-						<select id="sigungu" name="city" onchange="javascript:choiceAdministrativeDistrict(this); sendToControllerguCode(this);">
-							<option value="no" disabled selected>선택</option>
-						</select>
+						<!-- Select-Sido (시도) -->
+					<select id="sido" name="state"
+						onchange="javascript:choiceAdministrativeDistrict(this); $('#dash-board').empty(); $('#dong').empty()">
+						<option value="no" disabled selected>선택</option>
+						<%-- <c:forEach var="sido" items="${sido }">
+							<option value="${sido.code}">${sido.name}</option>
+						</c:forEach> --%>
+					</select>
+
+					<!-- Select-Sigungu (시군구) -->
+					<select id="sigungu" name="city"
+						onchange="javascript:choiceAdministrativeDistrict(this); findAreaToJson(this.value); $('#dash-board').empty()">
+						<option value="no" disabled selected>선택</option>
+					</select>
+
+					<!-- Select-Dong (읍면동) -->
+					<select id="dong" name="street"
+						onchange="javascript:choiceAdministrativeDistrict(this); findAreaToJson(this.value); openDashBoard(this.value);">
+						<option value="no" disabled selected>선택</option>
+					</select>
 					</div>
 				</div>
 				<div class="input-box">
@@ -67,8 +78,8 @@
 		<!-- content -->
 		<div class="content">
 			<div class="svg-map-box" id="svgMap01">
-				<jsp:include page="/jsp_nohead/svgMapIndex.jsp" flush="false"/>
-				<jsp:include page="/jsp_nohead/svgMapSeoul.jsp" flush="false"/>
+				<jsp:include page="/jsp/jsp_nohead/svgMapIndex.jsp" flush="false"/>
+				<jsp:include page="/jsp/jsp_nohead/svgMapSeoul.jsp" flush="false"/>
 			</div>
 		</div>
 	</div>

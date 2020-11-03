@@ -8,10 +8,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import area.AreaDTO;
-import area.DongDTO;
+import area.AreaInMapBoundDTO;
 import area.SelectedAreaDTO;
 import area.SidoDTO;
-import area.SigunguDTO;
 import mybatis.AbstractMybatis;
 
 @Service
@@ -50,24 +49,24 @@ public class AreaDAO extends AbstractMybatis {
 		}
 	}
 
-	public List<SigunguDTO> sigungu(String sigunguCode) {
+	public AreaDTO sigungu(String sigunguCode) {
 		Map<String, Object> sigungu_code = new HashMap<String, Object>();
 		sigungu_code.put("sigungu_code", sigunguCode);
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
-			return sqlSession.selectList(namespace + ".sigungu", sigungu_code);
+			return sqlSession.selectOne(namespace + ".sigungu", sigungu_code);
 		} finally {
 			sqlSession.close();
 		}
 	}
 
-	public List<DongDTO> dong(String dongCode) {
+	public AreaDTO dong(String dongCode) {
 		Map<String, Object> dong_code = new HashMap<String, Object>();
 		dong_code.put("dong_code", dongCode);
 		System.out.println("동코드가 머냐" + dongCode);
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
-			return sqlSession.selectList(namespace + ".dong", dong_code);
+			return sqlSession.selectOne(namespace + ".dong", dong_code);
 		} finally {
 			sqlSession.close();
 		}
@@ -99,6 +98,23 @@ public class AreaDAO extends AbstractMybatis {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
 			return sqlSession.selectList(namespace + ".areaCoordinate", areaCodeMap);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	public List<AreaInMapBoundDTO> sigunguListInMapBound(Map<String, Object> lanlng) {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			return sqlSession.selectList(namespace + ".sigunguListInMapBound", lanlng);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	public List<AreaInMapBoundDTO> dongListInMapBound(Map<String, Object> lanlng) {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			return sqlSession.selectList(namespace + ".dongListInMapBound", lanlng);
 		} finally {
 			sqlSession.close();
 		}
