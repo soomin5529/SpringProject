@@ -141,49 +141,42 @@ function inputCheck() {
          window.location.href = "/SpringTeamProject/view/main";
       }
    });
-   
-
-
 }
 
+// 비밀번호 수정 체크
 function pwdCheck(){
    var chkboolean = false;
-   // 비밀번호 및 비밀번호 확인 체크
-   if (document.pwdForm.oldpwd.value == "") {
-      alert("비밀번호를 입력하세요")
-      document.regForm.pwd.focus();
+   
+   if (document.updateForm.pwd.value == "") {
+      alert("비밀번호를 입력하세요");
+      document.updateForm.pwd.focus();
       return;
    }
-   if (document.pwdForm.pwd.value == "") {
-      alert("새로운 비밀번호를 입력하세요")
-      document.regForm.pwd.focus();
-      return;
-   }
-   if (document.pwdForm.repwd.value == "") {
+   if (document.updateForm.repwd.value == "") {
       alert("비밀번호를 확인하세요");
-      document.regForm.repwd.focus();
+      document.updateForm.repwd.focus();
       return;
    }
-   if (document.pwdForm.pwd.value != document.pwdForm.repwd.value) {
+   if (document.updateForm.pwd.value != document.updateForm.repwd.value) {
       alert("비밀번호가 일치하지 않습니다.");
-      document.pwdForm.repwd.value = "";
-      document.pwdForm.repwd.focus();
+      document.updateForm.repwd.value = "";
+      document.updateForm.repwd.focus();
       return;
    }
    
    var pwdInfo = {
-         "pwd" : $('#pwd').val(),
+         "pwd" : $('#pwd').val()
       }
       $.ajax({
          type : "post",
-         url : "/SpringTeamProject/member/updatepassword",
+         url : "/SpringTeamProject/member/updatePassword",
          contentType : "application/x-www-form-urlencoded; charset=UTF-8",
          data : pwdInfo,
          success : function(textStatus) {
             if (textStatus.includes('fail')) {
-               alert("비밀번호 수정 실패");
+               alert("회원정보 수정 실패");
             } else {
-               alert("비밀번호 수정 완료");
+               alert("회원정보 수정 완료");
             }
             window.location.href = "/SpringTeamProject/view/main";
          }

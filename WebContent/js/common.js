@@ -123,9 +123,7 @@ function openPopMyPage() {
 					+ '		<div class="tit">마이페이지</div>'
 					+ '	</div>'
 					+ '	<ul>'
-					+ '		<li onclick="openPopMyPageModify()">내 정보 변경</li>'
-					+ '		<li onclick="openPopPwd()">비밀번호 변경</li>'
-					+ '		<li onclick="openPopUserDelete()">회원탈퇴</li>'
+					+ '		<li onclick="location.href=\'/SpringTeamProject/member/myPageModify\'; closePopMypage();">내 정보 변경</li>'
 					+ '		<li onclick="location.href=\'/SpringTeamProject/member/logout\'">로그아웃</li>'
 					+ '	</ul>' + '	<ul>'
 					+ '		<li onclick="openPopMyArea()">관심지역</li>'
@@ -401,6 +399,16 @@ function enterLogin(event) {
 /* SVG toggle button */
 
 
+/* bookmark icon */
+function bookmark() {
+
+	var bookmark = document.getElementById("bookmark");
+	if (bookmark.classList.contains('on')) {
+		bookmark.className = bookmark.className.replace("on", "off");
+	} else if (bookmark.classList.contains('off')) {
+		bookmark.className = bookmark.className.replace("off", "on");
+	}
+}
 
 /* like icon */
 function postLike(bdid) {

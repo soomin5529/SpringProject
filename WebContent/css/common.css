@@ -95,7 +95,7 @@
 	.map-popup .title-box .close-btn {float:right; margin: 4px 0; width:20px; height:20px; word-break: break-all; cursor:pointer;}
 	.map-popup .title-box .close-btn .close-icon {fill:none; stroke:#333; stroke-width: 3px;}
 	/* sub-page */
-	.content-body {max-width:1200px; margin:0 auto; padding:40px 20px;}
+	.content-body {max-width:1200px; min-width:800px; margin:0 auto; padding:40px 20px;}
 		/* title box */
 		.page-title-box {background-color:var(--main-color); padding:40px 0;}
 		.page-title-box .page-name {max-width:1200px; margin:0 auto 15px; padding:0 15px; font-size:3rem; font-weight:800; color:#fff;}
@@ -106,17 +106,23 @@
 		.content-body .search-box .input-box {margin-bottom:20px;}
 		.content-body .search-box .input-box .label-box {margin-bottom:10px; font-weight:500; font-size:2rem;}
 		.content-body .search-box .input-box .label-box .value {font-size:1.4rem; color:var(--point-color); float:right; line-height: 2.9rem;}
+		.content-body .search-box .input-box .label-box .unit {font-size:1.4rem; color:var(--point-color); float:right; line-height: 2.9rem;}
 		.content-body .search-box .input-box input {margin-bottom:10px;}
 		.content-body .search-box .input-box input:last-child {margin-bottom:0;}
 		.content-body .search-box .input-box .check-box {margin-bottom:5px;}
 		.content-body .search-box .input-box .check-box input[type="checkbox"] {margin-right:5px;}
 		.content-body .search-box .input-box .check-box label {font-size:1.6rem; cursor:pointer;}
-
-
-
+		.content-body .lnb-box {border:1px solid #d2d2d2;}
+		.content-body .lnb-box li {font-size:1.6rem; padding:10px 15px; cursor:pointer;}
+		.content-body .lnb-box li.on, .content-body .lnb-box li:hover {color:#fff; background-color:var(--main-color);}
+		
 /* main */
 .main .map {width:100%; height:calc(100% - 52px); margin-top:52px;}
-
+.marker {text-align:center; background-color:#4d55b2; padding:5px; border-radius:5px; color:#fff;}
+.marker p {font-size:1.4rem;}
+.marker span {font-size:1.2rem;}
+.marker.sigungu {background-color:#4d55b2; border: 2px solid #3b439e;}
+.marker.store {background-color:#535679; border: 2px solid #3a3d58;} 
 	/* map-pop search */
 	.main .search-group {top:60px; left:0; width:100%; border-bottom:1px solid #ddd; background-color:#fff;}
 	.main .search-group .search-box {padding:10px 15px;}
@@ -221,10 +227,45 @@ li.readed .msg, li.readed .msg .highlight01 {color:#999;}
 .content-body .content .tbl .bar-graph div {height:6px; border-radius:3px; background-color:var(--main-color);;}
 
 /* svg map */
-.svg-map-box {padding: 20px calc((100% - 600px)/2)}
-.svg-map-box .svg-map {fill:#fff ;fill-opacity:1; stroke:#666;}
-.svg-map-box .svg-map .area-text {fill:#333; stroke:none; pointer-events:none}
+.svg-map-box {position:relative; padding: 20px calc((100% - 500px)/2);}
+.svg-map-box .svg-map {fill:#fff ;fill-opacity:1; stroke:#aaa;}
+.svg-map-box .svg-map .area-text {fill:#aaa; stroke:none; pointer-events:none}
 .svg-map-box .svg-map .area-text text {font-size:16px;}
+.emoticon-container {position:absolute; top:0; left: calc((100% - 500px)/2); width:500px; height:720px;}
+.emoticon-box {position:absolute; width:80px; height:100px; padding:10px; border-radius:10px; border:2px solid #000; background-color:rgba(255,255,255,0.8); cursor:pointer; transition: 0.3s;}
+.emoticon-box:hover {background-color:var(--main-color); transition: 0.3s;}
+#icSeoul.emoticon-box {top:130px; left:120px;}
+#icDaejeon.emoticon-box {top:310px; left:170px;}
+#icGwangju.emoticon-box {top:510px; left:94px;}
+#icDaegu.emoticon-box {top:400px; right:100px;}
+#icBusan.emoticon-box {top:500px; right:20px;}
+.emoticon-box .txt {margin-bottom:5px; font-size:16px; color:#333; text-align:center;}
+.emoticon-box:hover .txt {color:#fff}
+.emoticon-box svg {margin:0 10px;}
+.score01 .bg,
+.score02 .bg{fill:#FFCE66;}
+.score03 .bg{fill:#22C4A1;}
+.score04 .bg{fill:#E56255;}
+.score05 .bg{fill:#7DC0F1;}
+.score01 .eye{fill:none;stroke:#000000;stroke-linejoin:round;stroke-miterlimit:10;}
+.score02 .eye,
+.score03 .eye,
+.score04 .eye{fill:#000000;stroke:none;}
+.score01 .cheek,
+.score02 .cheek{fill:#F98118; stroke:none;}
+.score03 .cheek{fill:#1FA384; stroke:none;}
+.score01 .mouth,
+.score02 .mouth,
+.score05 .mouth{fill:#E65866;stroke:#000000;stroke-linejoin:round;stroke-miterlimit:10;}
+.score03 .mouth {fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+.score04 .mouth{fill:#FFFFFF;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+
+
+
+
+
+
+
 
 
 
