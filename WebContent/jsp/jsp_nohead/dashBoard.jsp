@@ -9,10 +9,10 @@
 			</svg>
 		</div>
 		<div class="tit">
-			  ${sigunguName}				 ${dongName}
+			  ${sigunguName}			 ${dongName}
 		</div>
 		<!-- bookmark on/off -->
-		<div class="bookmark off" id="bookmark" onclick="bookmark()">
+		<div class="bookmark off" id="bookmark"  onclick="bookmark()">
 			<svg viewBox="0 0 55 55" class="bookmark-icon">
 					<path
 					d="M9.9,30.8l-9.1-8.9c-1.6-1.6-0.7-4.3,1.5-4.6l12.6-1.8c0.9-0.1,1.6-0.7,2-1.5l5.7-11.4c1-2,3.8-2,4.8,0L33.1,14c0.4,0.8,1.1,1.3,2,1.5l12.6,1.8c2.2,0.3,3.1,3,1.5,4.6L40,30.8c-0.6,0.6-0.9,1.5-0.8,2.4l2.1,12.6c0.4,2.2-1.9,3.9-3.9,2.8l-11.3-5.9c-0.8-0.4-1.7-0.4-2.5,0l-11.3,5.9c-2,1-4.3-0.6-3.9-2.8l2.2-12.6C10.9,32.3,10.6,31.4,9.9,30.8z" />
@@ -40,7 +40,7 @@
 	</div>
 
 	<!-- 통계자료 묶음 -->
-	<div class="chart-box">
+	<div class="chart-box" id="sessionId" >
 		<div class="chart">
 			<div class="tit">대분류 업종 Top3</div>
 			<div id="chartContainer01"></div>
@@ -90,6 +90,38 @@ function openPopCommunity() {
 	if (dashboard.style.display == "block") {
 		community.style.left = "350px";
 	}
+	
+}
+
+/* bookmark icon */
+function bookmark() {
+	var status = "insert";
+	var userid = "${userid}";
+	var selectCode = "${dongCode}";
+	var bookmark = document.getElementById("bookmark");
+	if (bookmark.classList.contains('on')) {
+		status = "delete";
+		bookmark.className = bookmark.className.replace("on", "off");
+	} else if (bookmark.classList.contains('off')) {
+		bookmark.className = bookmark.className.replace("off", "on");
+	}
+	
+	  	$.ajax({
+		type : "post",
+		url : "<%=request.getContextPath()%>/request/insertLikeArea",
+		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+		data : {
+			'userid' : userid,
+			'dongcode': selectCode,
+			'status'  : status
+		},
+		success : function(textStatus) {
+			alert(textStatus);
+		
+		 
+		}
+	});	
+	
 	
 }
 //main화면에서 업종분류 선택시, 다음 하위 옵션의 카테고리 동적으로 받아옴

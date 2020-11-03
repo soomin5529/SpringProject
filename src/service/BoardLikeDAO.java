@@ -11,7 +11,7 @@ import mybatis.AbstractMybatis;
 
 @Service
 public class BoardLikeDAO extends AbstractMybatis {
-	String namespace = "Like";
+	String namespace = "BoardLike";
 
 	Map<String, Object> map = new HashMap<String, Object>();
 

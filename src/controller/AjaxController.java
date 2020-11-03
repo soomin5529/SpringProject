@@ -18,12 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import area.AreaDTO;
 import area.DongDTO;
 import area.SigunguDTO;
 import industry.IndustryDTO;
 import service.AreaDAO;
+import service.AreaLikeDAO;
 import service.BoardLikeDAO;
 import service.IndustryDAO;
 import service.MemberDAO;
@@ -33,6 +35,7 @@ import store.StoreDTO;
 @Controller
 @RequestMapping("/request/")
 public class AjaxController {
+	ModelAndView mv;
 
 	@Autowired
 	AreaDAO areaDB;
@@ -44,6 +47,8 @@ public class AjaxController {
 	StoreDAO storeDB;
 	@Autowired
 	BoardLikeDAO boardlikeDB;
+	@Autowired
+	AreaLikeDAO arealikeDB;
 
 	// produces -> encoding문제 해결/안해주면 한글깨짐
 	@RequestMapping(value = "/areaOption", method = RequestMethod.POST, produces = "application/json; charset=utf8")
@@ -176,5 +181,22 @@ public class AjaxController {
 			resultOption = "빼기 성공";
 		}
 		return resultOption;
+	}
+	
+	@RequestMapping(value = "/insertLikeArea", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public int insertLikeArea(@RequestParam("userid") String userid, @RequestParam("dongcode") String code,
+			@RequestParam("status") String status) throws Throwable {
+		
+		int num = 10;
+		if (status.equals("insert")) {
+			num = arealikeDB.insertAreaLike( userid, code);
+			System.out.println("들어가무 " + num);
+			
+		} else if (status.equals("delete")) {
+			num = arealikeDB.deleteAreaLike( userid, code);
+			System.out.println("삭제대무 "+num);
+		}
+		return num;
 	}
 }

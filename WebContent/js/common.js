@@ -386,7 +386,7 @@ function closePopUserDelete() {
 /* myArea */
 function openPopMyArea() {
 	if (!myArea.firstChild) {
-		myArea.innerHTML = '	<div class="title-box cf">'
+		/*myArea.innerHTML = '	<div class="title-box cf">'
 				+ '		<div class="close-btn" onclick="closePopMyArea();">'
 				+ '			<svg viewBox="0 0 40 40" class="close-icon">'
 				+ '				<line x1="4.9" y1="4.9" x2="35.1" y2="35.1"/>'
@@ -396,7 +396,7 @@ function openPopMyArea() {
 				+ '			<div class="area">강남구 역삼동</div>'
 				+ '			<div class="delete-btn">x</div>' + '		</li>' + '		<li>'
 				+ '			<div class="area">강남구 역삼동</div>'
-				+ '			<div class="delete-btn">x</div>' + '		</li>' + '</ul>'
+				+ '			<div class="delete-btn">x</div>' + '		</li>' + '</ul>'*/
 	}
 	myArea.style.right = 0;
 }
@@ -414,15 +414,7 @@ function enterLogin(event) {
 
 /* SVG toggle button */
 
-/* bookmark icon */
-function bookmark() {
-	var bookmark = document.getElementById("bookmark");
-	if (bookmark.classList.contains('on')) {
-		bookmark.className = bookmark.className.replace("on", "off");
-	} else if (bookmark.classList.contains('off')) {
-		bookmark.className = bookmark.className.replace("off", "on");
-	}
-}
+
 
 /* like icon */
 function postLike(bdid) {

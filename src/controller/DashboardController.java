@@ -93,6 +93,7 @@ public class DashboardController {
 		mv.addObject("main", MainList);
 		mv.addObject("dongName", dongName);
 		mv.addObject("sigunguName", sigunguName);
+		mv.addObject("dongCode", dongCode);
 		mv.addObject("name" , name);
 		mv.addObject("userid", userid);
 		
