@@ -15,39 +15,32 @@
 	</insert>
 
 	<select id="checkId" parameterType="hashmap" resultType="String">
-		select userid from Member where userid = #{userid}
+		SELECT userid FROM Member WHERE userid = #{userid}
 	</select>
 
-	<select id="loginMember" parameterType="hashmap"
-		resultType="String">
-		select userid from Member where userid = #{userid} and pwd = #{pwd}
+	<select id="loginMember" parameterType="hashmap" resultType="String">
+		SELECT userid FROM Member WHERE userid = #{userid} and pwd = #{pwd}
 	</select>
 
-	<select  id="nameMember" parameterType="hashmap"
-		resultType="String">select name from Member where userid = #{userid} </select>
+	<select  id="nameMember" parameterType="hashmap" resultType="String">
+		SELECT name FROM Member WHERE userid = #{userid} 
+	</select>
 		
 	<delete id="deletemember" parameterType="hashmap">
 		DELETE FROM member WHERE userid = #{userid} and pwd = #{pwd}
 	</delete>
-	
-	
 
-
-	<update id="upadatemember" parameterType="hashmap">
-		UPDATE MEMBER
-		SET name = #{name}, email = #{email}, birthdate = #{birthdate}
-		WHERE userid =
-		#{userid}
-	</update>
-
-	<update id="updatepassword" parameterType="hashmap">
-		UPDATE MEMBER
-		SET pwd = #{pwd}
+	<update id="updateMember" parameterType="hashmap">
+		UPDATE member
+		SET  pwd = #{pwd}, name = #{name},email = #{email}, birthdate = #{birthdate},gender = #{gender}
 		WHERE userid = #{userid}
 	</update>
+	
+	 <select id="userInfo" parameterType="String" resultType="Member">
+        SELECT userid, pwd, name, email, birthdate, gender,regdate,author
+        FROM MEMBER
+        WHERE userid = #{userid}
+   </select>
 
 
-
-	<!-- <select id="userInfo" resultType="hashmap"> SELECT userid, pwd, name,email,birthdate,gender 
-		FROM MEMBER WHERE userid = #{userid} </select> -->
 </mapper>
