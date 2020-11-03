@@ -78,6 +78,7 @@ public class MainController {
 		System.out.println(sigunguList + "------------> 시군구 리스트");
 
 		List<MainCategoryDTO> MainList = industryDB.category_mainList();
+		model.addAttribute("userid", userid);
 		
 		return "view/main";
 

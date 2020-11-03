@@ -102,7 +102,6 @@ public class MemberController {
 			message = "fail";
 		}
 		return "redirect:/view/main";
-
 	}
 
 	// 회원정보 수정

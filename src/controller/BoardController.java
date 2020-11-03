@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -157,42 +158,43 @@ public class BoardController {
 
 	// 날짜 변환 메소드
 	public String regDate(String regdate) throws ParseException {
-
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyymmdd");
-		Date today = new Date();
-		Date startDate = null;
-
-		startDate = sdf.parse(regdate);
-
-		sdf.format(today);
-
+		
 		String DateDays = null;
-
-		long calDate = today.getTime() - startDate.getTime();
-		long calDateDays = calDate / (24 * 60 * 60 * 1000);
-		calDateDays = Math.abs(calDateDays);
-		if ((calDateDays / 30) == 1) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar calendar = Calendar.getInstance();
+        Date date = new Date(calendar.getTimeInMillis());
+        String todayDate = sdf.format(date);
+        long todayTimestamp = sdf.parse(todayDate).getTime();
+        Date date2 = new Date(todayTimestamp);
+        //오늘 날짜
+        String todayDate2 = sdf.format(date2);
+        //등록된 날짜 타임스탬프
+		long nextdayTimestamp = sdf.parse(regdate).getTime();
+		//일수 차 (타임스탬프 기준)
+        long difference = (todayTimestamp- nextdayTimestamp);
+        //일수 차 ( 날짜 기준)
+       long days=  difference/ (24*60*60*1000);
+       System.out.println(days);
+		if ((days / 30) == 1) {
 			DateDays = "한달 전";
-		} else if ((calDateDays / 7) == 1) {
+		} else if ((days / 7) == 1) {
 			DateDays = "일주일 전";
-		} else if ((calDateDays / 60) == 1) {
+		} else if ((days / 60) == 1) {
 			DateDays = "두달 전";
-		} else if (calDateDays == 0) {
+		} else if (days == 0) {
 			DateDays = "방금 전";
 		} else {
-			DateDays = String.valueOf(calDateDays) + "일 전";
+			DateDays = days +"일 전";
 		}
-		System.out.println("date=====" + startDate);
-		System.out.println("today=====" + today);
-		System.out.println("두 날짜의 날짜 차이: " + DateDays);
 
-		return DateDays;
+		return  DateDays;
 	}
 
 	@RequestMapping("writeUploadPro")
 	public String writeUploadPro(MultipartHttpServletRequest multipart, BoardDTO article, Model m) throws Exception {
 		String today = null;
-		;
+		
+		String userid = multipart.getParameter("userid");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		today = sdf.format(new java.util.Date());
 
@@ -210,7 +212,10 @@ public class BoardController {
 		}
 		article.setDong_code(dong_code);
 		article.setRegDate(today);
+		article.setUserid(userid);
+		System.out.println("article===="+article);
 		boardDB.insertArticle(article);
+		
 		m.addAttribute("display", "block");
 		return "redirect:/view/main";
 		// jsp로 보내지 않고 바로 view 로
