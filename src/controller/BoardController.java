@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import area.AreaDTO;
 import area.SigunguDTO;
 import board.BoardDTO;
 import comment.CommentDTO;
@@ -151,7 +152,7 @@ public class BoardController {
 		m.addAttribute("main", MainList);
 		System.out.println("메인리스트 나와요" + MainList);
 
-		List<SigunguDTO> sigunguList = areaDB.sigungu(dong_code);
+		AreaDTO sigunguList = areaDB.sigungu(dong_code);
 		// List<DongDTO> dongList = areaDB.dong(dong_code);
 		m.addAttribute("sigungu", sigunguList);
 		System.out.println("시군구 나와요" + sigunguList);
@@ -163,7 +164,7 @@ public class BoardController {
 	public String dashBoardPro(HttpServletRequest request, Model m) throws Exception {
 		List<MainCategoryDTO> MainList = industryDB.category_mainList();
 		m.addAttribute("main", MainList);
-		List<SigunguDTO> sigunguList = areaDB.sigungu(dong_code);
+		AreaDTO sigunguList = areaDB.sigungu(dong_code);
 		m.addAttribute("sigungu", sigunguList);
 
 		return "board/dashBoard";

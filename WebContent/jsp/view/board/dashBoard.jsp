@@ -1,22 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-			<%		String display = request.getParameter("display");%>
-			
-<div class="map-popup dashboard" id="dashboard" style="display:none; display:<%=display %>">
+<%
+	String display = request.getParameter("display");
+%>
+
+<div class="map-popup dashboard" id="dashboard"
+	style="display:none; display:<%=display%>">
 	<div class="title-box cf">
 		<div class="back-btn" onclick="closePopDashboard();">
 			<svg viewBox="0 0 40 40" class="back-icon">
 				<path d="M18 35L3 20 18 5" /></svg>
 		</div>
 		<div class="tit">
-			<!--<c:forEach var="sigungu" items="${sigungu}">
-			  ${sigungu.name}
-			</c:forEach>
-			<c:forEach var="dong" items="${dong }">
-				 ${dong.name}
-			</c:forEach>-->
-			<span id="sigunguName" ></span>&nbsp;<span id="dongName" ></span>
+			  <%-- ${sigungu.name} ${dong.name} --%>
+			<span id="sigunguName"></span>&nbsp;<span id="dongName"></span>
 		</div>
 		<!-- bookmark on/off -->
 		<div class="bookmark off" id="bookmark" onclick="bookmark()">

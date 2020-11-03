@@ -3,38 +3,69 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Store">
-	<select id="storeList" resultType="Store" parameterType="hashmap">
-		SELECT 
-			STORE_NUM as storeNum,
-			STORE_NAME as stroreName,
-			BRANCH_NAME as branchName,
-			MAINCATEGORY_CODE as mainCategoryCode,
-			MIDDLECATEGORY_CODE as middleCategoryCode,
-			SMALLCATEGORY_CODE as smallCategoryCode,
-			DONG_CODE as dongCode,
-			LOT_NUMBER_ADDRESS as lotNumAddress,
-			ROAD_NAME_ADDRESS as roadAddress,
-			LATITUDE as latitude,
-			LONGITUDE as longitude
+
+	<select id="storeListInDongBound" resultType="Store"
+		parameterType="hashmap">
+		SELECT
+		STORE_NUM as storeNum,
+		STORE_NAME as stroreName,
+		BRANCH_NAME as branchName,
+		MAINCATEGORY_CODE as mainCategoryCode,
+		MIDDLECATEGORY_CODE as middleCategoryCode,
+		SMALLCATEGORY_CODE as
+		smallCategoryCode,
+		DONG_CODE as dongCode,
+		LOT_NUMBER_ADDRESS as
+		lotNumAddress,
+		ROAD_NAME_ADDRESS as roadAddress,
+		LATITUDE as latitude,
+		LONGITUDE as longitude
+		FROM STORE WHERE DONG_CODE = #{dongCode}
+		AND TO_NUMBER(LATITUDE) BETWEEN #{lat1} and #{lat2}
+		AND TO_NUMBER(LONGITUDE) BETWEEN #{lng1} and #{lng2}
+		AND ${category} = #{categoryCode}
+	</select>
+
+	<select id="storeList" resultType="Store"
+		parameterType="hashmap">
+		SELECT
+		STORE_NUM as storeNum,
+		STORE_NAME as stroreName,
+		BRANCH_NAME as branchName,
+		MAINCATEGORY_CODE as mainCategoryCode,
+		MIDDLECATEGORY_CODE as middleCategoryCode,
+		SMALLCATEGORY_CODE as
+		smallCategoryCode,
+		DONG_CODE as dongCode,
+		LOT_NUMBER_ADDRESS as
+		lotNumAddress,
+		ROAD_NAME_ADDRESS as roadAddress,
+		LATITUDE as latitude,
+		LONGITUDE as longitude
 		FROM STORE WHERE DONG_CODE = #{dongCode}
 	</select>
-	
-	<select id="allStoreList" resultType="Store" parameterType="hashmap">
-		SELECT 
-			STORE_NUM as storeNum,
-			STORE_NAME as stroreName,
-			BRANCH_NAME as branchName,
-			MAINCATEGORY_CODE as mainCategoryCode,
-			MIDDLECATEGORY_CODE as middleCategoryCode,
-			SMALLCATEGORY_CODE as smallCategoryCode,
-			DONG_CODE as dongCode,
-			LOT_NUMBER_ADDRESS as lotNumAddress,
-			ROAD_NAME_ADDRESS as roadAddress,
-			LATITUDE as latitude,
-			LONGITUDE as longitude
+
+	<select id="allStoreList" resultType="Store"
+		parameterType="hashmap">
+		SELECT
+		STORE_NUM as storeNum,
+		STORE_NAME as stroreName,
+		BRANCH_NAME as branchName,
+		MAINCATEGORY_CODE as mainCategoryCode,
+		MIDDLECATEGORY_CODE as middleCategoryCode,
+		SMALLCATEGORY_CODE as
+		smallCategoryCode,
+		DONG_CODE as dongCode,
+		LOT_NUMBER_ADDRESS as
+		lotNumAddress,
+		ROAD_NAME_ADDRESS as roadAddress,
+		LATITUDE as latitude,
+		LONGITUDE as longitude
 		FROM STORE
-		WHERE TO_NUMBER(LATITUDE) BETWEEN ${lat1} and ${lat2} 
-			AND TO_NUMBER(LONGITUDE) BETWEEN ${lng1} and ${lng2}
+		WHERE TO_NUMBER(LATITUDE) BETWEEN
+		${lat1} and
+		${lat2}
+		AND TO_NUMBER(LONGITUDE) BETWEEN ${lng1} and ${lng2}
 	</select>
-	
+
 </mapper>

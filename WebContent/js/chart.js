@@ -1,3 +1,4 @@
+
 function drawChart() {
 	var ctx1 = document.getElementById('chart01').getContext('2d');
 	var ctx2 = document.getElementById('chart02').getContext('2d');
