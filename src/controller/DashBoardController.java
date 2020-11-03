@@ -1,10 +1,18 @@
 package controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.http.HttpRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,48 +21,55 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import area.AreaDTO;
+import area.AreaLikeDTO;
+import area.DongDTO;
+import area.SigunguDTO;
+import dashboard.IndustryCountDTO;
 import industry.IndustryDTO;
 import industry.IndustryRankDTO;
+import industry.MainCategoryDTO;
 import service.AreaDAO;
+import service.AreaLikeDAO;
+import service.BoardLikeDAO;
+import service.DashboardDAO;
 import service.IndustryDAO;
+import service.MemberDAO;
 import service.StoreDAO;
 import store.StoreDTO;
 
 @Controller
 @RequestMapping("/dashBoard/")
-public class DashBoardController {
-
+public class DashboardController {
 	ModelAndView mv;
+	String userid = "";
+	String name = "";
 
+	@Autowired
+	StoreDAO storeDB;
+	@Autowired
+	DashboardDAO dashboardDB;
 	@Autowired
 	AreaDAO areaDB;
 	@Autowired
 	IndustryDAO industryDB;
 	@Autowired
-	StoreDAO storeDB;
+	AreaLikeDAO arealikeDB;
 
-	@RequestMapping(value = "/dong/{dongCode}", method = RequestMethod.POST, produces = "application/text; charset=utf8")
-	@ResponseBody
-	public ModelAndView openDashBoard(@PathVariable("dongCode") String dongCode) {
-		mv = new ModelAndView();
-		// 시군구 읍면동 이름
-		// 차트
-		String sigunguCode = dongCode.substring(0, 5);
-
-		// 행정구역(시군구, 읍면동) 이름
-		AreaDTO sigungu = areaDB.sigungu(sigunguCode);
-		AreaDTO dong = areaDB.dong(dongCode);
-		// 선택된 동에 있는 maincategory (산업-대분류)
-		List<IndustryDTO> maincategory = industryDB.maincategory(dongCode);
-		// ModelAndView Setting
-		mv.setViewName("jsp_nohead/dashBoard");
-		mv.addObject("sigungu", sigungu);
-		mv.addObject("dong", dong);
-		mv.addObject("maincategory", maincategory);
-
-		return mv;
+	@ModelAttribute
+	public void headProcess(HttpServletRequest request, HttpServletResponse res) {
+		try {
+			request.setCharacterEncoding("utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		HttpSession session = request.getSession();
+		if (request.getParameter("userid") != null) {
+			session.setAttribute("userid", request.getParameter("userid"));
+		}
+		userid = (String) session.getAttribute("userid");
 	}
 
+	
 	@RequestMapping(value = "/douhnutchart", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public List<IndustryRankDTO> drawDouhnutChartOnDashBoard(@RequestBody Map<String, String> dongCode) {
@@ -105,5 +120,122 @@ public class DashBoardController {
 		List<StoreDTO> storeList = storeDB.storeListInDongBound(data);
 		return storeList;
 	}
+	
+	@RequestMapping(value = "/dong/{dongCode}", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public ModelAndView openDashBoard(@PathVariable("dongCode") String dongCode) {
+		mv = new ModelAndView();
+		// 시군구 읍면동 이름
+		// 차트
+		String sigunguCode = dongCode.substring(0, 5);
 
+		// 행정구역(시군구, 읍면동) 이름
+		AreaDTO sigungu = areaDB.sigungu(sigunguCode);
+		AreaDTO dong = areaDB.dong(dongCode);
+		// 선택된 동에 있는 maincategory (산업-대분류)
+		List<IndustryDTO> maincategory = industryDB.maincategory(dongCode);
+		// ModelAndView Setting
+		mv.setViewName("jsp_nohead/dashBoard");
+		mv.addObject("sigungu", sigungu);
+		mv.addObject("dong", dong);
+		mv.addObject("maincategory", maincategory);
+		mv.addObject("userid", userid);
+
+		return mv;
+	}
+
+	@RequestMapping(value = "{dongCode}", produces = "application/text; charset=utf8")
+	@ResponseBody
+	public ModelAndView openDashBoardOfDong(@PathVariable("dongCode") String dongCode) throws Throwable {
+		mv = new ModelAndView();
+		String dongName = "";
+		String sigunguName = "";
+		AreaDTO sigungu = null;
+		AreaDTO dong = null;
+
+		String sigunguCode = dongCode.substring(0, 5);
+		System.out.println(sigunguCode);
+
+		sigungu = areaDB.sigungu(sigunguCode);
+		dong = areaDB.dong(dongCode);
+
+		sigunguName = sigungu.getName();
+		dongName = dong.getName();
+
+		List<MainCategoryDTO> MainList = industryDB.category_mainList();
+		mv.addObject("main", MainList);
+		mv.addObject("dongName", dongName);
+		mv.addObject("sigunguName", sigunguName);
+		mv.addObject("dongCode", dongCode);
+		mv.addObject("name", name);
+		mv.addObject("userid", userid);
+
+		mv.setViewName("jsp_nohead/dashBoard");
+		return mv;
+
+	}
+
+
+	@RequestMapping(value = "boardWriteForm/{dongCode}", produces = "application/text; charset=utf8")
+	@ResponseBody
+	public ModelAndView boardWriteForm(@PathVariable("dongCode") String dongCode, HttpServletRequest request) throws Throwable {
+		mv = new ModelAndView();
+		String dongName = "";
+		String sigunguName = "";
+		AreaDTO sigungu = null;
+		AreaDTO dong = null;
+
+		HttpSession session = request.getSession();
+		String userid = (String) session.getAttribute("userid");
+        String name = (String) session.getAttribute("name"); 
+		
+		String sigunguCode = dongCode.substring(0, 5);
+
+		sigungu = areaDB.sigungu(sigunguCode);
+		dong = areaDB.dong(dongCode);
+
+		sigunguName = sigungu.getName();
+		dongName = dong.getName();
+
+		mv.addObject("dongName", dongName);
+		mv.addObject("sigunguName", sigunguName);
+		mv.addObject("dongCode", dongCode);
+		mv.addObject("userid", userid);
+		mv.addObject("name", name);
+		mv.setViewName("jsp_nohead/boardWriteForm");
+		return mv;
+
+	}
+
+	@RequestMapping(value = "myArea/{code}", produces = "application/text; charset=utf8")
+	@ResponseBody
+	public ModelAndView myArea(@PathVariable("code") String code ,HttpServletRequest request) throws Throwable {
+		mv = new ModelAndView();
+		
+		HttpSession session = request.getSession();
+		String userid = (String) session.getAttribute("userid");
+		String dongName = "";
+		String sigunguName = "";
+		AreaDTO sigungu = null;
+		AreaDTO dong = null;
+
+		List<Object> areaLike = arealikeDB.selectAreaLike(userid);
+
+		/*
+		 * String sigunguCode = dong.substring(0, 5);
+		 * 
+		 * sigungu = areaDB.sigungu(sigunguCode); dong = areaDB.dong(dong);
+		 * 
+		 * sigunguName = sigungu.getName(); dongName = dong.getName();
+		 */
+
+		mv.addObject("dongName", dongName);
+		mv.addObject("sigunguName", sigunguName);
+		mv.addObject("dongCode", dong);
+		mv.addObject("userid", userid);
+		mv.addObject("name", name);
+		mv.setViewName("jsp_nohead/boardWriteForm");
+		return mv;
+
+	}
 }

@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -211,25 +213,30 @@ public class AjaxController {
 
 	@RequestMapping(value = "/insertLike", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody
-	public String selectCode(@RequestParam("userid") String userid, @RequestParam("boardid") int boardid,
-			@RequestParam("status") String status) throws Throwable {
+	public String selectCode(@RequestParam("boardid") int boardid,
+			@RequestParam("status") String status, HttpServletRequest request) throws Throwable {
+		HttpSession session = request.getSession();
+		String userid = (String) session.getAttribute("userid");
 		String resultOption = "";
 		int num = 10;
 		if (status.equals("insert")) {
 			num = boardlikeDB.insertBoardLike(boardid, userid);
 			resultOption = "들어감";
+			System.out.println(resultOption);
 		} else if (status.equals("delete")) {
 			num = boardlikeDB.deleteBoardLike(boardid, userid);
 			resultOption = "빼기 성공";
+			System.out.println(resultOption);
 		}
 		return resultOption;
 	}
 	
 	@RequestMapping(value = "/insertLikeArea", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody
-	public int insertLikeArea(@RequestParam("userid") String userid, @RequestParam("dongcode") String code,
-			@RequestParam("status") String status) throws Throwable {
-		
+	public int insertLikeArea(@RequestParam("dongcode") String code,
+			@RequestParam("status") String status, HttpServletRequest request) throws Throwable {
+		HttpSession session = request.getSession();
+		String userid = (String) session.getAttribute("userid");
 		int num = 10;
 		if (status.equals("insert")) {
 			num = arealikeDB.insertAreaLike( userid, code);

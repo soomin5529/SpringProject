@@ -62,14 +62,14 @@ public class MemberController {
 		System.out.println(name + "----------> name 상태");
 		session.setAttribute("userid", userid);
 		session.setAttribute("name", name);
-		return "head/okmain";
+		return "view/okmain";
 	}
 
 	@RequestMapping("logout")
 	public String logout(HttpServletRequest request, HttpServletResponse response) throws Throwable {
 		HttpSession session = request.getSession();
 		session.invalidate();
-		return "head/okmain";
+		return "view/okmain";
 	}
 
 	// 회원 탈퇴
@@ -88,7 +88,7 @@ public class MemberController {
 		} else { // 실패시
 			message = "fail";
 		}
-		return "head/okmain";
+		return "view/okmain";
 
 	}
 

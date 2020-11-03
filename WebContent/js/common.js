@@ -71,6 +71,7 @@ var myCommunity = document.getElementById("myCommunity");
 
 /* dashboard */
 function openPopDashboard() {
+	var dashboard = document.getElementById("dashboard");
 	dashboard.style.display = "block";
 	if (community.style.display == "block") {
 		community.style.left = "350px";
@@ -80,16 +81,31 @@ function openPopDashboard() {
 
 
 function closePopDashboard() {
+	var dashboard = document.getElementById("dashboard");
 	dashboard.style.display = "none";
 	if (community.style.display == "block") {
 		community.style.left = 0;
 	}
 	
 }
-
+function sendToboardList(code){
+	var selectcode = code; 
+	$.ajax({
+		type : "post",
+		url : "/SpringTeamProject/board/boardList/"+selectcode,
+		contentType : "application/json; charset=UTF-8",
+		success : function(data) {
+			   $("#community").html(data);
+		}
+	});
+}
 /* community */
 function openPopCommunity() {
+	var community = document.getElementById("community");
+	var code = document.getElementById("dong").value;
 	community.style.display = "block";
+	sendToboardList(code);
+	var dashboard = document.getElementById("dashboard");
 	if (dashboard.style.display == "block") {
 		community.style.left = "350px";
 	}
@@ -98,14 +114,79 @@ function closePopCommunity() {
 	community.style.display = "none";
 }
 
+/* bookmark icon */
+function bookmark() {
+	var status = "insert";
+	var selectCode = document.getElementById("dong").value;
+	var bookmark = document.getElementById("bookmark");
+	if (bookmark.classList.contains('on')) {
+		status = "delete";
+		bookmark.className = bookmark.className.replace("on", "off");
+	} else if (bookmark.classList.contains('off')) {
+		bookmark.className = bookmark.className.replace("off", "on");
+	}
+	
+	  	$.ajax({
+		type : "post",
+		url : "/SpringTeamProject/request/insertLikeArea",
+		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+		data : {
+			'dongcode': selectCode,
+			'status'  : status
+		},
+		success : function(textStatus) {
+			alert(textStatus);
+		
+		 
+		}
+	});	
+}
+
+	
+	function sendLike(board){ 
+	var communityReg = document.getElementById("communityReg");
+	var boardid = board.parentNode.parentNode.id;
+	var status = "insert";
+	var postLikeBtn = document.getElementById(boardid);
+	if (postLikeBtn.classList.contains('on')) {
+		status = "delete";
+		postLikeBtn.className = postLikeBtn.className.replace("on", "off");
+	} else if (postLikeBtn.classList.contains('off')) {
+		postLikeBtn.className = postLikeBtn.className.replace("off", "on");
+	}
+   
+   	$.ajax({
+		type : "post",
+		url : "/SpringTeamProject/request/insertLike",
+		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+		data : {
+			'boardid': boardid,
+			'status'  : status
+		},
+		success : function(textStatus) {
+			communityReg.style.display = "block";
+			postLike(boardid+"u");
+		}
+	});	
+} 
 /* communityRegist */
 function openPopCommunityReg() {
-	
 	var code = document.getElementById("dong").value;
-	sendToboardWriteForm(code);
-	communityReg.style.display = "block";
+	var communityReg = document.getElementById("communityReg");
+	
+	$.ajax({
+		type : "post",
+		url : "/SpringTeamProject/dashBoard/boardWriteForm/" + code,
+		contentType : "application/json; charset=UTF-8",
+		success : function(data) {
+			   $("#communityReg").html(data);
+      communityReg.style.display = "block";
+	
+		}
+	});
 }
 function closePopCommunityReg() {
+	var communityReg = document.getElementById("communityReg");
 	communityReg.style.display = "none";
 }
 
@@ -371,12 +452,11 @@ function closePopUserDelete() {
 
 /* myArea */
 function openPopMyArea() {
-	var userid = document.getElementById("push").value;
-	alert(userid);
+	
 	if (!myArea.firstChild) {
 	$.ajax({
 		type : "post",
-		url : "<%=request.getContextPath()%>/dashboard/myArea/" + userid,
+		url : "<%=request.getContextPath()%>/dashBoard/myArea/" + userid,
 		contentType : "application/json; charset=UTF-8",
 		success : function(data) {
 			   $("#myArea").html(data);
@@ -387,7 +467,7 @@ function openPopMyArea() {
 	myArea.style.right = 0;
 }
 function closePopMyArea() {
-	myArea.style.right = "-350px";
+	myArea.style.right = "350px";
 }
 /* end of popup open/close */
 
@@ -464,33 +544,23 @@ function choiceAdministrativeDistrict(select) {
 			findDistrictInMapBound('sigungu');
 		}
 	}
-	// 시군구 선택 -> 동리스트 출력 및 담기
+		// 시군구 선택 -> 동리스트 출력 및 담기
 	if (select.getAttribute('id') == 'sigungu') {
-		closePopDashboard();
-		console.log("-----------------시군구선택")
+
+		//closePopDashboard();
+		$('#dash-board').empty();
+
 		dongArray = [];
 		returnAreaArray('sigungu', select.value);
-		console.log(dongArray);
-		for ( var i in sigunguArray) {
-			if (sigunguArray[i].code == select.value) {
-				console.log(sigunguArray[i]);
-				choiceArea(sigunguArray[i]);
-			}
-		}
-		//selectOption(sigunguArray, select);
+
+		findDistrictInMapBound('sigungu');
 	}
+	// 동 선택 -> 중심으로 이동 및 대쉬 펼치기
 	if (select.getAttribute('id') == 'dong') {
-		console.log("-----------------동선택")
-		for ( var i in dongArray) {
-			if (dongArray[i].code == select.value) {
-				console.log(dongArray[i]);
-				choiceArea(dongArray[i]);
-			}
-		}
-		//selectOption(dongArray, select);
+		findDistrictInMapBound('dong');
 	}
 }
-function returnAreaArray(districtType, districtCode){
+function returnAreaArray(districtType, districtCode) {
 	$.ajax({
 		type : "post",
 		url : "/SpringTeamProject/request/areaOption",
@@ -506,10 +576,76 @@ function returnAreaArray(districtType, districtCode){
 				if (districtType.includes('sido')) {
 					sigunguArray.push(areaList[i]);
 				}
-				if(districtType.includes('sigungu')){
+				if (districtType.includes('sigungu')) {
 					dongArray.push(areaList[i]);
 				}
-				options += '<option value=' + areaList[i].code + '>' + areaList[i].name + '</option>\n'
+				options += '<option value=' + areaList[i].code + '>'
+						+ areaList[i].name + '</option>\n'
+			}
+			var areaId = districtType == 'sido' ? 'sigungu' : 'dong';
+			$("#" + areaId).empty().append(options);
+		}
+	});
+}
+/* DashBoard에서 검색된 산업분류에 따라 지도에 상점을 표시해주기위하여 세션에 정보를 저장해 놓는다. */
+function dashBoardSetSession(data, code){
+	sessionStorage.setItem("code", code);
+	sessionStorage.setItem("categry", data.getAttribute('id'));
+	sessionStorage.setItem("categryCode", data.value);
+}
+
+function clickPinDistrict(code){
+	changeDistrictSelectBox(code);
+	if((code+"").length > 5){
+		openDashBoard(code);
+	}
+}
+/* 핀 클릭 시 행정구역(시도, 시군구, 읍면동) 셀렉트 박스를 생성하고 클릭한 행정구역에 위치 시킨다. */
+function changeDistrictSelectBox(code){
+	var code = code+"";
+	if(code.length == 5){
+		var sidoCode = code.substr(0,2);
+		returnAreaArrayByClickPin('sido', Number(sidoCode), code);
+		$("#sido option[value="+sidoCode+"]").attr('selected','selected');
+		findDistrictInMapBound('sigungu');
+	}else{
+		var sigunguCode = code.substr(0,5);
+		returnAreaArrayByClickPin('sigungu', Number(sigunguCode), code);
+		findDistrictInMapBound('dong');
+	}
+}
+function returnAreaArrayByClickPin(districtType, highDistrictCode, lowDistrictCode) {
+	if(lowDistrictCode > 5){
+		$("#sigungu option[value="+highDistrictCode+"]").attr('selected','selected');
+	}else{
+		$("#sido option[value="+highDistrictCode+"]").attr('selected','selected');
+	}
+	
+	$.ajax({
+		type : "post",
+		url : "/SpringTeamProject/request/areaOption",
+		dataType : 'json',
+		contentType : "application/json; charset=UTF-8",
+		data : JSON.stringify({
+			'type' : districtType,
+			'code' : highDistrictCode
+		}),
+		success : function(areaList) {
+			var options = '<option value=\"no\" disabled>선택</option>';
+			for ( var i in areaList) {
+				if (districtType.includes('sido')) {
+					sigunguArray.push(areaList[i]);
+				}
+				if (districtType.includes('sigungu')) {
+					dongArray.push(areaList[i]);
+				}
+				if(areaList[i].code == lowDistrictCode){
+					options += '<option value=' + areaList[i].code + ' selected>'
+					+ areaList[i].name + '</option>\n'
+				}else{
+					options += '<option value=' + areaList[i].code + '>'
+							+ areaList[i].name + '</option>\n'
+				}
 			}
 			var areaId = districtType == 'sido' ? 'sigungu' : 'dong';
 			$("#" + areaId).empty().append(options);

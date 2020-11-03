@@ -23,12 +23,12 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
       <typeAlias type="industry.SmallCategoryDTO"
          alias="SmallCategory" />
       <typeAlias type="industry.IndustryDTO" alias="Industry" />
-      
+      <typeAlias type="industry.IndustryRankDTO" alias="IndustryRank" />
       <typeAlias type="board.BoardDTO" alias="Board" />
       <typeAlias type="board.BoardLikeDTO" alias="BoardLike" />
       <typeAlias type="dashboard.IndustryCountDTO" alias="IndustryCount" />
       <typeAlias type="area.AreaLikeDTO" alias="AreaLike" />
-      
+      <typeAlias type="industry.IndustryRankDTO" alias="IndustryRank" />
       <typeAlias type="comment.CommentDTO" alias="Comment" />
       
       
