@@ -539,7 +539,12 @@ function changeDistrictSelectBox(code){
 	}
 }
 function returnAreaArrayByClickPin(districtType, highDistrictCode, lowDistrictCode) {
-	alert(lowDistrictCode);
+	if(lowDistrictCode > 5){
+		$("#sigungu option[value="+highDistrictCode+"]").attr('selected','selected');
+	}else{
+		$("#sido option[value="+highDistrictCode+"]").attr('selected','selected');
+	}
+	
 	$.ajax({
 		type : "post",
 		url : "/SpringTeamProject/request/areaOption",
