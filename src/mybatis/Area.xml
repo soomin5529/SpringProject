@@ -5,86 +5,87 @@
 <!-- 연결을 namespace로 한다.(대소문자 구분함) -->
 <mapper namespace="Area">
 
-   <!-- 시도 출력 -->
-   <select id="sidoList" resultType="Sido">
-      select sido_code as code,
-      sido_name as name from sido
-   </select>
+	<!-- 시도 출력 -->
+	<select id="sidoList" resultType="Sido">
+		select sido_code as code,
+		sido_name as name from sido
+	</select>
+	
+	<!--  -->
+	<select id="sigunguList" resultType="Area"
+		parameterType="hashmap">
+		select sigungu_code as code, sigungu_name as name,
+		latitude, longitude from sigungu
+		where sido_code = #{sido_code} order
+		by sigungu_name
+	</select>
 
-   <select id="sigunguList" resultType="Area"
-      parameterType="hashmap">
-      select sigungu_code as code, sigungu_name as name,
-      latitude, longitude from sigungu
-      where sido_code = #{sido_code} order
-      by sigungu_name
-   </select>
+	<select id="dongList" resultType="Area" parameterType="hashmap">
+		select
+		dong_code as code, dong_name as name, latitude, longitude from dong
+		where sigungu_code = #{sigungu_code} order by dong_name
+	</select>
 
-   <select id="dongList" resultType="Area" parameterType="hashmap">
-      select
-      dong_code as code, dong_name as name, latitude, longitude from dong
-      where sigungu_code = #{sigungu_code} order by dong_name
-   </select>
+	<select id="sigungu" resultType="Area"
+		parameterType="hashmap">
+		select sigungu_code as code, sigungu_name as name, latitude, longitude from
+		sigungu where sigungu_code = #{sigungu_code}
+	</select>
 
-   <select id="sigungu" resultType="Area"
-      parameterType="hashmap">
-      select sigungu_code as code, sigungu_name as name, latitude, longitude from
-      sigungu where sigungu_code = #{sigungu_code}
-   </select>
+	<select id="dong" resultType="Area" parameterType="hashmap">
+		select
+		dong_code as code, dong_name as name, latitude, longitude from dong where dong_code =
+		#{dong_code}
+	</select>
 
-   <select id="dong" resultType="Area" parameterType="hashmap">
-      select
-      dong_code as code, dong_name as name, latitude, longitude from dong where dong_code =
-      #{dong_code}
-   </select>
+	<!-- 선택한 동의 시도, 시군구, 동의 이름을 받아온다. -->
+	<select id="selectedArea" resultType="SelectedArea"
+		parameterType="hashMap">
+		Select
+		c.sido_name as si,
+		b.sigungu_name as sig,
+		a.dong_name as emd
+		from dong a,
+		sigungu b, sido c
+		where c.SIDO_CODE =
+		b.SIDO_CODE
+		and
+		b.SIGUNGU_CODE =
+		(select sigungu_code from dong where
+		dong_code =
+		#{dong_code1}) and
+		a.DONG_CODE = #{dong_code2}
+	</select>
 
-   <!-- 선택한 동의 시도, 시군구, 동의 이름을 받아온다. -->
-   <select id="selectedArea" resultType="SelectedArea"
-      parameterType="hashMap">
-      Select
-      c.sido_name as si,
-      b.sigungu_name as sig,
-      a.dong_name as emd
-      from dong a,
-      sigungu b, sido c
-      where c.SIDO_CODE =
-      b.SIDO_CODE
-      and
-      b.SIGUNGU_CODE =
-      (select sigungu_code from dong where
-      dong_code =
-      #{dong_code1}) and
-      a.DONG_CODE = #{dong_code2}
-   </select>
+	<select id="areaCoordinate" resultType="Area"
+		parameterType="hashMap">
+		SELECT latitude, longitude FROM ${areaTable} WHERE
+		${areaCodeName} = #{areaCode}
+	</select>
 
-   <select id="areaCoordinate" resultType="Area"
-      parameterType="hashMap">
-      SELECT latitude, longitude FROM ${areaTable} WHERE
-      ${areaCodeName} = #{areaCode}
-   </select>
+	<select id="sigunguListInMapBound" resultType="AreaInMapBound"
+		parameterType="hashmap">
+		SELECT
+			SIG.SIGUNGU_CODE as code, SIG.SIGUNGU_NAME as name,
+			SIG.LATITUDE as latitude, SIG.LONGITUDE as longitude, COUNT(*) as storeNum
+		FROM SIGUNGU SIG, STORE STR
+		WHERE
+			SIG.SIGUNGU_CODE = STR.SIGUNGU_CODE and
+			TO_NUMBER(SIG.LATITUDE) BETWEEN ${lat1} and ${lat2} AND
+			TO_NUMBER(SIG.LONGITUDE) BETWEEN ${lng1} and ${lng2}
+		GROUP by SIG.SIGUNGU_CODE, SIG.SIGUNGU_NAME, SIG.LATITUDE, SIG.LONGITUDE
+	</select>
 
-   <select id="sigunguListInMapBound" resultType="AreaInMapBound"
-      parameterType="hashmap">
-      SELECT
-         SIG.SIGUNGU_CODE as code, SIG.SIGUNGU_NAME as name,
-         SIG.LATITUDE as latitude, SIG.LONGITUDE as longitude, COUNT(*) as storeNum
-      FROM SIGUNGU SIG, STORE STR
-      WHERE
-         SIG.SIGUNGU_CODE = STR.SIGUNGU_CODE and
-         TO_NUMBER(SIG.LATITUDE) BETWEEN ${lat1} and ${lat2} AND
-         TO_NUMBER(SIG.LONGITUDE) BETWEEN ${lng1} and ${lng2}
-      GROUP by SIG.SIGUNGU_CODE, SIG.SIGUNGU_NAME, SIG.LATITUDE, SIG.LONGITUDE
-   </select>
-
-   <select id="dongListInMapBound" resultType="AreaInMapBound"
-      parameterType="hashmap">
-      SELECT
-         DNG.DONG_CODE as code, DNG.DONG_NAME as name,
-         DNG.LATITUDE as latitude, DNG.LONGITUDE as longitude, COUNT(*) as storeNum
-      FROM DONG DNG, STORE STR 
-      WHERE
-         DNG.DONG_CODE = STR.DONG_CODE and
-         TO_NUMBER(DNG.LATITUDE) BETWEEN ${lat1} and ${lat2} AND
-         TO_NUMBER(DNG.LONGITUDE) BETWEEN ${lng1} and ${lng2}
-      GROUP by DNG.DONG_CODE, DNG.DONG_NAME, DNG.LATITUDE, DNG.LONGITUDE
-   </select>
+	<select id="dongListInMapBound" resultType="AreaInMapBound"
+		parameterType="hashmap">
+		SELECT
+			DNG.DONG_CODE as code, DNG.DONG_NAME as name,
+			DNG.LATITUDE as latitude, DNG.LONGITUDE as longitude, COUNT(*) as storeNum
+		FROM DONG DNG, STORE STR 
+		WHERE
+			DNG.DONG_CODE = STR.DONG_CODE and
+			TO_NUMBER(DNG.LATITUDE) BETWEEN ${lat1} and ${lat2} AND
+			TO_NUMBER(DNG.LONGITUDE) BETWEEN ${lng1} and ${lng2}
+		GROUP by DNG.DONG_CODE, DNG.DONG_NAME, DNG.LATITUDE, DNG.LONGITUDE
+	</select>
 </mapper>

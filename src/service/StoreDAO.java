@@ -33,4 +33,13 @@ public class StoreDAO extends AbstractMybatis {
 			sqlSession.close();
 		}
 	}
+	
+	public List<StoreDTO> storeListInDongBound(Map<String, String> data) {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			return sqlSession.selectList(namespace + ".storeListInDongBound", data);
+		} finally {
+			sqlSession.close();
+		}
+	}
 }

@@ -20,9 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import area.AreaDTO;
-import area.DongDTO;
 import area.SidoDTO;
-import area.SigunguDTO;
 import board.BoardDTO;
 import comment.CommentDTO;
 import industry.MainCategoryDTO;
@@ -39,8 +37,7 @@ public class MainController {
 	public String userid = "";
 
 	public ModelAndView mv = new ModelAndView();
-    
-	
+
 	@Autowired
 	AreaDAO areaDB;
 	@Autowired
@@ -70,7 +67,7 @@ public class MainController {
 
 	// main화면 실행 시 시도 selectBox에 값 생성
 	@SuppressWarnings("finally")
-	@RequestMapping("main")
+	@RequestMapping("/main")
 	public String main(Model model) throws Exception {
 		// 처음 시도 목록을 받아 지역 시도선택에 뿌려준다.
 		List<SidoDTO> sidoList = areaDB.sidoList();
@@ -80,8 +77,9 @@ public class MainController {
 		model.addAttribute("sigunguList", sigunguList);
 		System.out.println(sigunguList + "------------> 시군구 리스트");
 
+		List<MainCategoryDTO> MainList = industryDB.category_mainList();
 		
-		return "head/main";
+		return "view/main";
 
 	
 	}
@@ -121,27 +119,27 @@ public class MainController {
 	}
 
 	// main화면 실행 시 카테고리 selectBox에 값 생성
-	@RequestMapping("mainCategory")
+	@RequestMapping("/mainCategory")
 	public String mainCategory(Model model) throws Throwable {
 		List<MainCategoryDTO> MainList = industryDB.category_mainList();
 		System.out.println(MainList);
 		model.addAttribute("main", MainList);
-		return "main";
+		return "view/main";
 	}
 
 	@RequestMapping("startupKeyword")
 	public String startupKeyword() throws Throwable {
-		return "head/startupKeyword";
+		return "view/startupKeyword";
 	}
 
 	@RequestMapping("startupWeather")
 	public String startupWeather() throws Throwable {
-		return "head/startupWeather";
+		return "view/startupWeather";
 	}
 
-	@RequestMapping("intro")
+	@RequestMapping("/intro")
 	public String intro() throws Throwable {
-		return "jsp_nohead/intro.jsp";
+		return "jsp_nohead/intro";
 	}
 
 }

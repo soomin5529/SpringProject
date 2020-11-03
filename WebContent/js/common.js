@@ -14,11 +14,18 @@ window.onload = function() {
 	if (url[url.length - 1] == "startupWeather") {
 		menu03.className += "on";
 	}
-	pinSigungu(sigungu);
 }
 
 /* jQuery onload */
 $(document).ready(function() {
+	
+	/* 화면이 로드되면 시군구를 보여준다 */
+	var bound = mapBound();
+	/* 시군구가 보여지는 줌 레벨 */
+	if (map.getZoom() >= 11 && map.getZoom() <= 14) {
+		findDistrictInMapBound('sigungu');
+	}
+	
 	$("#svgMap01 g").mouseover(function(event) {
 		var cls = $(this).attr('class');
 		var _path = event.target;
@@ -63,50 +70,29 @@ var myArea = document.getElementById("myArea");
 var myCommunity = document.getElementById("myCommunity");
 
 /* dashboard */
-function openPopDashboard(data) {
+function openPopDashboard() {
 	dashboard.style.display = "block";
-	var community = document.getElementById("community");
 	if (community.style.display == "block") {
 		community.style.left = "350px";
 	}
-	drawChart(data);
+	drawChart();
 }
 
-function sendChart(){
-	var dongcode = document.getElementById("dong");
-	var code = { "dong_code" : dongcode.options[dongcode.selectedIndex].value };
-	
-	$.ajax({
-		type : "post",
-		url : "/SpringTeamProject/dashboard/chart",
-		dataType : "json",
-		contentType : "application/json; charset=UTF-8",
-		data : JSON.stringify(code),
-		success : function(data) {
-			openPopDashboard(data);
-		}
-	});
-}
+
 function closePopDashboard() {
 	dashboard.style.display = "none";
-		if(community != null){
-			if (community.style.display == "block") {
-			community.style.left = 0;
-		}
+	if (community.style.display == "block") {
+		community.style.left = 0;
 	}
 	
 }
 
 /* community */
 function openPopCommunity() {
-	var code = document.getElementById("dong").value;
-	sendToboardList(code);
 	community.style.display = "block";
-	
 	if (dashboard.style.display == "block") {
 		community.style.left = "350px";
 	}
-	
 }
 function closePopCommunity() {
 	community.style.display = "none";
@@ -433,22 +419,28 @@ function postLike(bdid) {
 	}
 
 }
-// 동 선택 시, 동 면적을 json에서 찾아와 표시한다.
-function findAreaToJson(select) {
-	var id = select.getAttribute('id');
-	var text = $("#" + id + " option:checked").text();
-	var paths;
+// 행정구역(시군군, 읍면동) 선택 시, 행정구역 면적을 json에서 찾아와 표시한다.
+function findAreaToJson(districtCode) {
+	var code = districtCode+"";
+	var url;
+	if (code.length==5) {
+		url = "/SpringTeamProject/request/findSigunguToJson";
+	} else {
+		url = "/SpringTeamProject/request/findDongToJson";
+	}
 	$.ajax({
 		type : "post",
-		url : "/SpringTeamProject/request/findAreaToJson",
+		url : url,
 		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 		data : {
-			'dong' : text,
-			'code' : select.value
+			'code' : code
 		},
-		success : function(textStatus) {
-			drawPolygonDong(textStatus);
-			sendChart();
+		success : function(paths) {
+			var centerPath = paths.split(':')[0];
+			var area = { code : code, latitude : centerPath.split(',')[0], longitude : centerPath.split(',')[1]}
+			choiceArea(area);
+			var borderPaths = paths.split(':')[1];
+			drawPolygonDong(borderPaths);
 		}
 	});
 }
@@ -458,15 +450,21 @@ function findAreaToJson(select) {
 var sigunguArray = new Array();
 var dongArray = new Array();
 function choiceAdministrativeDistrict(select) {
+
+	deleteDistrictMarkers();
 	// 시도 선택 -> 시군구리스트 출력 및 담기
-	// 시군구 선택 -> 동리스트 출력 및 담기
-	// 동 선택 -> 중심으로 이동 및 대쉬 펼치기
 	if (select.getAttribute('id') == 'sido') {
-		console.log("-----------------시도선택")
 		sigunguArray = [];
 		returnAreaArray('sido', select.value);
-		console.log(sigunguArray);
+		if (select.value == '11') {
+			map.setOptions({
+				zoom : 12,
+				center : new naver.maps.LatLng(37.5642135, 127.0016985)
+			})
+			findDistrictInMapBound('sigungu');
+		}
 	}
+	// 시군구 선택 -> 동리스트 출력 및 담기
 	if (select.getAttribute('id') == 'sigungu') {
 		closePopDashboard();
 		console.log("-----------------시군구선택")

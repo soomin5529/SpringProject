@@ -25,4 +25,82 @@
 		category_small where middlecategory_code =
 		#{middlecategory_code}
 	</select>
+
+	<select id="maincategory" resultType="Industry"
+		parameterType="String">
+		SELECT cm.MAINCATEGORY_NAME as name,
+		cm.MAINCATEGORY_CODE as code
+		FROM STORE str, CATEGORY_MAIN cm
+		WHERE
+		str.DONG_CODE = #{dongCode} and str.MAINCATEGORY_CODE =
+		cm.MAINCATEGORY_CODE
+		GROUP BY cm.MAINCATEGORY_NAME,
+		cm.MAINCATEGORY_CODE ORDER BY cm.MAINCATEGORY_CODE
+	</select>
+	
+	<select id="middlecategory" resultType="Industry"
+		parameterType="String">
+		SELECT cm.MIDDLECATEGORY_NAME as name,
+		cm.MIDDLECATEGORY_CODE as code
+		FROM STORE str, CATEGORY_MIDDLE cm
+		WHERE
+		str.DONG_CODE = #{dongCode}
+		and str.MIDDLECATEGORY_CODE = cm.MIDDLECATEGORY_CODE
+		and cm.MAINCATEGORY_CODE = #{mainCode}
+		GROUP BY cm.MIDDLECATEGORY_NAME,
+		cm.MIDDLECATEGORY_CODE ORDER BY cm.MIDDLECATEGORY_CODE
+	</select>
+	
+	<select id="smallcategory" resultType="Industry"
+		parameterType="String">
+		SELECT cm.SMALLCATEGORY_NAME as name,
+		cm.SMALLCATEGORY_CODE as code
+		FROM STORE str, CATEGORY_SMALL cm
+		WHERE
+		str.DONG_CODE = #{dongCode}
+		and str.SMALLCATEGORY_CODE = cm.SMALLCATEGORY_CODE
+		and cm.MIDDLECATEGORY_CODE = #{middleCode}
+		GROUP BY cm.SMALLCATEGORY_NAME,
+		cm.SMALLCATEGORY_CODE ORDER BY cm.SMALLCATEGORY_CODE
+	</select>
+
+	<select id="maincategoryRank" resultType="IndustryRank"
+		parameterType="String">
+		SELECT * FROM(
+		SELECT cm.MAINCATEGORY_CODE as code, cm.MAINCATEGORY_NAME as name,
+		CEIL(count(*)/(select count(*) from STORE str, CATEGORY_MAIN cm where
+		str.DONG_CODE = #{dongCode} and str.MAINCATEGORY_CODE =
+		cm.MAINCATEGORY_CODE)*100) as sum, RANK() over (ORDER BY
+		COUNT(str.MAINCATEGORY_CODE) DESC) as rank
+		FROM STORE str, CATEGORY_MAIN cm
+		WHERE str.MAINCATEGORY_CODE =
+		cm.MAINCATEGORY_CODE and str.DONG_CODE = #{dongCode}
+		GROUP BY
+		cm.MAINCATEGORY_CODE, cm.MAINCATEGORY_NAME) WHERE rank &lt;= 3
+		<!-- '&lt;=' : '<=' -->
+	</select>
+
+	<select id="middlecategoryRank" resultType="IndustryRank"
+		parameterType="String">
+		SELECT * FROM(
+		SELECT cm.MIDDLECATEGORY_CODE as code, cm.MIDDLECATEGORY_NAME as name,
+		count(*) as sum, RANK() over (ORDER BY COUNT(str.MIDDLECATEGORY_CODE)
+		DESC) as rank
+		FROM STORE str, CATEGORY_MIDDLE cm
+		WHERE str.MIDDLECATEGORY_CODE =
+		cm.MIDDLECATEGORY_CODE and str.DONG_CODE = ${dongCode}
+		GROUP BY
+		cm.MIDDLECATEGORY_CODE, cm.MIDDLECATEGORY_NAME) WHERE rank &lt;= 5
+		<!-- '&lt;=' : '<=' -->
+	</select>
+
+	<select id="frenchiseRank" resultType="IndustryRank" parameterType="String">
+		select * from(
+			select '맥도날드' as name, count(*) as sum from Store where STORE_NAME like '%맥%도%날%드%' and DONG_CODE = ${dongCode} union
+			select '파리바게트', count(*) from Store where STORE_NAME like '%리%바%게%' and DONG_CODE = ${dongCode} union
+			select '올리브영', count(*) from Store where STORE_NAME like '%올%리%브%영%' and DONG_CODE = ${dongCode} union
+			select '스타벅스', count(*) from Store where STORE_NAME like '%스%타%벅%스%' and DONG_CODE = ${dongCode})
+		order by sum desc
+	</select>
+
 </mapper>

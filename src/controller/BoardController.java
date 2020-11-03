@@ -26,7 +26,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import area.AreaDTO;
-import area.DongDTO;
 import area.SigunguDTO;
 import board.BoardDTO;
 import comment.CommentDTO;
@@ -44,7 +43,6 @@ public class BoardController {
 	public String boardid = "";
 	public String userid = "";
 	public String dong_code = "";
-	public String name = "";
 	// boardid, userid, dong_code 는 view 에서 값 받아야함
 	public String remoteId = "";
 	public ModelAndView mv = new ModelAndView();
@@ -80,7 +78,6 @@ public class BoardController {
 			session.setAttribute("userid", request.getParameter("userid"));
 		}
 		userid = (String) session.getAttribute("userid");
-		name = (String) session.getAttribute("name");
 	}
 
 	@RequestMapping(value = "/boardList/{code}", produces = "application/text; charset=utf8")
@@ -102,7 +99,6 @@ public class BoardController {
 			
 			mav.addObject("count", count);
 			mav.addObject("userid", userid);
-			mav.addObject("name", name);
 			mav.setViewName("jsp_nohead/boardList");
 		}
 		System.out.println("count 수는------????????" +count);
@@ -155,7 +151,6 @@ public class BoardController {
 		mav.addObject("regDate", regDatemap);
 		}
 		mav.addObject("userid", userid);
-		mav.addObject("name", name);
 		mav.setViewName("jsp_nohead/boardList");
 		
 		return mav;
@@ -246,8 +241,6 @@ public class BoardController {
 		// jsp로 보내지 않고 바로 view 로
 	}
 
-
-	
 	@RequestMapping("deletePro")
 	public String deletePro(String userid, String dong_code, String boardid, Model m) throws Exception {
 		int delete_ok = boardDB.deleteArticle(userid, dong_code, boardid);
