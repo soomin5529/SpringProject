@@ -69,16 +69,15 @@
 		</c:forEach>
 	</div>
 	<div class="reply-reg-box">
-		<form method="post" id="commentform"
-			action="<%=request.getContextPath()%>/board/commentUploadPro">
+		<form method="post" id="commentform">
 			<input type="hidden" name="userid" id="userid" value="${userid}" />
 			<input type="hidden" name="name" id="name" value="${name }" /> <input
-				type="hidden" name="boardid" id="boardid"
-				value="${article.boardid }" /> <input type="text" name="content"
+				type="hidden" name="boardid" id="board_id"
+				value="${article.boardid }" /> <input type="text" id="content" name="content"
 				placeholder="댓글을 입력하세요" />
 
 			<div class="reg-btn"
-				onclick="javascript:document.getElementById('commentform').submit();">
+				onclick="javascript:sendReplyReg();">
 				<svg viewBox="0 0 40 40" class="reg-icon">
 					<path
 						d="M28.6 4.5c.4 0 .8.2 1 .4l5.5 5.4a1.5 1.5 0 010 2.1L13 34.5H5.5V27l22-22c.3-.3.7-.5 1.1-.5zm-6.1 6l7 7"></path></svg>
