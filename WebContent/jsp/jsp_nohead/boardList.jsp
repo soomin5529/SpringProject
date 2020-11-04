@@ -41,7 +41,7 @@
                               · </span>
                      </c:if>
                   </c:forEach>
-                  <span id="likeCnt${article.boardid}" ><c:out value="${boardLikeCount[article.boardid]}"/></span> 명에게 도움됐어요
+                  <span id="likeCnt${article.boardid}" ><c:out value="${boardLikeCount[article.boardid]}"/></span> 명에게 도움됐어요</div>
          	<!-- 좋아요 -->
 	         <c:if test="${userBoardLike[article.boardid] != null}" >
 	         	<div class="like-btn on" id="likeBtn${article.boardid }" style="float: right;" onclick="javascript:sendLike(this);" >
