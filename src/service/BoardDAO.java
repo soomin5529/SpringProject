@@ -41,7 +41,6 @@ public class BoardDAO extends AbstractMybatis {
 
 	public int insertArticle(BoardDTO article) throws Exception {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
-
 		try {
 			map.clear();
 			int number = sqlSession.selectOne(namespace + ".insertArticle_new");
@@ -50,10 +49,7 @@ public class BoardDAO extends AbstractMybatis {
 			else
 				number = 1;
 			String statement = namespace + ".insertArticle";
-			/*
-			 * Date today = new Date(); SimpleDateFormat sdf = new
-			 * SimpleDateFormat("yy/MM/dd"); String regDate = sdf.format(today);
-			 */
+
 			map.put("userid", article.getUserid());
 			map.put("boardid", number);
 			map.put("dong_code", article.getDong_code());
@@ -74,6 +70,17 @@ public class BoardDAO extends AbstractMybatis {
 			sqlSession.close();
 		}
 
+	}
+    //최신 boardid 가져오기
+	public int getnewBoardid(String dong_code) throws Exception {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			map.put("dong_code", dong_code);
+			System.out.println(map);
+			return sqlSession.selectOne(namespace + ".getnewBoardid", map);
+		} finally {
+			sqlSession.close();
+		}
 	}
 
 	public int deleteArticle(String userid, String dong_code, String boardid) throws Exception {

@@ -24,6 +24,10 @@
 
 	</select>
 	
+	<select id="getnewBoardid"  resultType="int">
+	select max(boardid) from board where dong_code = #{dong_code} 
+	</select>
+	
 	<!-- writeuploadform insert -->
 	<insert id="insertArticle" parameterType="hashmap">
 		insert into

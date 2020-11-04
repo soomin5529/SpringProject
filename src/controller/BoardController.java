@@ -34,6 +34,8 @@ import board.BoardDTO;
 import board.BoardLikeDTO;
 import comment.CommentDTO;
 import service.AreaDAO;
+import service.AreaLikeDAO;
+import service.AreaNoticeDAO;
 import service.BoardDAO;
 import service.BoardLikeDAO;
 import service.CommentDAO;
@@ -43,7 +45,7 @@ import service.MemberDAO;
 @Controller
 @RequestMapping("/board/")
 public class BoardController {
-	public String boardid = "";
+	public int boardid = 0;
 	public String userid = "";
 	public String dong_code = "";
 	// boardid, userid, dong_code 는 view 에서 값 받아야함
@@ -67,6 +69,12 @@ public class BoardController {
 
 	@Autowired
 	BoardLikeDAO boardlikeDB;
+
+	@Autowired
+	AreaNoticeDAO areanoticeDB;
+
+	@Autowired
+	AreaLikeDAO arealikeDB;
 
 	@ModelAttribute
 	public void headProcess(HttpServletRequest request, HttpServletResponse res) {
@@ -217,7 +225,7 @@ public class BoardController {
 		MultipartFile multi = multipart.getFile("uploadfile");
 		String filename = multi.getOriginalFilename();
 		dong_code = multipart.getParameter("dongCode");
-		System.out.println(multi +"-----------파일");
+
 		if (filename != null && !filename.equals("")) {
 			String uploadpath = multipart.getRealPath("/") + "/uploadFile";
 			FileCopyUtils.copy(multi.getInputStream(),
@@ -231,6 +239,17 @@ public class BoardController {
 		article.setUserid(userid);
 		int num = boardDB.insertArticle(article);
 		System.out.println(num);
+		// ===============================================================
+		// 최신 boardid 값
+		boardid = boardDB.getnewBoardid(dong_code);
+		System.out.println("boardid 값=========" + boardid);
+		// AreaLike에 있는 userlist
+		List<String> userList = arealikeDB.getUserid(dong_code);
+		for (String user : userList) {
+			System.out.println("user" + user + "dong_code" + dong_code + "boardid" + boardid + "today" + today);
+			areanoticeDB.insertNotice(user, dong_code, boardid, today);
+
+		}
 	}
 
 	@RequestMapping(value = "/commentUploadPro", produces = "application/text; charset=utf8")

@@ -24,4 +24,8 @@
 		select code from AREA_LIKE where userid = #{userid} and code = #{code}
 	</select>
 	
+	<select id="getUserid" parameterType="hashmap" resultType="String">
+	select userid from AREA_LIKE where code = #{code}
+	</select>
+	
 </mapper>
