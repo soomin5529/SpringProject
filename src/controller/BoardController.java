@@ -184,7 +184,7 @@ public class BoardController {
 	public String regDate(String regdate) throws ParseException {
 
 		String DateDays = null;
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
 		Calendar calendar = Calendar.getInstance();
 		Date date = new Date(calendar.getTimeInMillis());
 		String todayDate = sdf.format(date);
@@ -195,19 +195,49 @@ public class BoardController {
 		// 등록된 날짜 타임스탬프
 		long nextdayTimestamp = sdf.parse(regdate).getTime();
 		// 일수 차 (타임스탬프 기준)
-		long difference = (todayTimestamp - nextdayTimestamp);
-		// 일수 차 ( 날짜 기준)
-		long days = difference / (24 * 60 * 60 * 1000);
-		if ((days / 30) == 1) {
+		long days = (todayTimestamp - nextdayTimestamp) / (24 * 60 * 60 * 1000 * 365);
+		// 시간 차 (타임스탬프 기준)
+		long hour = (todayTimestamp - nextdayTimestamp) / (60000 * 60);
+		// 분 차 (타임스탬프 기준)
+		long minute = (todayTimestamp - nextdayTimestamp) / 60000;
+
+		System.out.println("일수차" + days);
+		System.out.println(("시간차" + hour));
+		System.out.println("분 차" + minute);
+
+		if (minute < 60) {
+			if (minute < 1) {
+				DateDays = "방금 전";
+			} else
+				DateDays = minute + "분 전";
+		} else if (minute >= 60 && hour < 24) {
+			if (hour == 1)
+				DateDays = "한시간 전";
+			if (hour == 2)
+				DateDays = "두시간 전";
+			if (hour == 3)
+				DateDays = "세시간 전";
+			if (hour == 4)
+				DateDays = "네시간 전";
+			if (hour == 5)
+				DateDays = "다섯시간 전";
+			if (hour == 6)
+				DateDays = "여섯시간 전";
+			if (hour == 7)
+				DateDays = "일곱시간 전";
+		} else if (hour >= 24 && days == 0) {
+			DateDays = "하루 전";
+			// 일수 차 ( 날짜 기준)
+		} else if ((days / 30) == 1) {
 			DateDays = "한달 전";
 		} else if ((days / 7) == 1) {
 			DateDays = "일주일 전";
 		} else if ((days / 60) == 1) {
 			DateDays = "두달 전";
 		} else if (days == 0) {
-			DateDays = "방금 전";
+			DateDays = "7시간 전";
 		} else {
-			DateDays = days + "일 전";
+			DateDays = (days) + "일 전";
 		}
 
 		return DateDays;
@@ -219,7 +249,7 @@ public class BoardController {
 		String today = null;
 		String userid = multipart.getParameter("userid");
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
 		today = sdf.format(new java.util.Date());
 
 		MultipartFile multi = multipart.getFile("uploadfile");
@@ -258,8 +288,8 @@ public class BoardController {
 			HttpServletRequest request) throws Exception {
 
 		Date today = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
-		String regDate = sdf.format(today);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
+		String reg_date = sdf.format(today);
 
 		HttpSession session = request.getSession();
 		String userid = (String) session.getAttribute("userid");
@@ -268,7 +298,7 @@ public class BoardController {
 		article.setContent(content);
 		article.setName(name);
 		article.setUserid(userid);
-		article.setRegDate(regDate);
+		article.setRegDate(regDate(reg_date));
 		commentDB.insertComment(article);
 
 		return userid;

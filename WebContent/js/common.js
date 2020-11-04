@@ -243,9 +243,7 @@ function openPopMyPage() {
 					+ '      <li onclick="openPopUserDelete()">회원탈퇴</li>'
 					+ '      <li onclick="javascript:logout(); location.href=\'/SpringTeamProject/member/logout\'; " >로그아웃</li>'
 					+ '   </ul>' + '   <ul>'
-					+ '      <li onclick="openPopMyArea()">관심지역</li>'
-					+ '      <li onclick="openPopMyCommunity()">떠들썩</li>'
-					+ '   </ul>';
+					+'   </ul>';
 			myPage.style.display = "block";
 			pwdModify.style.display = "block";
 			userDelete.style.display = "block";
