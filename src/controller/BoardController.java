@@ -29,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 import area.AreaDTO;
 import area.SigunguDTO;
 import board.BoardDTO;
+import board.BoardLikeDTO;
 import comment.CommentDTO;
 import industry.MainCategoryDTO;
 import service.AreaDAO;
@@ -97,20 +98,35 @@ public class BoardController {
 		// board 개수 count
 		count = boardDB.getBoardCount(dong_code);
 		if (count == 0) {
-
 			mav.addObject("count", count);
 			mav.addObject("userid", userid);
 			mav.setViewName("jsp_nohead/boardList");
 		}
-		System.out.println("count 수는------????????" + count);
+
+		Map<Integer, Integer> boardLikeCount = new HashMap<Integer, Integer>();
+		Map<Integer, Integer> userBoardLike = new HashMap<Integer, Integer>();
 		if (count > 0) {
 			// board list 뿌려주기
 			articles = boardDB.getArticles(dong_code);
 			mav.addObject("articleList", articles);
+			// board 좋아요
+			for (BoardDTO board : articles) {
+				boardLikeCount.put(board.getBoardid(), boardlikeDB.getBoardLikeCount(board.getBoardid()));
 
+				// user가 좋아요한 게시물
+				List<BoardLikeDTO> ubl = boardlikeDB.checkBoardLike(userid);
+				for(BoardLikeDTO bld : ubl) {
+					if(bld.getBoardid()== board.getBoardid()) {
+						userBoardLike.put(bld.getBoardid(), 1);
+					}
+				}
+			}
 		}
+		mav.addObject("boardLikeCount", boardLikeCount);
+		mav.addObject("userBoardLike", userBoardLike);
 		// board 게시물 수
 		mav.addObject("count", count);
+
 		// =================comment list========================================
 		int boardid = 0;
 		int cnt = 0;
@@ -136,7 +152,6 @@ public class BoardController {
 				boardLikecnt = boardlikeDB.getBoardLikeCount(boardid);
 				// 댓글 개수
 				mav.addObject("cnt", cnt);
-
 				// 댓글 list
 				comment = commentDB.getComments(boardid);
 
@@ -158,23 +173,22 @@ public class BoardController {
 
 	// 날짜 변환 메소드
 	public String regDate(String regdate) throws ParseException {
-		
+
 		String DateDays = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar calendar = Calendar.getInstance();
-        Date date = new Date(calendar.getTimeInMillis());
-        String todayDate = sdf.format(date);
-        long todayTimestamp = sdf.parse(todayDate).getTime();
-        Date date2 = new Date(todayTimestamp);
-        //오늘 날짜
-        String todayDate2 = sdf.format(date2);
-        //등록된 날짜 타임스탬프
+		Date date = new Date(calendar.getTimeInMillis());
+		String todayDate = sdf.format(date);
+		long todayTimestamp = sdf.parse(todayDate).getTime();
+		Date date2 = new Date(todayTimestamp);
+		// 오늘 날짜
+		String todayDate2 = sdf.format(date2);
+		// 등록된 날짜 타임스탬프
 		long nextdayTimestamp = sdf.parse(regdate).getTime();
-		//일수 차 (타임스탬프 기준)
-        long difference = (todayTimestamp- nextdayTimestamp);
-        //일수 차 ( 날짜 기준)
-       long days=  difference/ (24*60*60*1000);
-       System.out.println(days);
+		// 일수 차 (타임스탬프 기준)
+		long difference = (todayTimestamp - nextdayTimestamp);
+		// 일수 차 ( 날짜 기준)
+		long days = difference / (24 * 60 * 60 * 1000);
 		if ((days / 30) == 1) {
 			DateDays = "한달 전";
 		} else if ((days / 7) == 1) {
@@ -184,16 +198,16 @@ public class BoardController {
 		} else if (days == 0) {
 			DateDays = "방금 전";
 		} else {
-			DateDays = days +"일 전";
+			DateDays = days + "일 전";
 		}
 
-		return  DateDays;
+		return DateDays;
 	}
 
 	@RequestMapping("writeUploadPro")
 	public String writeUploadPro(MultipartHttpServletRequest multipart, BoardDTO article, Model m) throws Exception {
 		String today = null;
-		
+
 		String userid = multipart.getParameter("userid");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		today = sdf.format(new java.util.Date());
@@ -213,9 +227,8 @@ public class BoardController {
 		article.setDong_code(dong_code);
 		article.setRegDate(today);
 		article.setUserid(userid);
-		System.out.println("article===="+article);
 		boardDB.insertArticle(article);
-		
+
 		m.addAttribute("display", "block");
 		return "redirect:/view/main";
 		// jsp로 보내지 않고 바로 view 로
@@ -237,7 +250,6 @@ public class BoardController {
 		article.setName(name);
 		article.setUserid(userid);
 		article.setRegDate(regDate);
-		System.out.println("comment article------" + article);
 		commentDB.insertComment(article);
 
 		m.addAttribute("display", "block");

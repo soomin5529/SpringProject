@@ -17,7 +17,7 @@
 	<select id="myAllAreaLike" parameterType="hashmap"
 		resultType="AreaLike">
 		select code from AREA_LIKE where userid = #{userid}
-	</select>
+	</select>	
 	
 	<select id="checkAreaLike" parameterType="hashmap"
 		resultType="AreaLike">
