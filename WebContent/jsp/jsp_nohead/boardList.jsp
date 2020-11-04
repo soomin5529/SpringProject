@@ -31,8 +31,9 @@
                   <div class="name">${article.writer}</div>
                   <div class="content">
                      <div class="text">${article.content }</div>
-                     <div class="photo"
-                        style="background-image:url('<%=request.getContextPath() %>/uploadFile/${article.filename}');"></div>
+                     <c:if test="${article.filename != null}">
+                     <div class="photo" style="background-image:url('<%=request.getContextPath() %>/uploadFile/${article.filename}');"></div>
+                     </c:if>
                   </div>
                   <c:forEach var="regDate" items="${regDate}">
                      <c:if test="${regDate.key eq article.boardid}">

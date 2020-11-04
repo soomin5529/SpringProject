@@ -20,18 +20,19 @@ import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import area.AreaDTO;
-import area.SigunguDTO;
 import board.BoardDTO;
 import board.BoardLikeDTO;
 import comment.CommentDTO;
-import industry.MainCategoryDTO;
 import service.AreaDAO;
 import service.BoardDAO;
 import service.BoardLikeDAO;
@@ -115,8 +116,8 @@ public class BoardController {
 
 				// user가 좋아요한 게시물
 				List<BoardLikeDTO> ubl = boardlikeDB.checkBoardLike(userid);
-				for(BoardLikeDTO bld : ubl) {
-					if(bld.getBoardid()== board.getBoardid()) {
+				for (BoardLikeDTO bld : ubl) {
+					if (bld.getBoardid() == board.getBoardid()) {
 						userBoardLike.put(bld.getBoardid(), 1);
 					}
 				}
@@ -204,18 +205,19 @@ public class BoardController {
 		return DateDays;
 	}
 
-	@RequestMapping("writeUploadPro")
-	public String writeUploadPro(MultipartHttpServletRequest multipart, BoardDTO article, Model m) throws Exception {
+	@RequestMapping(value = "writeUploadPro", method = RequestMethod.POST, consumes = { "multipart/form-data" })
+	@ResponseBody
+	public void writeUploadPro(MultipartHttpServletRequest multipart, BoardDTO article) throws Exception {
 		String today = null;
-
 		String userid = multipart.getParameter("userid");
+
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		today = sdf.format(new java.util.Date());
 
 		MultipartFile multi = multipart.getFile("uploadfile");
 		String filename = multi.getOriginalFilename();
 		dong_code = multipart.getParameter("dongCode");
-
+		System.out.println(multi +"-----------파일");
 		if (filename != null && !filename.equals("")) {
 			String uploadpath = multipart.getRealPath("/") + "/uploadFile";
 			FileCopyUtils.copy(multi.getInputStream(),
@@ -227,24 +229,22 @@ public class BoardController {
 		article.setDong_code(dong_code);
 		article.setRegDate(today);
 		article.setUserid(userid);
-		boardDB.insertArticle(article);
-
-		m.addAttribute("display", "block");
-		return "redirect:/view/main";
-		// jsp로 보내지 않고 바로 view 로
+		int num = boardDB.insertArticle(article);
+		System.out.println(num);
 	}
 
 	@RequestMapping(value = "/commentUploadPro", produces = "application/text; charset=utf8")
 	@ResponseBody
-	public String commentUploadPro(String dongcode, int boardid, String content, String name, CommentDTO article, HttpServletRequest request) throws Exception {
+	public String commentUploadPro(String dongcode, int boardid, String content, String name, CommentDTO article,
+			HttpServletRequest request) throws Exception {
 
 		Date today = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
 		String regDate = sdf.format(today);
-		
+
 		HttpSession session = request.getSession();
 		String userid = (String) session.getAttribute("userid");
-	     name = (String) session.getAttribute("name");
+		name = (String) session.getAttribute("name");
 		article.setBoardid(boardid);
 		article.setContent(content);
 		article.setName(name);
@@ -253,7 +253,7 @@ public class BoardController {
 		commentDB.insertComment(article);
 
 		return userid;
-		
+
 	}
 
 	@RequestMapping("deletePro")

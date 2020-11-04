@@ -54,6 +54,7 @@ $(document).ready(function() {
 			});
 		}
 	});
+
 });
 
 /* popup open/close */
@@ -117,37 +118,42 @@ function openPopCommunity() {
 }
 
 function closePopCommunity() {
-	$("#community").css('display','none');
+	$("#community").css('display', 'none');
 	$("#community").empty();
-	//community.style.display = "none";
+	// community.style.display = "none";
 }
 
 /* bookmark icon */
 function changeBookmark() {
 	/* 로그인이 되어있다면 */
-	if(sessionStorage.getItem("userid")!=null){
+	if (sessionStorage.getItem("userid") != null) {
 		/* 관심 지역 표시에 따라 insert/delete를 나눠준다 */
 		var bookmark = document.getElementById("bookmark");
 		var status = bookmark.classList.contains('on') ? "delete" : "insert";
-		
+
 		/* Dong-Code */
 		var selectCode = document.getElementById("dongCode").innerText;
-		
+
 		$.ajax({
 			type : "post",
 			url : "/SpringTeamProject/request/insertAreaLike",
 			contentType : "application/json; charset=UTF-8",
 			dataType : 'json',
-			data : JSON.stringify({'dongcode' : selectCode,'status' : status}),
+			data : JSON.stringify({
+				'dongcode' : selectCode,
+				'status' : status
+			}),
 			success : function(textStatus) {
-				if(status == "insert"){
-					bookmark.className = bookmark.className.replace("off", "on");
-				}else{
-					bookmark.className = bookmark.className.replace("on", "off");
+				if (status == "insert") {
+					bookmark.className = bookmark.className
+							.replace("off", "on");
+				} else {
+					bookmark.className = bookmark.className
+							.replace("on", "off");
 				}
 			}
 		});
-	}else{
+	} else {
 		openPopLogin("로그인 후 서비스 이용 가능합니다.");
 	}
 }
@@ -157,19 +163,22 @@ function sendLike(likeBtn) {
 	var boardid = likeBtn.getAttribute('id').substr(7);
 	var boardLikeBtn = document.getElementById("likeBtn" + boardid);
 	var status = boardLikeBtn.classList.contains('on') ? "delete" : "insert";
-	
+
 	$.ajax({
 		type : "post",
 		url : "/SpringTeamProject/request/boardLike",
 		contentType : "application/json; charset=UTF-8",
 		dataType : "json",
-		data : JSON.stringify({ 'boardid' : boardid, 'status' : status }),
+		data : JSON.stringify({
+			'boardid' : boardid,
+			'status' : status
+		}),
 		success : function(result) {
-			alert(result);
 			$("#likeCnt" + boardid).empty().append(result);
-			//communityReg.style.display = "block";
+			// communityReg.style.display = "block";
 			postLike("likeBtn" + boardid);
-			//boardLikeBtn.className = boardLikeBtn.className.replace("on", "off");
+			// boardLikeBtn.className = boardLikeBtn.className.replace("on",
+			// "off");
 		}
 	});
 }
@@ -195,24 +204,24 @@ function closePopCommunityReg() {
 }
 /* 떠들썩 댓글 */
 function sendReplyReg() {
-	   var selectCode = document.getElementById("dong").value;
-	   var boardid = document.getElementById("board_id").value;
-	   var content = document.getElementById("content").value;
-	   alert(boardid);
-	   $.ajax({
-	      type : "post",
-	      url : "/SpringTeamProject/board/commentUploadPro",
-	      contentType : "application/json; charset=UTF-8",
-	      data : {
-	         'dongcode': selectCode,
-	         'boardid' : boardid,
-	         'content' : content,
-	      },
-	      success : function(data) {
-	         alert("success");
-	      }
-	   });
-	}
+	var selectCode = document.getElementById("dong").value;
+	var boardid = document.getElementById("board_id").value;
+	var content = document.getElementById("content").value;
+	alert(boardid);
+	$.ajax({
+		type : "post",
+		url : "/SpringTeamProject/board/commentUploadPro",
+		contentType : "application/json; charset=UTF-8",
+		data : {
+			'dongcode' : selectCode,
+			'boardid' : boardid,
+			'content' : content,
+		},
+		success : function(data) {
+			alert("success");
+		}
+	});
+}
 
 /* mypage */
 function openPopMyPage() {
@@ -261,33 +270,31 @@ function closePopMyPage() {
 }
 
 /* login */
-function openPopLogin(text){
+function openPopLogin(text) {
 	login.innerHTML = '<div class="deemed" onclick="closePopLogin()"></div>'
-		+ '<span class="close-btn" onclick="closePopLogin()">x</span>'
-		+ '<div class="pop-box" style="width:400px; height:360px;">'
-		+ '   <div class="title-box">'
-		+ '      <div class="tit">' + text + '</div>'
-		+ '   </div>'
-		+ '<div class="content-box">'
-		+ '      <form name="loginFrm" action="/SpringTeamProject/member/login">'
-		+ '         <div class="input-box">'
-		+ '            <div class="label-box">아이디</div>'
-		+ '            <input type="text" id="loginId" name="userid" placeholder="아이디를 입력하세요" onkeyup="enterLogin(event);"/>'
-		+ '         </div>'
-		+ '         <div class="input-box">'
-		+ '            <div class="label-box">비밀번호</div>'
-		+ '            <input type="password" id="loginPwd" name="pwd" placeholder="비밀번호를 입력하세요" onkeyup="enterLogin(event);"/>'
-		+ '         </div>'
-		+ '         <span id="idPresenceCheck" style="color:red;"></span>'
-		+ '         <button type="button" onclick="loginCheck()" class="btn-full btn01-reverse">로그인</button>'
-		+ '         <div class="join-btn">'
-		+ '            <span class="gray">아직 회원이 아니신가요?</span>'
-		+ '            <span class="highlight01" onclick="openPopJoin()">회원가입</span>'
-		+ '         </div>'
-		+ '      </form>'
-		+ '   </div>'
-		+ '</div>';
-login.style.display = "block";
+			+ '<span class="close-btn" onclick="closePopLogin()">x</span>'
+			+ '<div class="pop-box" style="width:400px; height:360px;">'
+			+ '   <div class="title-box">' + '      <div class="tit">'
+			+ text
+			+ '</div>'
+			+ '   </div>'
+			+ '<div class="content-box">'
+			+ '      <form name="loginFrm" action="/SpringTeamProject/member/login">'
+			+ '         <div class="input-box">'
+			+ '            <div class="label-box">아이디</div>'
+			+ '            <input type="text" id="loginId" name="userid" placeholder="아이디를 입력하세요" onkeyup="enterLogin(event);"/>'
+			+ '         </div>'
+			+ '         <div class="input-box">'
+			+ '            <div class="label-box">비밀번호</div>'
+			+ '            <input type="password" id="loginPwd" name="pwd" placeholder="비밀번호를 입력하세요" onkeyup="enterLogin(event);"/>'
+			+ '         </div>'
+			+ '         <span id="idPresenceCheck" style="color:red;"></span>'
+			+ '         <button type="button" onclick="loginCheck()" class="btn-full btn01-reverse">로그인</button>'
+			+ '         <div class="join-btn">'
+			+ '            <span class="gray">아직 회원이 아니신가요?</span>'
+			+ '            <span class="highlight01" onclick="openPopJoin()">회원가입</span>'
+			+ '         </div>' + '      </form>' + '   </div>' + '</div>';
+	login.style.display = "block";
 }
 function closePopLogin() {
 	while (login.firstChild) {
@@ -348,7 +355,8 @@ function openPopJoin() {
 function closePopJoin() {
 	while (join.firstChild) {
 		join.removeChild(join.firstChild);
-	};
+	}
+	;
 	join.style.display = "none";
 }
 
@@ -578,7 +586,6 @@ function findAreaToJson(districtCode) {
 var sigunguArray = new Array();
 var dongArray = new Array();
 function choiceAdministrativeDistrict(select) {
-
 	deleteDistrictMarkers();
 	// 시도 선택 -> 시군구리스트 출력 및 담기
 	if (select.getAttribute('id') == 'sido') {
@@ -700,6 +707,7 @@ function returnAreaArrayByClickPin(districtType, highDistrictCode,
 			}
 			var areaId = districtType == 'sido' ? 'sigungu' : 'dong';
 			$("#" + areaId).empty().append(options);
+			choiceAdministrativeDistrict(document.getElementById(areaId));
 		}
 	});
 }
