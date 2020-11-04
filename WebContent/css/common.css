@@ -168,7 +168,8 @@
 .community .list-box .post-box .reply-reg-box {position: relative; padding:0 15px 15px; }
 .community .list-box .post-box .reply-reg-box input {padding-right:30px;}
 .community .list-box .post-box .reply-reg-box .reg-btn {position:absolute; top:5px; right:23px;}
-
+.empty-txt {color:#999; text-align:center; font-size:1.6rem; margin-top:20px; font-weight:400;}
+.empty-txt:before {content:''; display:block; width:80px; height:69px; margin:80% auto 0; background-image:url('/SpringTeamProject/images/note.png'); background-repeat:no-repeat; }
 	
 /* communityReg */
 .content-box textarea {margin-bottom:15px; resize: none;}
