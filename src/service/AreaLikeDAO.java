@@ -71,12 +71,30 @@ public class AreaLikeDAO extends AbstractMybatis {
 			areaLike = sqlSession.selectList(statement, map);
 
 		} finally {
-			sqlSession.commit();
 			sqlSession.close();
 		}
 		System.out.println("areaLike---" + areaLike);
 		return areaLike;
-
+	}
+	
+	public boolean checkAreaLike(String userid, String code) throws Exception {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		AreaLikeDTO areaLike = null;
+		boolean result = false;
+		try {
+			map.clear();
+			map.put("userid", userid);
+			map.put("code", code);
+			String statement = namespace + ".checkAreaLike";
+			areaLike = sqlSession.selectOne(statement, map);
+			System.out.println("areaLike---" + areaLike);
+			if(areaLike != null) {
+				result = true;
+			}
+		} finally {
+			sqlSession.close();
+		}
+		return result;
 	}
 
 }

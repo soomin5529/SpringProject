@@ -90,8 +90,6 @@ public class AjaxController {
 		return resultOption;
 	}
 
-	
-
 	@RequestMapping(value = "/loginCheck", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody
 	public String loginCheck(@RequestParam("userid") String requestId, @RequestParam("pwd") String requestPwd)
@@ -179,7 +177,7 @@ public class AjaxController {
 				path += coordinates[i].split(",")[1] + "," + coordinates[i].split(",")[0] + "/";
 			}
 		}
-		
+
 		return path;
 	}
 
@@ -196,8 +194,8 @@ public class AjaxController {
 	// 화면에 보여지는 지도의 행정구역(시군구, 읍면동) 출력
 	@RequestMapping(value = "/currentPageDistrict/{type}", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
-	public List<AreaInMapBoundDTO> currentPageDistrict(@RequestBody Map<String, Object> params, @PathVariable("type") String type,
-			HttpServletResponse response) throws IOException {
+	public List<AreaInMapBoundDTO> currentPageDistrict(@RequestBody Map<String, Object> params,
+			@PathVariable("type") String type, HttpServletResponse response) throws IOException {
 		System.out.println("행정구역은?------>" + type);
 		List<AreaInMapBoundDTO> districts = null;
 		if (type.contains("sigungu")) {
@@ -209,12 +207,11 @@ public class AjaxController {
 		}
 		return districts;
 	}
-	
 
 	@RequestMapping(value = "/insertLike", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody
-	public String selectCode(@RequestParam("boardid") int boardid,
-			@RequestParam("status") String status, HttpServletRequest request) throws Throwable {
+	public String selectCode(@RequestParam("boardid") int boardid, @RequestParam("status") String status,
+			HttpServletRequest request) throws Throwable {
 		HttpSession session = request.getSession();
 		String userid = (String) session.getAttribute("userid");
 		String resultOption = "";
@@ -230,21 +227,21 @@ public class AjaxController {
 		}
 		return resultOption;
 	}
-	
-	@RequestMapping(value = "/insertLikeArea", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+
+	@RequestMapping(value = "/insertAreaLike", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody
-	public int insertLikeArea(@RequestParam("dongcode") String code,
-			@RequestParam("status") String status, HttpServletRequest request) throws Throwable {
+	public int insertAreaLike(@RequestParam("dongcode") String code, @RequestParam("status") String status,
+			HttpServletRequest request) throws Throwable {
 		HttpSession session = request.getSession();
 		String userid = (String) session.getAttribute("userid");
 		int num = 10;
 		if (status.equals("insert")) {
-			num = arealikeDB.insertAreaLike( userid, code);
+			num = arealikeDB.insertAreaLike(userid, code);
 			System.out.println("들어가무 " + num);
-			
+
 		} else if (status.equals("delete")) {
-			num = arealikeDB.deleteAreaLike( userid, code);
-			System.out.println("삭제대무 "+num);
+			num = arealikeDB.deleteAreaLike(userid, code);
+			System.out.println("삭제대무 " + num);
 		}
 		return num;
 	}

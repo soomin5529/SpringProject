@@ -51,7 +51,7 @@ public class MemberController {
 	}
 
 	@RequestMapping("login")
-	public String login(HttpServletRequest request, HttpServletResponse response) throws Throwable {
+	public String login(HttpServletRequest request) throws Throwable {
 		String userid = request.getParameter("userid");
 		String pwd = request.getParameter("pwd");
 		// 로그인 세션

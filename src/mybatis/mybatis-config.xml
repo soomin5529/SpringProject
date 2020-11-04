@@ -12,6 +12,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="area.DongDTO" alias="Dong" />
 		<typeAlias type="area.AreaDTO" alias="Area" />
 		<typeAlias type="area.SelectedAreaDTO" alias="SelectedArea" />
+		<typeAlias type="area.AreaLikeDTO" alias="AreaLike" />
 		<typeAlias type="area.AreaInMapBoundDTO"
 			alias="AreaInMapBound" />
 
@@ -24,17 +25,16 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="industry.SmallCategoryDTO"
 			alias="SmallCategory" />
 		<typeAlias type="industry.IndustryDTO" alias="Industry" />
+		<typeAlias type="industry.IndustryRankDTO"
+			alias="IndustryRank" />
 
 		<typeAlias type="board.BoardDTO" alias="Board" />
 		<typeAlias type="board.BoardLikeDTO" alias="BoardLike" />
-		<typeAlias type="board.BookMarkDTO" alias="Bookmark" />
-		<typeAlias type="dashboard.IndustryCountDTO"
-			alias="IndustryCount" />
-		<typeAlias type="area.AreaLikeDTO" alias="AreaLike" />
 
 		<typeAlias type="comment.CommentDTO" alias="Comment" />
 
-
+		<typeAlias type="dashboard.IndustryCountDTO"
+			alias="IndustryCount" />
 
 	</typeAliases>
 	<environments default="development">
@@ -53,13 +53,12 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<mappers>
 		<mapper resource="mybatis/Member.xml" />
 		<mapper resource="mybatis/Area.xml" />
-		<mapper resource="mybatis/Industry.xml" />
-		<mapper resource="mybatis/Board.xml" />
-		<mapper resource="mybatis/Store.xml" />
-		<mapper resource="mybatis/Comment.xml" />
-		<mapper resource="mybatis/BoardLike.xml" />
-		<mapper resource="mybatis/Dashboard.xml" />
 		<mapper resource="mybatis/AreaLike.xml" />
-		<mapper resource="mybatis/bookmark.xml" />
+		<mapper resource="mybatis/Store.xml" />
+		<mapper resource="mybatis/Board.xml" />
+		<mapper resource="mybatis/BoardLike.xml" />
+		<mapper resource="mybatis/Comment.xml" />
+		<mapper resource="mybatis/Dashboard.xml" />
+		<mapper resource="mybatis/Industry.xml" />
 	</mappers>
 </configuration>

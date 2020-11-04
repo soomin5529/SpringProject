@@ -18,14 +18,14 @@ window.onload = function() {
 
 /* jQuery onload */
 $(document).ready(function() {
-	
+
 	/* 화면이 로드되면 시군구를 보여준다 */
 	var bound = mapBound();
 	/* 시군구가 보여지는 줌 레벨 */
 	if (map.getZoom() >= 11 && map.getZoom() <= 14) {
 		findDistrictInMapBound('sigungu');
 	}
-	
+
 	$("#svgMap01 g").mouseover(function(event) {
 		var cls = $(this).attr('class');
 		var _path = event.target;
@@ -38,7 +38,8 @@ $(document).ready(function() {
 		} else {
 			$.each(_over_g, function(index, item) {
 				item.setAttribute("fill", "#584de4")
-			});da
+			});
+			da
 		}
 	}).mouseout(function(event) {
 		var cls = $(this).attr('class');
@@ -79,23 +80,22 @@ function openPopDashboard() {
 	drawChart();
 }
 
-
 function closePopDashboard() {
 	var dashboard = document.getElementById("dashboard");
 	dashboard.style.display = "none";
 	if (community.style.display == "block") {
 		community.style.left = 0;
 	}
-	
+
 }
-function sendToboardList(code){
-	var selectcode = code; 
+function sendToboardList(code) {
+	var selectcode = code;
 	$.ajax({
 		type : "post",
-		url : "/SpringTeamProject/board/boardList/"+selectcode,
+		url : "/SpringTeamProject/board/boardList/" + selectcode,
 		contentType : "application/json; charset=UTF-8",
 		success : function(data) {
-			   $("#community").html(data);
+			$("#community").html(data);
 		}
 	});
 }
@@ -125,25 +125,22 @@ function bookmark() {
 	} else if (bookmark.classList.contains('off')) {
 		bookmark.className = bookmark.className.replace("off", "on");
 	}
-	
-	  	$.ajax({
+
+	$.ajax({
 		type : "post",
 		url : "/SpringTeamProject/request/insertLikeArea",
 		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 		data : {
-			'dongcode': selectCode,
-			'status'  : status
+			'dongcode' : selectCode,
+			'status' : status
 		},
 		success : function(textStatus) {
 			alert(textStatus);
-		
-		 
 		}
-	});	
+	});
 }
 
-	
-	function sendLike(board){ 
+function sendLike(board) {
 	var communityReg = document.getElementById("communityReg");
 	var boardid = board.parentNode.parentNode.id;
 	var status = "insert";
@@ -154,34 +151,34 @@ function bookmark() {
 	} else if (postLikeBtn.classList.contains('off')) {
 		postLikeBtn.className = postLikeBtn.className.replace("off", "on");
 	}
-   
-   	$.ajax({
+
+	$.ajax({
 		type : "post",
 		url : "/SpringTeamProject/request/insertLike",
 		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 		data : {
-			'boardid': boardid,
-			'status'  : status
+			'boardid' : boardid,
+			'status' : status
 		},
 		success : function(textStatus) {
 			communityReg.style.display = "block";
-			postLike(boardid+"u");
+			postLike(boardid + "u");
 		}
-	});	
-} 
+	});
+}
 /* communityRegist */
 function openPopCommunityReg() {
 	var code = document.getElementById("dong").value;
 	var communityReg = document.getElementById("communityReg");
-	
+
 	$.ajax({
 		type : "post",
 		url : "/SpringTeamProject/dashBoard/boardWriteForm/" + code,
 		contentType : "application/json; charset=UTF-8",
 		success : function(data) {
-			   $("#communityReg").html(data);
-      communityReg.style.display = "block";
-	
+			$("#communityReg").html(data);
+			communityReg.style.display = "block";
+
 		}
 	});
 }
@@ -312,7 +309,8 @@ function openPopJoin() {
 function closePopJoin() {
 	while (join.firstChild) {
 		join.removeChild(join.firstChild);
-	};
+	}
+	;
 	join.style.display = "none";
 }
 
@@ -396,7 +394,8 @@ function openPopMyPageModify() {
 function closePopMyPageModify() {
 	while (myPageModify.firstChild) {
 		myPageModify.removeChild(myPageModify.firstChild);
-	};
+	}
+	;
 	myPageModify.style.display = "none";
 }
 
@@ -450,17 +449,17 @@ function closePopUserDelete() {
 
 /* myArea */
 function openPopMyArea() {
-	
+
 	if (!myArea.firstChild) {
-	$.ajax({
-		type : "post",
-		url : "<%=request.getContextPath()%>/dashBoard/myArea/" + userid,
-		contentType : "application/json; charset=UTF-8",
-		success : function(data) {
-			   $("#myArea").html(data);
-		}
-	});
-		
+		$.ajax({
+			type : "post",
+			url : "<%=request.getContextPath()%>/dashBoard/myArea/" + userid,
+			contentType : "application/json; charset=UTF-8",
+			success : function(data) {
+				$("#myArea").html(data);
+			}
+		});
+
 	}
 	myArea.style.right = 0;
 }
@@ -477,7 +476,6 @@ function enterLogin(event) {
 }
 
 /* SVG toggle button */
-
 
 /* bookmark icon */
 function bookmark() {
@@ -498,7 +496,7 @@ function postLike(bdid) {
 		postLike.innerHTML = '<svg viewBox="0 0 40 40" class="like-icon">'
 				+ '<path d="M20 4.5h.8c.9.1 1.6.5 2.1 1.2.5.6 	.8 1.4.6 2.2v8.6H34c.7 0 1.4.3 1.8.9.5.6.8 1.5.7 2.4v7.8c0 2.3-.5 4.9-2.5 6.7-1.5 1.3-4 2.2-7.6 2.2H3.5v-15h7.6l5.2-8 1.3-8.6.1-.3zm-9.5 17v15"></path>'
 				+ '</svg>' + '<span class="like-txt">좋아요</span>';
-				
+
 	} else if (postLike.classList.contains('off')) {
 		postLike.className = postLike.className.replace("off", "on");
 		postLike.innerHTML = '<svg viewBox="0 0 40 40" class="like-icon">'
@@ -509,9 +507,9 @@ function postLike(bdid) {
 }
 // 행정구역(시군군, 읍면동) 선택 시, 행정구역 면적을 json에서 찾아와 표시한다.
 function findAreaToJson(districtCode) {
-	var code = districtCode+"";
+	var code = districtCode + "";
 	var url;
-	if (code.length==5) {
+	if (code.length == 5) {
 		url = "/SpringTeamProject/request/findSigunguToJson";
 	} else {
 		url = "/SpringTeamProject/request/findDongToJson";
@@ -525,7 +523,11 @@ function findAreaToJson(districtCode) {
 		},
 		success : function(paths) {
 			var centerPath = paths.split(':')[0];
-			var area = { code : code, latitude : centerPath.split(',')[0], longitude : centerPath.split(',')[1]}
+			var area = {
+				code : code,
+				latitude : centerPath.split(',')[0],
+				longitude : centerPath.split(',')[1]
+			}
 			choiceArea(area);
 			var borderPaths = paths.split(':')[1];
 			drawPolygonDong(borderPaths);
@@ -552,10 +554,10 @@ function choiceAdministrativeDistrict(select) {
 			findDistrictInMapBound('sigungu');
 		}
 	}
-		// 시군구 선택 -> 동리스트 출력 및 담기
+	// 시군구 선택 -> 동리스트 출력 및 담기
 	if (select.getAttribute('id') == 'sigungu') {
 
-		//closePopDashboard();
+		// closePopDashboard();
 		$('#dash-board').empty();
 
 		dongArray = [];
@@ -596,39 +598,42 @@ function returnAreaArray(districtType, districtCode) {
 	});
 }
 /* DashBoard에서 검색된 산업분류에 따라 지도에 상점을 표시해주기위하여 세션에 정보를 저장해 놓는다. */
-function dashBoardSetSession(data, code){
+function dashBoardSetSession(data, code) {
 	sessionStorage.setItem("code", code);
 	sessionStorage.setItem("categry", data.getAttribute('id'));
 	sessionStorage.setItem("categryCode", data.value);
 }
 
-function clickPinDistrict(code){
+function clickPinDistrict(code) {
 	changeDistrictSelectBox(code);
-	if((code+"").length > 5){
+	if ((code + "").length > 5) {
 		openDashBoard(code);
 	}
 }
 /* 핀 클릭 시 행정구역(시도, 시군구, 읍면동) 셀렉트 박스를 생성하고 클릭한 행정구역에 위치 시킨다. */
-function changeDistrictSelectBox(code){
-	var code = code+"";
-	if(code.length == 5){
-		var sidoCode = code.substr(0,2);
+function changeDistrictSelectBox(code) {
+	var code = code + "";
+	if (code.length == 5) {
+		var sidoCode = code.substr(0, 2);
 		returnAreaArrayByClickPin('sido', Number(sidoCode), code);
-		$("#sido option[value="+sidoCode+"]").attr('selected','selected');
+		$("#sido option[value=" + sidoCode + "]").attr('selected', 'selected');
 		findDistrictInMapBound('sigungu');
-	}else{
-		var sigunguCode = code.substr(0,5);
+	} else {
+		var sigunguCode = code.substr(0, 5);
 		returnAreaArrayByClickPin('sigungu', Number(sigunguCode), code);
 		findDistrictInMapBound('dong');
 	}
 }
-function returnAreaArrayByClickPin(districtType, highDistrictCode, lowDistrictCode) {
-	if(lowDistrictCode > 5){
-		$("#sigungu option[value="+highDistrictCode+"]").attr('selected','selected');
-	}else{
-		$("#sido option[value="+highDistrictCode+"]").attr('selected','selected');
+function returnAreaArrayByClickPin(districtType, highDistrictCode,
+		lowDistrictCode) {
+	if (lowDistrictCode > 5) {
+		$("#sigungu option[value=" + highDistrictCode + "]").attr('selected',
+				'selected');
+	} else {
+		$("#sido option[value=" + highDistrictCode + "]").attr('selected',
+				'selected');
 	}
-	
+
 	$.ajax({
 		type : "post",
 		url : "/SpringTeamProject/request/areaOption",
@@ -647,10 +652,10 @@ function returnAreaArrayByClickPin(districtType, highDistrictCode, lowDistrictCo
 				if (districtType.includes('sigungu')) {
 					dongArray.push(areaList[i]);
 				}
-				if(areaList[i].code == lowDistrictCode){
-					options += '<option value=' + areaList[i].code + ' selected>'
-					+ areaList[i].name + '</option>\n'
-				}else{
+				if (areaList[i].code == lowDistrictCode) {
+					options += '<option value=' + areaList[i].code
+							+ ' selected>' + areaList[i].name + '</option>\n'
+				} else {
 					options += '<option value=' + areaList[i].code + '>'
 							+ areaList[i].name + '</option>\n'
 				}
@@ -662,10 +667,8 @@ function returnAreaArrayByClickPin(districtType, highDistrictCode, lowDistrictCo
 }
 // 행정구역(시군구, 동)을 선택하면 areaArray[]에서 선택된 구역을 찾아 choiceArea()에 보내어 실행시킨다.
 function selectOption(array, option) {
-	console.log("selectOption() 실행-->" + array[i] +", " +option)
 	for ( var i in array) {
 		if (array[i].code == option.value) {
-			console.log(array[i]);
 			choiceArea(array[i]);
 		}
 	}
