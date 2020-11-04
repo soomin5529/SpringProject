@@ -21,15 +21,15 @@ public class AreaLikeDAO extends AbstractMybatis {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		int result = 0;
 		try {
-			AreaLikeDTO article = new AreaLikeDTO();
+			// AreaLikeDTO article = new AreaLikeDTO();
 			String statement = namespace + ".insertAreaLike";
+			map.clear();
+			map.put("userid", userid);
+			map.put("code", code);
 
-			article.setUserid(userid);
-			article.setCode(code);
+			System.out.println("insertAreaLike article??===" + map);
 
-			System.out.println("insertAreaLike article??===" + article);
-
-			result = sqlSession.insert(statement, article);
+			result = sqlSession.insert(statement, map);
 			sqlSession.commit();
 			System.out.println("result" + result);
 		} finally {
@@ -42,11 +42,10 @@ public class AreaLikeDAO extends AbstractMybatis {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		int result = 0;
 		try {
-			map.clear();
 			String statement = namespace + ".deleteAreaLike";
-
-			map.put("code", code);
+			map.clear();
 			map.put("userid", userid);
+			map.put("code", code);
 
 			System.out.println("deleteAreaLike article??===" + map);
 			result = sqlSession.delete(statement, map);
@@ -71,12 +70,30 @@ public class AreaLikeDAO extends AbstractMybatis {
 			areaLike = sqlSession.selectList(statement, map);
 
 		} finally {
-			sqlSession.commit();
 			sqlSession.close();
 		}
 		System.out.println("areaLike---" + areaLike);
 		return areaLike;
+	}
 
+	public boolean checkAreaLike(String userid, String code) throws Exception {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		AreaLikeDTO areaLike = null;
+		boolean result = false;
+		try {
+			map.clear();
+			map.put("userid", userid);
+			map.put("code", code);
+			String statement = namespace + ".checkAreaLike";
+			areaLike = sqlSession.selectOne(statement, map);
+			System.out.println("areaLike---" + areaLike);
+			if (areaLike != null) {
+				result = true;
+			}
+		} finally {
+			sqlSession.close();
+		}
+		return result;
 	}
 	
 	public List<String> getUserid(String code) throws Exception {

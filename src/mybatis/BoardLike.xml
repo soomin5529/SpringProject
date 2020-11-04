@@ -4,22 +4,25 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="BoardLike">
-   <insert id="insertBoardLike" parameterType="hashmap">
+	<insert id="insertBoardLike" parameterType="hashmap">
 		insert into
-		BOARD_LIKE (userid, boardid )
-		values (#{userid},#{boardid})
+		BOARD_LIKE (userid, boardid) values (#{userid},#{boardid})
 	</insert>
-	
-	
-	<select id="getBoardLikeCount" parameterType="hashmap"
-		resultType="int">
-		select nvl(count(*),0) from BOARD_LIKE where boardid = #{boardid}
-	</select>
-	
-	
-	 <delete id="deleteBoardLike" parameterType="hashmap">
+
+	<delete id="deleteBoardLike" parameterType="hashmap">
 		delete from
-		BOARD_LIKE 
+		BOARD_LIKE
 		where userid = #{userid} and boardid = #{boardid}
 	</delete>
+
+	<select id="getBoardLikeCount" parameterType="hashmap"
+		resultType="int">
+		select nvl(count(*),0) from BOARD_LIKE where boardid =
+		#{boardid}
+	</select>
+
+	<select id="checkBoardLike" parameterType="hashmap"
+		resultType="BoardLike">
+		select boardid from BOARD_LIKE where userid = #{userid}
+	</select>
 </mapper>

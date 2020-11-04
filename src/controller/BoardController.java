@@ -27,10 +27,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import area.AreaDTO;
-import area.SigunguDTO;
 import board.BoardDTO;
+import board.BoardLikeDTO;
 import comment.CommentDTO;
-import industry.MainCategoryDTO;
 import service.AreaDAO;
 import service.AreaLikeDAO;
 import service.AreaNoticeDAO;
@@ -110,14 +109,31 @@ public class BoardController {
 			mav.addObject("userid", userid);
 			mav.setViewName("jsp_nohead/boardList");
 		}
+
+		Map<Integer, Integer> boardLikeCount = new HashMap<Integer, Integer>();
+		Map<Integer, Integer> userBoardLike = new HashMap<Integer, Integer>();
 		if (count > 0) {
 			// board list 뿌려주기
 			articles = boardDB.getArticles(dong_code);
 			mav.addObject("articleList", articles);
+			// board 좋아요
+			for (BoardDTO board : articles) {
+				boardLikeCount.put(board.getBoardid(), boardlikeDB.getBoardLikeCount(board.getBoardid()));
 
+				// user가 좋아요한 게시물
+				List<BoardLikeDTO> ubl = boardlikeDB.checkBoardLike(userid);
+				for (BoardLikeDTO bld : ubl) {
+					if (bld.getBoardid() == board.getBoardid()) {
+						userBoardLike.put(bld.getBoardid(), 1);
+					}
+				}
+			}
 		}
+		mav.addObject("boardLikeCount", boardLikeCount);
+		mav.addObject("userBoardLike", userBoardLike);
 		// board 게시물 수
 		mav.addObject("count", count);
+
 		// =================comment list========================================
 		int boardid = 0;
 		int cnt = 0;
@@ -143,6 +159,8 @@ public class BoardController {
 				boardLikecnt = boardlikeDB.getBoardLikeCount(boardid);
 				// 댓글 개수
 				mav.addObject("cnt", cnt);
+				// 댓글 list
+				comment = commentDB.getComments(boardid);
 
 				// 댓글 list
 				comment = commentDB.getComments(boardid);
@@ -181,7 +199,6 @@ public class BoardController {
 		long difference = (todayTimestamp - nextdayTimestamp);
 		// 일수 차 ( 날짜 기준)
 		long days = difference / (24 * 60 * 60 * 1000);
-		System.out.println(days);
 		if ((days / 30) == 1) {
 			DateDays = "한달 전";
 		} else if ((days / 7) == 1) {
@@ -198,7 +215,7 @@ public class BoardController {
 	}
 
 	@RequestMapping("writeUploadPro")
-	public String writeUploadPro(MultipartHttpServletRequest multipart, BoardDTO article, Model m) throws Exception {
+	public String writeUploadPro(MultipartHttpServletRequest multipart, BoardDTO article) throws Exception {
 		String today = null;
 		String userid = multipart.getParameter("userid");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -254,7 +271,6 @@ public class BoardController {
 		article.setName(name);
 		article.setUserid(userid);
 		article.setRegDate(regDate);
-		System.out.println("comment article------" + article);
 		commentDB.insertComment(article);
 
 		return userid;

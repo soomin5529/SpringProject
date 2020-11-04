@@ -4,59 +4,61 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-   <typeAliases>
-      <typeAlias type="member.MemberDTO" alias="Member" />
-      
-      <typeAlias type="area.SidoDTO" alias="Sido" />
-      <typeAlias type="area.SigunguDTO" alias="Sigungu" />
-      <typeAlias type="area.DongDTO" alias="Dong" />
-      <typeAlias type="area.AreaDTO" alias="Area" />
-      <typeAlias type="area.SelectedAreaDTO" alias="SelectedArea" />
-      <typeAlias type="area.AreaInMapBoundDTO" alias="AreaInMapBound" />
-      <typeAlias type="store.StoreDTO" alias="Store" />
-      <typeAlias type="area.AreaNoticeDTO" alias="AreaNotice" />
-      
-      <typeAlias type="industry.MainCategoryDTO"
-         alias="MainCategory" />
-      <typeAlias type="industry.MiddleCategoryDTO"
-         alias="MiddleCategory" />
-      <typeAlias type="industry.SmallCategoryDTO"
-         alias="SmallCategory" />
-      <typeAlias type="industry.IndustryDTO" alias="Industry" />
-      <typeAlias type="industry.IndustryRankDTO" alias="IndustryRank" />
-      <typeAlias type="board.BoardDTO" alias="Board" />
-      <typeAlias type="board.BoardLikeDTO" alias="BoardLike" />
-      <typeAlias type="dashboard.IndustryCountDTO" alias="IndustryCount" />
-      <typeAlias type="area.AreaLikeDTO" alias="AreaLike" />
-      <typeAlias type="industry.IndustryRankDTO" alias="IndustryRank" />
-      <typeAlias type="comment.CommentDTO" alias="Comment" />
-      
-      
-      
-   </typeAliases>
-   <environments default="development">
-      <environment id="development">
-         <transactionManager type="JDBC" />
-         <dataSource type="POOLED">
-            <property name="driver"
-               value="oracle.jdbc.driver.OracleDriver" />
-            <property name="url"
-               value="jdbc:oracle:thin:@localhost:1521:xe" />
-            <property name="username" value="FinalProject" />
-            <property name="password" value="1111" />
-         </dataSource>
-      </environment>
-   </environments>
-   <mappers>
-      <mapper resource="mybatis/Member.xml" />
-      <mapper resource="mybatis/Area.xml" />
-      <mapper resource="mybatis/Industry.xml" />
-      <mapper resource="mybatis/Board.xml" />
-      <mapper resource="mybatis/Store.xml" />
-      <mapper resource="mybatis/Comment.xml" />
-      <mapper resource="mybatis/BoardLike.xml" />
-      <mapper resource="mybatis/Dashboard.xml" />
-       <mapper resource="mybatis/AreaLike.xml" />
-       <mapper resource="mybatis/AreaNotice.xml" />
-   </mappers>
+	<typeAliases>
+		<typeAlias type="member.MemberDTO" alias="Member" />
+
+		<typeAlias type="area.SidoDTO" alias="Sido" />
+		<typeAlias type="area.SigunguDTO" alias="Sigungu" />
+		<typeAlias type="area.DongDTO" alias="Dong" />
+		<typeAlias type="area.AreaDTO" alias="Area" />
+		<typeAlias type="area.SelectedAreaDTO" alias="SelectedArea" />
+		<typeAlias type="area.AreaInMapBoundDTO"
+			alias="AreaInMapBound" />
+		<typeAlias type="store.StoreDTO" alias="Store" />
+		<typeAlias type="area.AreaNoticeDTO" alias="AreaNotice" />
+
+		<typeAlias type="industry.MainCategoryDTO"
+			alias="MainCategory" />
+		<typeAlias type="industry.MiddleCategoryDTO"
+			alias="MiddleCategory" />
+		<typeAlias type="industry.SmallCategoryDTO"
+			alias="SmallCategory" />
+		<typeAlias type="industry.IndustryDTO" alias="Industry" />
+		<typeAlias type="industry.IndustryRankDTO"
+			alias="IndustryRank" />
+		<typeAlias type="board.BoardDTO" alias="Board" />
+		<typeAlias type="board.BoardLikeDTO" alias="BoardLike" />
+		<typeAlias type="dashboard.IndustryCountDTO"
+			alias="IndustryCount" />
+		<typeAlias type="area.AreaLikeDTO" alias="AreaLike" />
+		<typeAlias type="industry.IndustryRankDTO"
+			alias="IndustryRank" />
+		<typeAlias type="comment.CommentDTO" alias="Comment" />
+
+	</typeAliases>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver"
+					value="oracle.jdbc.driver.OracleDriver" />
+				<property name="url"
+					value="jdbc:oracle:thin:@localhost:1521:xe" />
+				<property name="username" value="FinalProject" />
+				<property name="password" value="1111" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="mybatis/Member.xml" />
+		<mapper resource="mybatis/Area.xml" />
+		<mapper resource="mybatis/Industry.xml" />
+		<mapper resource="mybatis/Board.xml" />
+		<mapper resource="mybatis/Store.xml" />
+		<mapper resource="mybatis/Comment.xml" />
+		<mapper resource="mybatis/BoardLike.xml" />
+		<mapper resource="mybatis/Dashboard.xml" />
+		<mapper resource="mybatis/AreaLike.xml" />
+		<mapper resource="mybatis/AreaNotice.xml" />
+	</mappers>
 </configuration>

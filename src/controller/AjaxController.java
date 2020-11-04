@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import area.AreaDTO;
 import area.AreaInMapBoundDTO;
@@ -212,44 +211,49 @@ public class AjaxController {
 		return districts;
 	}
 
-	@RequestMapping(value = "/insertLike", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@RequestMapping(value = "/boardLike", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
-	public String selectCode(@RequestParam("boardid") int boardid, @RequestParam("status") String status,
-			HttpServletRequest request) throws Throwable {
+	public int boardLike(@RequestBody Map<String, String> data, HttpServletRequest request) throws Throwable {
 		HttpSession session = request.getSession();
 		String userid = (String) session.getAttribute("userid");
+		String status = data.get("status");
+		int boardid = Integer.valueOf(data.get("boardid"));
+		
 		String resultOption = "";
+		
 		int num = 10;
 		if (status.equals("insert")) {
 			num = boardlikeDB.insertBoardLike(boardid, userid);
 			resultOption = "들어감";
 			System.out.println(resultOption);
-		} else if (status.equals("delete")) {
+		}
+		if (data.get("status").equals("delete")) {
 			num = boardlikeDB.deleteBoardLike(boardid, userid);
 			resultOption = "빼기 성공";
 			System.out.println(resultOption);
 		}
-		return resultOption;
+		int likeNum = 0;
+		if (num == 1) {
+			likeNum = boardlikeDB.getBoardLikeCount(boardid);
+		}
+		return likeNum;
 	}
 
-	@RequestMapping(value = "/insertLikeArea", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@RequestMapping(value = "/insertAreaLike", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
-	public int insertLikeArea(@RequestParam("dongcode") String code, @RequestParam("status") String status,
-			HttpServletRequest request) throws Throwable {
+	public int insertAreaLike(@RequestBody Map<String, String> data, HttpServletRequest request) throws Throwable {
+		// @RequestParam("dongcode") String code, @RequestParam("status") String status
 		HttpSession session = request.getSession();
 		String userid = (String) session.getAttribute("userid");
 		int num = 10;
-		
-		if (status.equals("insert")) {
-			num = arealikeDB.insertAreaLike(userid, code);
-			System.out.println("들어가무 bookmark" + num);
-			
-
-		} else if (status.equals("delete")) {
-			num = arealikeDB.deleteAreaLike(userid, code);
+		if (data.get("status").equals("insert")) {
+			num = arealikeDB.insertAreaLike(userid, data.get("dongcode"));
+			System.out.println("들어가무 " + num);
+		}
+		if (data.get("status").equals("delete")) {
+			num = arealikeDB.deleteAreaLike(userid, data.get("dongcode"));
 			System.out.println("삭제대무 " + num);
 		}
 		return num;
 	}
-
 }

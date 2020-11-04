@@ -18,14 +18,14 @@ window.onload = function() {
 
 /* jQuery onload */
 $(document).ready(function() {
-	
+
 	/* 화면이 로드되면 시군구를 보여준다 */
 	var bound = mapBound();
 	/* 시군구가 보여지는 줌 레벨 */
 	if (map.getZoom() >= 11 && map.getZoom() <= 14) {
 		findDistrictInMapBound('sigungu');
 	}
-	
+
 	$("#svgMap01 g").mouseover(function(event) {
 		var cls = $(this).attr('class');
 		var _path = event.target;
@@ -38,7 +38,8 @@ $(document).ready(function() {
 		} else {
 			$.each(_over_g, function(index, item) {
 				item.setAttribute("fill", "#584de4")
-			});da
+			});
+			da
 		}
 	}).mouseout(function(event) {
 		var cls = $(this).attr('class');
@@ -79,159 +80,112 @@ function openPopDashboard() {
 	drawChart();
 }
 
-
 function closePopDashboard() {
 	var dashboard = document.getElementById("dashboard");
 	dashboard.style.display = "none";
 	if (community.style.display == "block") {
 		community.style.left = 0;
 	}
-	
+
 }
-function sendToboardList(code){
-	var selectcode = code; 
+function sendToboardList(code) {
+	var selectcode = code;
 	$.ajax({
 		type : "post",
-		url : "/SpringTeamProject/board/boardList/"+selectcode,
+		url : "/SpringTeamProject/board/boardList/" + selectcode,
 		contentType : "application/json; charset=UTF-8",
 		success : function(data) {
-			   $("#community").html(data);
+			$("#community").html(data);
 		}
 	});
 }
 /* community */
-function sendReplyReg() {
-	var selectCode = document.getElementById("dong").value;
-	var boardid = document.getElementById("board_id").value;
-	var content = document.getElementById("content").value;
-	
-	alert( boardid  );
-	$.ajax({
-		type : "post",
-		url : "/SpringTeamProject/board/commentUploadPro",
-		contentType : "application/json; charset=UTF-8",
-		data : {
-			'dongcode': selectCode,
-			'boardid' : boardid,
-			'content' : content,
-		},
-		success : function(data) {
-			alert("success");
-		}
-	});
-	
-	
-}
 function openPopCommunity() {
 	var community = document.getElementById("community");
 	var idcheck = sessionStorage.getItem("userid");
-	if(idcheck == null){
-	community.style.display = "none";
-	login.innerHTML = '<div class="deemed" onclick="closePopLogin()"></div>'
-					+ '<span class="close-btn" onclick="closePopLogin()">x</span>'
-					+ '<div class="pop-box" style="width:400px; height:360px;">'
-					+ '	<div class="title-box">'
-					+ '		<div class="tit">로그인</div>'
-					+ '	</div>'
-					+ '<div class="content-box">'
-					+ '		<form name="loginFrm" action="/SpringTeamProject/member/login">'
-					+ '			<div class="input-box">'
-					+ '				<div class="label-box">아이디</div>'
-					+ '				<input type="text" id="loginId" name="userid" placeholder="아이디를 입력하세요" onkeyup="enterLogin(event);"/>'
-					+ '			</div>'
-					+ '			<div class="input-box">'
-					+ '				<div class="label-box">비밀번호</div>'
-					+ '				<input type="password" id="loginPwd" name="pwd" placeholder="비밀번호를 입력하세요" onkeyup="enterLogin(event);"/>'
-					+ '			</div>'
-					+ '			<span id="idPresenceCheck" style="color:red;"></span>'
-					+ '			<button type="button" onclick="loginCheck()" class="btn-full btn01-reverse">로그인</button>'
-					+ '			<div class="join-btn">'
-					+ '				<span class="gray">아직 회원이 아니신가요?</span>'
-					+ '				<span class="highlight01" onclick="openPopJoin()">회원가입</span>'
-					+ '			</div>' + '		</form>' + '	</div>' + '</div>';
-			login.style.display = "block";
-	}else {
+	if (idcheck == null) {
+		openPopLogin("떠들썩은 로그인 후 이용가능합니다!");
+	} else {
 		community.style.display = "block";
-	var code = document.getElementById("dong").value;
-	
-	sendToboardList(code);
-	var dashboard = document.getElementById("dashboard");
-	if (dashboard.style.display == "block") {
-		community.style.left = "350px";
-	}}
+		var code = document.getElementById("dong").value;
+		sendToboardList(code);
+		var dashboard = document.getElementById("dashboard");
+		if (dashboard.style.display == "block") {
+			community.style.left = "350px";
+		}
+	}
 }
+
 function closePopCommunity() {
-	community.style.display = "none";
+	$("#community").css('display','none');
+	$("#community").empty();
+	//community.style.display = "none";
 }
 
 /* bookmark icon */
-function bookmark() {
-	var status = "insert";
-	var selectCode = document.getElementById("dong").value;
-	var bookmark = document.getElementById("bookmark");
-	if (bookmark.classList.contains('on')) {
-		status = "delete";
-		bookmark.className = bookmark.className.replace("on", "off");
-	} else if (bookmark.classList.contains('off')) {
-		bookmark.className = bookmark.className.replace("off", "on");
-	}
-	
-	  	$.ajax({
-		type : "post",
-		url : "/SpringTeamProject/request/insertLikeArea",
-		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-		data : {
-			'dongcode': selectCode,
-			'status'  : status
-		},
-		success : function(textStatus) {
-			alert(textStatus);
+function changeBookmark() {
+	/* 로그인이 되어있다면 */
+	if(sessionStorage.getItem("userid")!=null){
+		/* 관심 지역 표시에 따라 insert/delete를 나눠준다 */
+		var bookmark = document.getElementById("bookmark");
+		var status = bookmark.classList.contains('on') ? "delete" : "insert";
 		
-		 
-		}
-	});	
+		/* Dong-Code */
+		var selectCode = document.getElementById("dongCode").innerText;
+		
+		$.ajax({
+			type : "post",
+			url : "/SpringTeamProject/request/insertAreaLike",
+			contentType : "application/json; charset=UTF-8",
+			dataType : 'json',
+			data : JSON.stringify({'dongcode' : selectCode,'status' : status}),
+			success : function(textStatus) {
+				if(status == "insert"){
+					bookmark.className = bookmark.className.replace("off", "on");
+				}else{
+					bookmark.className = bookmark.className.replace("on", "off");
+				}
+			}
+		});
+	}else{
+		openPopLogin("로그인 후 서비스 이용 가능합니다.");
+	}
 }
 
-	
-	function sendLike(board){ 
+function sendLike(likeBtn) {
 	var communityReg = document.getElementById("communityReg");
-	var boardid = board.parentNode.parentNode.id;
-	var status = "insert";
-	var postLikeBtn = document.getElementById(boardid);
-	if (postLikeBtn.classList.contains('on')) {
-		status = "delete";
-		postLikeBtn.className = postLikeBtn.className.replace("on", "off");
-	} else if (postLikeBtn.classList.contains('off')) {
-		postLikeBtn.className = postLikeBtn.className.replace("off", "on");
-	}
-   
-   	$.ajax({
+	var boardid = likeBtn.getAttribute('id').substr(7);
+	var boardLikeBtn = document.getElementById("likeBtn" + boardid);
+	var status = boardLikeBtn.classList.contains('on') ? "delete" : "insert";
+	
+	$.ajax({
 		type : "post",
-		url : "/SpringTeamProject/request/insertLike",
-		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-		data : {
-			'boardid': boardid,
-			'status'  : status
-		},
-		success : function(textStatus) {
-			communityReg.style.display = "block";
-			postLike(boardid+"u");
+		url : "/SpringTeamProject/request/boardLike",
+		contentType : "application/json; charset=UTF-8",
+		dataType : "json",
+		data : JSON.stringify({ 'boardid' : boardid, 'status' : status }),
+		success : function(result) {
+			alert(result);
+			$("#likeCnt" + boardid).empty().append(result);
+			//communityReg.style.display = "block";
+			postLike("likeBtn" + boardid);
+			//boardLikeBtn.className = boardLikeBtn.className.replace("on", "off");
 		}
-	});	
-} 
+	});
+}
 /* communityRegist */
 function openPopCommunityReg() {
 	var code = document.getElementById("dong").value;
 	var communityReg = document.getElementById("communityReg");
-	
+
 	$.ajax({
 		type : "post",
 		url : "/SpringTeamProject/dashBoard/boardWriteForm/" + code,
 		contentType : "application/json; charset=UTF-8",
 		success : function(data) {
-			   $("#communityReg").html(data);
-      communityReg.style.display = "block";
-	
+			$("#communityReg").html(data);
+			communityReg.style.display = "block";
+
 		}
 	});
 }
@@ -239,32 +193,50 @@ function closePopCommunityReg() {
 	var communityReg = document.getElementById("communityReg");
 	communityReg.style.display = "none";
 }
-function logout(){
-	sessionStorage.removeItem("userid");
-}
+/* 떠들썩 댓글 */
+function sendReplyReg() {
+	   var selectCode = document.getElementById("dong").value;
+	   var boardid = document.getElementById("board_id").value;
+	   var content = document.getElementById("content").value;
+	   alert(boardid);
+	   $.ajax({
+	      type : "post",
+	      url : "/SpringTeamProject/board/commentUploadPro",
+	      contentType : "application/json; charset=UTF-8",
+	      data : {
+	         'dongcode': selectCode,
+	         'boardid' : boardid,
+	         'content' : content,
+	      },
+	      success : function(data) {
+	         alert("success");
+	      }
+	   });
+	}
 
 /* mypage */
 function openPopMyPage() {
+	// 마이페이지 클릭 시, 로그인 x-로그인창 / 로그인 o-마이페이지창
 	if (login == null) {
 		if (!myPage.firstChild) {
-			myPage.innerHTML = '	<div class="title-box cf">'
-					+ '		<div class="close-btn" onclick="closePopMyPage();">'
-					+ '			<svg viewBox="0 0 40 40" class="close-icon">'
-					+ '				<line x1="4.9" y1="4.9" x2="35.1" y2="35.1"/>'
-					+ '				<line x1="35.1" y1="4.9" x2="4.9" y2="35.1"/>'
-					+ '			</svg>'
-					+ '		</div>'
-					+ '		<div class="tit">마이페이지</div>'
-					+ '	</div>'
-					+ '	<ul>'
-					+ '		<li onclick="openPopMyPageModify()">내 정보 변경</li>'
-					+ '		<li onclick="openPopPwd()">비밀번호 변경</li>'
-					+ '		<li onclick="openPopUserDelete()">회원탈퇴</li>'
-					+ '		<li onclick="javascript:logout(); location.href=\'/SpringTeamProject/member/logout\'; " >로그아웃</li>'
-					+ '	</ul>' + '	<ul>'
-					+ '		<li onclick="openPopMyArea()">관심지역</li>'
-					+ '		<li onclick="openPopMyCommunity()">떠들썩</li>'
-					+ '	</ul>';
+			myPage.innerHTML = '   <div class="title-box cf">'
+					+ '      <div class="close-btn" onclick="closePopMyPage();">'
+					+ '         <svg viewBox="0 0 40 40" class="close-icon">'
+					+ '            <line x1="4.9" y1="4.9" x2="35.1" y2="35.1"/>'
+					+ '            <line x1="35.1" y1="4.9" x2="4.9" y2="35.1"/>'
+					+ '         </svg>'
+					+ '      </div>'
+					+ '      <div class="tit">마이페이지</div>'
+					+ '   </div>'
+					+ '   <ul>'
+					+ '      <li onclick="openPopMyPageModify()">내 정보 변경</li>'
+					+ '      <li onclick="openPopPwd()">비밀번호 변경</li>'
+					+ '      <li onclick="openPopUserDelete()">회원탈퇴</li>'
+					+ '      <li onclick="javascript:logout(); location.href=\'/SpringTeamProject/member/logout\'; " >로그아웃</li>'
+					+ '   </ul>' + '   <ul>'
+					+ '      <li onclick="openPopMyArea()">관심지역</li>'
+					+ '      <li onclick="openPopMyCommunity()">떠들썩</li>'
+					+ '   </ul>';
 			myPage.style.display = "block";
 			pwdModify.style.display = "block";
 			userDelete.style.display = "block";
@@ -273,29 +245,7 @@ function openPopMyPage() {
 		}
 	} else {
 		if (!login.firstChild) {
-			login.innerHTML = '<div class="deemed" onclick="closePopLogin()"></div>'
-					+ '<span class="close-btn" onclick="closePopLogin()">x</span>'
-					+ '<div class="pop-box" style="width:400px; height:360px;">'
-					+ '	<div class="title-box">'
-					+ '		<div class="tit">로그인</div>'
-					+ '	</div>'
-					+ '<div class="content-box">'
-					+ '		<form name="loginFrm" action="/SpringTeamProject/member/login">'
-					+ '			<div class="input-box">'
-					+ '				<div class="label-box">아이디</div>'
-					+ '				<input type="text" id="loginId" name="userid" placeholder="아이디를 입력하세요" onkeyup="enterLogin(event);"/>'
-					+ '			</div>'
-					+ '			<div class="input-box">'
-					+ '				<div class="label-box">비밀번호</div>'
-					+ '				<input type="password" id="loginPwd" name="pwd" placeholder="비밀번호를 입력하세요" onkeyup="enterLogin(event);"/>'
-					+ '			</div>'
-					+ '			<span id="idPresenceCheck" style="color:red;"></span>'
-					+ '			<button type="button" onclick="loginCheck()" class="btn-full btn01-reverse">로그인</button>'
-					+ '			<div class="join-btn">'
-					+ '				<span class="gray">아직 회원이 아니신가요?</span>'
-					+ '				<span class="highlight01" onclick="openPopJoin()">회원가입</span>'
-					+ '			</div>' + '		</form>' + '	</div>' + '</div>';
-			login.style.display = "block";
+			openPopLogin("로그인")
 		}
 	}
 }
@@ -311,13 +261,44 @@ function closePopMyPage() {
 }
 
 /* login */
+function openPopLogin(text){
+	login.innerHTML = '<div class="deemed" onclick="closePopLogin()"></div>'
+		+ '<span class="close-btn" onclick="closePopLogin()">x</span>'
+		+ '<div class="pop-box" style="width:400px; height:360px;">'
+		+ '   <div class="title-box">'
+		+ '      <div class="tit">' + text + '</div>'
+		+ '   </div>'
+		+ '<div class="content-box">'
+		+ '      <form name="loginFrm" action="/SpringTeamProject/member/login">'
+		+ '         <div class="input-box">'
+		+ '            <div class="label-box">아이디</div>'
+		+ '            <input type="text" id="loginId" name="userid" placeholder="아이디를 입력하세요" onkeyup="enterLogin(event);"/>'
+		+ '         </div>'
+		+ '         <div class="input-box">'
+		+ '            <div class="label-box">비밀번호</div>'
+		+ '            <input type="password" id="loginPwd" name="pwd" placeholder="비밀번호를 입력하세요" onkeyup="enterLogin(event);"/>'
+		+ '         </div>'
+		+ '         <span id="idPresenceCheck" style="color:red;"></span>'
+		+ '         <button type="button" onclick="loginCheck()" class="btn-full btn01-reverse">로그인</button>'
+		+ '         <div class="join-btn">'
+		+ '            <span class="gray">아직 회원이 아니신가요?</span>'
+		+ '            <span class="highlight01" onclick="openPopJoin()">회원가입</span>'
+		+ '         </div>'
+		+ '      </form>'
+		+ '   </div>'
+		+ '</div>';
+login.style.display = "block";
+}
 function closePopLogin() {
 	while (login.firstChild) {
 		login.removeChild(login.firstChild);
 	}
 	login.style.display = "none";
 }
-
+/* logout */
+function logout() {
+	sessionStorage.removeItem("userid");
+}
 /* join */
 function openPopJoin() {
 	if (!join.firstChild) {
@@ -451,7 +432,8 @@ function openPopMyPageModify() {
 function closePopMyPageModify() {
 	while (myPageModify.firstChild) {
 		myPageModify.removeChild(myPageModify.firstChild);
-	};
+	}
+	;
 	myPageModify.style.display = "none";
 }
 
@@ -505,17 +487,17 @@ function closePopUserDelete() {
 
 /* myArea */
 function openPopMyArea() {
-	
+
 	if (!myArea.firstChild) {
-	$.ajax({
-		type : "post",
-		url : "<%=request.getContextPath()%>/dashBoard/myArea/" + userid,
-		contentType : "application/json; charset=UTF-8",
-		success : function(data) {
-			   $("#myArea").html(data);
-		}
-	});
-		
+		$.ajax({
+			type : "post",
+			url : "<%=request.getContextPath()%>/dashBoard/myArea/" + userid,
+			contentType : "application/json; charset=UTF-8",
+			success : function(data) {
+				$("#myArea").html(data);
+			}
+		});
+
 	}
 	myArea.style.right = 0;
 }
@@ -533,7 +515,16 @@ function enterLogin(event) {
 
 /* SVG toggle button */
 
+/* bookmark icon */
+function bookmark() {
 
+	var bookmark = document.getElementById("bookmark");
+	if (bookmark.classList.contains('on')) {
+		bookmark.className = bookmark.className.replace("on", "off");
+	} else if (bookmark.classList.contains('off')) {
+		bookmark.className = bookmark.className.replace("off", "on");
+	}
+}
 
 /* like icon */
 function postLike(bdid) {
@@ -543,7 +534,7 @@ function postLike(bdid) {
 		postLike.innerHTML = '<svg viewBox="0 0 40 40" class="like-icon">'
 				+ '<path d="M20 4.5h.8c.9.1 1.6.5 2.1 1.2.5.6 	.8 1.4.6 2.2v8.6H34c.7 0 1.4.3 1.8.9.5.6.8 1.5.7 2.4v7.8c0 2.3-.5 4.9-2.5 6.7-1.5 1.3-4 2.2-7.6 2.2H3.5v-15h7.6l5.2-8 1.3-8.6.1-.3zm-9.5 17v15"></path>'
 				+ '</svg>' + '<span class="like-txt">좋아요</span>';
-				
+
 	} else if (postLike.classList.contains('off')) {
 		postLike.className = postLike.className.replace("off", "on");
 		postLike.innerHTML = '<svg viewBox="0 0 40 40" class="like-icon">'
@@ -554,9 +545,9 @@ function postLike(bdid) {
 }
 // 행정구역(시군군, 읍면동) 선택 시, 행정구역 면적을 json에서 찾아와 표시한다.
 function findAreaToJson(districtCode) {
-	var code = districtCode+"";
+	var code = districtCode + "";
 	var url;
-	if (code.length==5) {
+	if (code.length == 5) {
 		url = "/SpringTeamProject/request/findSigunguToJson";
 	} else {
 		url = "/SpringTeamProject/request/findDongToJson";
@@ -570,7 +561,11 @@ function findAreaToJson(districtCode) {
 		},
 		success : function(paths) {
 			var centerPath = paths.split(':')[0];
-			var area = { code : code, latitude : centerPath.split(',')[0], longitude : centerPath.split(',')[1]}
+			var area = {
+				code : code,
+				latitude : centerPath.split(',')[0],
+				longitude : centerPath.split(',')[1]
+			}
 			choiceArea(area);
 			var borderPaths = paths.split(':')[1];
 			drawPolygonDong(borderPaths);
@@ -597,10 +592,10 @@ function choiceAdministrativeDistrict(select) {
 			findDistrictInMapBound('sigungu');
 		}
 	}
-		// 시군구 선택 -> 동리스트 출력 및 담기
+	// 시군구 선택 -> 동리스트 출력 및 담기
 	if (select.getAttribute('id') == 'sigungu') {
 
-		//closePopDashboard();
+		// closePopDashboard();
 		$('#dash-board').empty();
 
 		dongArray = [];
@@ -641,40 +636,42 @@ function returnAreaArray(districtType, districtCode) {
 	});
 }
 /* DashBoard에서 검색된 산업분류에 따라 지도에 상점을 표시해주기위하여 세션에 정보를 저장해 놓는다. */
-function dashBoardSetSession(data, code){
+function dashBoardSetSession(data, code) {
 	sessionStorage.setItem("code", code);
 	sessionStorage.setItem("categry", data.getAttribute('id'));
 	sessionStorage.setItem("categryCode", data.value);
 }
 
-
-function clickPinDistrict(code){
+function clickPinDistrict(code) {
 	changeDistrictSelectBox(code);
-	if((code+"").length > 5){
+	if ((code + "").length > 5) {
 		openDashBoard(code);
 	}
 }
 /* 핀 클릭 시 행정구역(시도, 시군구, 읍면동) 셀렉트 박스를 생성하고 클릭한 행정구역에 위치 시킨다. */
-function changeDistrictSelectBox(code){
-	var code = code+"";
-	if(code.length == 5){
-		var sidoCode = code.substr(0,2);
+function changeDistrictSelectBox(code) {
+	var code = code + "";
+	if (code.length == 5) {
+		var sidoCode = code.substr(0, 2);
 		returnAreaArrayByClickPin('sido', Number(sidoCode), code);
-		$("#sido option[value="+sidoCode+"]").attr('selected','selected');
+		$("#sido option[value=" + sidoCode + "]").attr('selected', 'selected');
 		findDistrictInMapBound('sigungu');
-	}else{
-		var sigunguCode = code.substr(0,5);
+	} else {
+		var sigunguCode = code.substr(0, 5);
 		returnAreaArrayByClickPin('sigungu', Number(sigunguCode), code);
 		findDistrictInMapBound('dong');
 	}
 }
-function returnAreaArrayByClickPin(districtType, highDistrictCode, lowDistrictCode) {
-	if(lowDistrictCode > 5){
-		$("#sigungu option[value="+highDistrictCode+"]").attr('selected','selected');
-	}else{
-		$("#sido option[value="+highDistrictCode+"]").attr('selected','selected');
+function returnAreaArrayByClickPin(districtType, highDistrictCode,
+		lowDistrictCode) {
+	if (lowDistrictCode > 5) {
+		$("#sigungu option[value=" + highDistrictCode + "]").attr('selected',
+				'selected');
+	} else {
+		$("#sido option[value=" + highDistrictCode + "]").attr('selected',
+				'selected');
 	}
-	
+
 	$.ajax({
 		type : "post",
 		url : "/SpringTeamProject/request/areaOption",
@@ -693,10 +690,10 @@ function returnAreaArrayByClickPin(districtType, highDistrictCode, lowDistrictCo
 				if (districtType.includes('sigungu')) {
 					dongArray.push(areaList[i]);
 				}
-				if(areaList[i].code == lowDistrictCode){
-					options += '<option value=' + areaList[i].code + ' selected>'
-					+ areaList[i].name + '</option>\n'
-				}else{
+				if (areaList[i].code == lowDistrictCode) {
+					options += '<option value=' + areaList[i].code
+							+ ' selected>' + areaList[i].name + '</option>\n'
+				} else {
 					options += '<option value=' + areaList[i].code + '>'
 							+ areaList[i].name + '</option>\n'
 				}
@@ -708,10 +705,8 @@ function returnAreaArrayByClickPin(districtType, highDistrictCode, lowDistrictCo
 }
 // 행정구역(시군구, 동)을 선택하면 areaArray[]에서 선택된 구역을 찾아 choiceArea()에 보내어 실행시킨다.
 function selectOption(array, option) {
-	console.log("selectOption() 실행-->" + array[i] +", " +option)
 	for ( var i in array) {
 		if (array[i].code == option.value) {
-			console.log(array[i]);
 			choiceArea(array[i]);
 		}
 	}

@@ -1,6 +1,7 @@
 package service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -16,7 +17,6 @@ public class BoardLikeDAO extends AbstractMybatis {
 	Map<String, Object> map = new HashMap<String, Object>();
 
 	public int getBoardLikeCount(int boardid) throws Exception {
-
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
 			map.put("boardid", boardid);
@@ -29,38 +29,41 @@ public class BoardLikeDAO extends AbstractMybatis {
 	public int insertBoardLike(int boardid, String userid) throws Exception {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
-			map.clear();
 			String statement = namespace + ".insertBoardLike";
-			BoardLikeDTO article = new BoardLikeDTO();
-
+			map.clear();
 			map.put("userid", userid);
 			map.put("boardid", boardid);
-			System.out.println("insertBoardLike article??===" + map);
-
 			return sqlSession.insert(statement, map);
 		} finally {
 			sqlSession.commit();
 			sqlSession.close();
 		}
-
 	}
-	
+
 	public int deleteBoardLike(int boardid, String userid) throws Exception {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
-			map.clear();
 			String statement = namespace + ".deleteBoardLike";
-
+			map.clear();
 			map.put("boardid", boardid);
 			map.put("userid", userid);
-
-			System.out.println("deleteBoardLike article??===" + map);
 			return sqlSession.delete(statement, map);
 		} finally {
 			sqlSession.commit();
 			sqlSession.close();
 		}
+	}
 
+	public List<BoardLikeDTO> checkBoardLike(String userid) throws Exception {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		try {
+			String statement = namespace + ".checkBoardLike";
+			map.clear();
+			map.put("userid", userid);
+			return sqlSession.selectList(statement, map);
+		} finally {
+			sqlSession.close();
+		}
 	}
 
 }
