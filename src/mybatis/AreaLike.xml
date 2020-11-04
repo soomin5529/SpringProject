@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AreaLike">
+
+	<insert id="insertAreaLike" parameterType="hashmap">
+		insert into AREA_LIKE values (#{userid}, #{code})
+	</insert>
+
+	<delete id="deleteAreaLike" parameterType="hashmap">
+		delete from AREA_LIKE
+		where userid = #{userid} and code = #{code}
+	</delete>
+
+	<select id="myAllAreaLike" parameterType="hashmap"
+		resultType="AreaLike">
+		select code from AREA_LIKE where userid = #{userid}
+	</select>	
+	
+	<select id="checkAreaLike" parameterType="hashmap"
+		resultType="AreaLike">
+		select code from AREA_LIKE where userid = #{userid} and code = #{code}
+	</select>
+	
+	<select id="getUserid" parameterType="hashmap" resultType="String">
+	select userid from AREA_LIKE where code = #{code}
+	</select>
+	
+</mapper>

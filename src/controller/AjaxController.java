@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -24,6 +26,8 @@ import area.AreaDTO;
 import area.AreaInMapBoundDTO;
 import industry.IndustryDTO;
 import service.AreaDAO;
+import service.AreaLikeDAO;
+import service.AreaNoticeDAO;
 import service.BoardLikeDAO;
 import service.IndustryDAO;
 import service.MemberDAO;
@@ -44,6 +48,10 @@ public class AjaxController {
 	StoreDAO storeDB;
 	@Autowired
 	BoardLikeDAO boardlikeDB;
+	@Autowired
+	AreaLikeDAO arealikeDB;
+	@Autowired
+	AreaNoticeDAO areanoticeDB;
 
 	// produces -> encoding문제 해결/안해주면 한글깨짐
 	@RequestMapping(value = "/areaOption", method = RequestMethod.POST, produces = "application/json; charset=utf8")
@@ -172,7 +180,7 @@ public class AjaxController {
 				path += coordinates[i].split(",")[1] + "," + coordinates[i].split(",")[0] + "/";
 			}
 		}
-		
+
 		return path;
 	}
 
@@ -189,8 +197,8 @@ public class AjaxController {
 	// 화면에 보여지는 지도의 행정구역(시군구, 읍면동) 출력
 	@RequestMapping(value = "/currentPageDistrict/{type}", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
-	public List<AreaInMapBoundDTO> currentPageDistrict(@RequestBody Map<String, Object> params, @PathVariable("type") String type,
-			HttpServletResponse response) throws IOException {
+	public List<AreaInMapBoundDTO> currentPageDistrict(@RequestBody Map<String, Object> params,
+			@PathVariable("type") String type, HttpServletResponse response) throws IOException {
 		System.out.println("행정구역은?------>" + type);
 		List<AreaInMapBoundDTO> districts = null;
 		if (type.contains("sigungu")) {
@@ -202,21 +210,50 @@ public class AjaxController {
 		}
 		return districts;
 	}
-	
 
-	@RequestMapping(value = "/insertLike", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@RequestMapping(value = "/boardLike", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
-	public String selectCode(@RequestParam("userid") String userid, @RequestParam("boardid") int boardid,
-			@RequestParam("status") String status) throws Throwable {
+	public int boardLike(@RequestBody Map<String, String> data, HttpServletRequest request) throws Throwable {
+		HttpSession session = request.getSession();
+		String userid = (String) session.getAttribute("userid");
+		String status = data.get("status");
+		int boardid = Integer.valueOf(data.get("boardid"));
+		
 		String resultOption = "";
+		
 		int num = 10;
 		if (status.equals("insert")) {
 			num = boardlikeDB.insertBoardLike(boardid, userid);
 			resultOption = "들어감";
-		} else if (status.equals("delete")) {
+			System.out.println(resultOption);
+		}
+		if (data.get("status").equals("delete")) {
 			num = boardlikeDB.deleteBoardLike(boardid, userid);
 			resultOption = "빼기 성공";
+			System.out.println(resultOption);
 		}
-		return resultOption;
+		int likeNum = 0;
+		if (num == 1) {
+			likeNum = boardlikeDB.getBoardLikeCount(boardid);
+		}
+		return likeNum;
+	}
+
+	@RequestMapping(value = "/insertAreaLike", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+	@ResponseBody
+	public int insertAreaLike(@RequestBody Map<String, String> data, HttpServletRequest request) throws Throwable {
+		// @RequestParam("dongcode") String code, @RequestParam("status") String status
+		HttpSession session = request.getSession();
+		String userid = (String) session.getAttribute("userid");
+		int num = 10;
+		if (data.get("status").equals("insert")) {
+			num = arealikeDB.insertAreaLike(userid, data.get("dongcode"));
+			System.out.println("들어가무 " + num);
+		}
+		if (data.get("status").equals("delete")) {
+			num = arealikeDB.deleteAreaLike(userid, data.get("dongcode"));
+			System.out.println("삭제대무 " + num);
+		}
+		return num;
 	}
 }

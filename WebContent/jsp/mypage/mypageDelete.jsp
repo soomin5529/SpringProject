@@ -5,7 +5,7 @@
 	<div class="page-title-box">
 		<div class="page-name">탈퇴하기</div>
 		<div class="page-desc">
-			안녕하세요 <span>홍길동</span>회원님<br />
+			안녕하세요  <span id="name" name="name">${name} </span>회원님<br />
 			정말 탈퇴하실 거에요?( Ĭ ^ Ĭ )
 		</div>
 	</div>
@@ -13,13 +13,12 @@
 	<div class="content-body cf">
 		<div class="search-group">
 			<ul class="lnb-box">
-				<li onclick="location.href='<%=request.getContextPath()%>/mypage/mypageModify'">내 정보 변경</li>
-				<li onclick="location.href='<%=request.getContextPath()%>/mypage/mypagePwd'">비밀번호 변경</li>
-				<li onclick="location.href='<%=request.getContextPath()%>/mypage/mypageDelete'" class="on">탈퇴하기</li>
+				<li onclick="location.href='<%=request.getContextPath()%>/member/myPageModify'">내 정보 변경</li>
+				<li onclick="location.href='<%=request.getContextPath()%>/member/mypageDelete'" class="on">탈퇴하기</li>
 			</ul>
 		</div>
 		<div class="content">
-			<form action="">
+			<form name="deleteForm" action="/SpringTeamProject/member/deletemember" method="post">
 				<table class="tbl tbl-reg">
 					<tr>
 						<th>비밀번호</th>

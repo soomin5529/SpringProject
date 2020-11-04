@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AreaNotice">
+
+	
+	<!-- board boardid, regdate insert -->
+	<insert id="insertNotice" parameterType="hashmap">
+		insert into
+		AREA_NOTICE
+		(userid, boardid, board_regdate, dongCode)
+		values
+		(#{userid}, #{boardid}, #{board_regdate}, #{dongCode})
+
+	</insert>
+	<!-- 읽었을 때 1로 update, 읽음처리 -->
+	<update id="updateReaded" parameterType="int">
+		update area_notice set
+		readed = 1 where boardid= #{boardid}
+	</update>
+
+	<select id="selectNotice" parameterType="hashmap"
+		resultType="AreaNotice">
+		select userid, dongcode as dongCode, boardid, board_regdate, readed from area_notice where userid = #{userid} order by board_regdate desc
+	</select>
+
+
+
+</mapper>

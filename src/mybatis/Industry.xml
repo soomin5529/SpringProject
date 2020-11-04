@@ -68,9 +68,7 @@
 		parameterType="String">
 		SELECT * FROM(
 		SELECT cm.MAINCATEGORY_CODE as code, cm.MAINCATEGORY_NAME as name,
-		CEIL(count(*)/(select count(*) from STORE str, CATEGORY_MAIN cm where
-		str.DONG_CODE = #{dongCode} and str.MAINCATEGORY_CODE =
-		cm.MAINCATEGORY_CODE)*100) as sum, RANK() over (ORDER BY
+		count(*) AS sum, RANK() over (ORDER BY
 		COUNT(str.MAINCATEGORY_CODE) DESC) as rank
 		FROM STORE str, CATEGORY_MAIN cm
 		WHERE str.MAINCATEGORY_CODE =

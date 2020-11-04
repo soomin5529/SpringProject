@@ -1,101 +1,12 @@
-// main화면에서 업종분류 선택시, 다음 하위 옵션의 카테고리 동적으로 받아옴
-function sendToControllerSelectCategoryValue(select) {
-	var category = select.getAttribute('id') == 'main' ? 'main' : 'middle';
-
-	$.ajax({
-		type : "post",
-		url : "/SpringTeamProject/request/categoryOption",
-		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-		data : {
-			'category' : category,
-			'code' : select.value
-		},
-		success : function(textStatus) {
-			if (category == 'main') {
-				$("#middle").empty().append(textStatus);
-			} else {
-				$("#small").empty().append(textStatus);
-			}
-		}
-	});
-}
-
-function sendToControllerguCode(select) {
-	var area = select.getAttribute('id') == 'sigungu' ? 'sigungu' : 'dong';
-	var code = document.getElementById("sigungu");
-	code = code.options[code.selectedIndex].value;
-	$.ajax({
-		type : "post",
-		url : "/SpringTeamProject/request/selectCode",
-		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-		data : {
-			'area' : area,
-			'code' : code
-		},
-		success : function(textStatus) {
-			var gu_name = textStatus;
-			// $('#result').empty().append(textStatus);
-			document.getElementById("sigunguName").innerHTML = gu_name;
-		}
-	});
-}
-
-function sendToControllerdongCode(select) {
-	var area = select.getAttribute('id') == 'sigungu' ? 'sigungu' : 'dong';
-	var gucode = document.getElementById("sigungu");
-	var dongcode = document.getElementById("dong");
-
-	gucode = gucode.options[gucode.selectedIndex].value;
-	dongcode = dongcode.options[dongcode.selectedIndex].value;
-	$.ajax({
-		type : "post",
-		url : "/SpringTeamProject/request/selectCode",
-		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-		data : {
-			'area' : area,
-			'code' : dongcode
-		},
-		success : function(textStatus) {
-			var dong_name = textStatus;
-			// $('#result').append(textStatus);
-			document.getElementById("dongName").innerHTML = dong_name;
-		}
-	});
-}
-
-function sendLike(board) {
-	var boardid = board.parentNode.parentNode.id;
-	var status = "insert";
-	var postLikeBtn = document.getElementById(boardid);
-	var userid = document.getElementById("userid").value;
-	if (postLikeBtn.classList.contains('on')) {
-		status = "delete";
-	}
-
-	$.ajax({
-		type : "post",
-		url : "/SpringTeamProject/request/insertLike",
-		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-		data : {
-			'userid' : userid,
-			'boardid' : boardid,
-			'status' : status
-		},
-		success : function(textStatus) {
-			postLike(boardid + "u");
-		}
-	});
-}
 /* 동 선택하면 (셀렉트 박스 or 동 핀 클릭) 대쉬보드 나오게 한다. */
 function openDashBoard(dongCode) {
-	var code = dongCode
+	var code = dongCode;
 	$.ajax({
 		type : "post",
 		url : "/SpringTeamProject/dashBoard/dong/" + code,
 		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 		success : function(text) {
 			document.getElementById('dash-board').innerHTML = text;
-			console.log(text);
 			drawDouhnutChart(code);
 			drawBarChart(code);
 			importantFrenchise(code);
@@ -225,7 +136,8 @@ function drawBarChart(dongCode) {
 }
 /* DashBoard에 주요 생활 프렌차이즈 */
 function importantFrenchise(dongCode) {
-	$.ajax({
+	$
+			.ajax({
 				type : "post",
 				url : "/SpringTeamProject/dashBoard/frenchise",
 				contentType : "application/json; charset=UTF-8",
@@ -287,9 +199,12 @@ function dashBoardMiddleCategory(industryCode, dongCode) {
 			"mainCode" : industryCode
 		}),
 		success : function(data) {
-			$('#middle').empty().append('<option value="no" disabled selected>중분류</option>');
-			for(var i in data){
-				$('#middle').append('<option value='+ data[i].code +'>' + data[i].name + '</option>');
+			$('#middle').empty().append(
+					'<option value="no" disabled selected>중분류</option>');
+			for ( var i in data) {
+				$('#middle').append(
+						'<option value=' + data[i].code + '>' + data[i].name
+								+ '</option>');
 			}
 		}
 	});
@@ -306,10 +221,36 @@ function dashBoardSmallCategory(industryCode, dongCode) {
 			"middleCode" : industryCode
 		}),
 		success : function(data) {
-			$('#small').empty().append('<option value="no" disabled selected>소분류</option>');
-			for(var i in data){
-				$('#small').append('<option value='+ data[i].code +'>' + data[i].name + '</option>');
+			$('#small').empty().append(
+					'<option value="no" disabled selected>소분류</option>');
+			for ( var i in data) {
+				$('#small').append(
+						'<option value=' + data[i].code + '>' + data[i].name
+								+ '</option>');
 			}
+		}
+	});
+}
+/* 게시물 쓰기 */
+function writeBoard() {
+	var form = $("form[name=writeform]")[0];
+	form.method = 'POST';
+	form.enctype = 'multipart/form-data';
+	var formData = new FormData(form);
+	
+	$.ajax({
+		type : 'post',
+		url : '/SpringTeamProject/board/writeUploadPro',
+		enctype : "multipart/form-data",
+		cache: false,
+		processData : false,
+        contentType : false,
+		data : formData,
+		success : function(textStatus) {
+			closePopCommunityReg();
+			openPopCommunity();
+		},error: function (e) {
+			alert("실패")
 		}
 	});
 }

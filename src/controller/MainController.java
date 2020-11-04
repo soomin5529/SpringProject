@@ -72,77 +72,17 @@ public class MainController {
 		// 처음 시도 목록을 받아 지역 시도선택에 뿌려준다.
 		List<SidoDTO> sidoList = areaDB.sidoList();
 		model.addAttribute("sido", sidoList);
-		//
-		// List<AreaDTO> sigunguList = areaDB.sigunguList("11");
-		// model.addAttribute("sigunguList", sigunguList);
-		// System.out.println(sigunguList + "------------> 시군구 리스트");
+		// 
+		List<AreaDTO> sigunguList = areaDB.sigunguList("11");
+		model.addAttribute("sigunguList", sigunguList);
+		System.out.println(sigunguList + "------------> 시군구 리스트");
 
 		List<MainCategoryDTO> MainList = industryDB.category_mainList();
-		model.addAttribute("main", MainList);
+		model.addAttribute("userid", userid);
+		
+		return "view/main";
 
-		AreaDTO sigungu = areaDB.sigungu("11680");
-		model.addAttribute("sigungu", sigungu);
-		AreaDTO dongList = areaDB.dong("1168010100");
-		model.addAttribute("dong", dongList);
-		String dong_code = "";
-		dong_code = dongList.getCode();
-		int count = 0;
-		List<BoardDTO> articles = null;
-		// board 개수 count
-		count = boardDB.getBoardCount(dong_code);
-		if (count > 0) {
-			// board list 뿌려주기
-			articles = boardDB.getArticles(dong_code);
-			System.out.println("article" + articles);
-			model.addAttribute("articleList", articles);
-		}
-		// board 게시물 수
-		model.addAttribute("count", count);
-		// =================comment list========================================
-		int boardid = 0;
-		int cnt = 0;
-		int boardLikecnt = 0;
-		int commentLikecnt = 0;
-		String regdate = null;
-		List<CommentDTO> comment = null;
-		// key 값: Boardid , value 값 : boardid 에 달린 댓글 list
-		Map<Integer, List<CommentDTO>> map = new HashMap<Integer, List<CommentDTO>>();
-		Map<Integer, Integer> boardLike = new HashMap<Integer, Integer>();
-		Map<Integer, String> regDatemap = new HashMap<Integer, String>();
-		try {
-			// 댓글 list
-			for (BoardDTO b : articles) {
-
-				boardid = b.getBoardid();
-				// 날짜 계산 --------------
-				regdate = b.getRegDate();
-				regDatemap.put(boardid, regDate(regdate));
-				// 날짜 계산 --------------
-				System.out.println("boardid 값은?=====" + boardid);
-				cnt = commentDB.getCommentCount(boardid);
-				boardLikecnt = boardlikeDB.getBoardLikeCount(boardid);
-				// 댓글 개수
-				model.addAttribute("cnt", cnt);
-
-				// 댓글 list
-				comment = commentDB.getComments(boardid);
-
-				map.put(boardid, comment);
-				boardLike.put(boardid, boardLikecnt);
-				System.out.println("boardLike=====" + boardLike);
-			}
-			System.out.println("map:" + map);
-			// 댓글 리스트
-			model.addAttribute("map", map);
-			// 좋아요 수
-			model.addAttribute("boardLike", boardLike);
-
-			model.addAttribute("regDate", regDatemap);
-		} catch (NullPointerException e) {
-			// TODO: handle exception
-		} finally {
-			return "view/main";
-		}
+	
 	}
 
 	// 날짜 변환 메소드
@@ -191,6 +131,11 @@ public class MainController {
 	@RequestMapping("startupKeyword")
 	public String startupKeyword() throws Throwable {
 		return "view/startupKeyword";
+	}
+
+	@RequestMapping("startupWeather")
+	public String startupWeather() throws Throwable {
+		return "view/startupWeather";
 	}
 
 	@RequestMapping("/intro")

@@ -83,7 +83,6 @@ function mapBound() {
 		'lat2' : bound.getNE().y,
 		'lat1' : bound.getSW().y
 	}
-	console.log(bounds);
 	return bounds;
 }
 
@@ -98,8 +97,6 @@ function findDistrictInMapBound(districtType) {
 		dataType : 'json',
 		data : JSON.stringify(bounds),
 		success : function(districts) {
-			console.log("지도 내 행정구역 수");
-			console.log(districts);
 			for ( var i in districts) {
 				pinDistrict(districts[i]);
 			}
