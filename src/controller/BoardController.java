@@ -234,17 +234,17 @@ public class BoardController {
 		// jsp로 보내지 않고 바로 view 로
 	}
 
-	@RequestMapping("commentUploadPro")
-	public String commentUploadPro(Model m, CommentDTO article, HttpServletRequest request) throws Exception {
+	@RequestMapping(value = "/commentUploadPro", produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String commentUploadPro(String dongcode, int boardid, String content, String name, CommentDTO article, HttpServletRequest request) throws Exception {
 
 		Date today = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
 		String regDate = sdf.format(today);
-
-		String userid = request.getParameter("userid");
-		String name = request.getParameter("name");
-		int boardid = Integer.parseInt(request.getParameter("boardid"));
-		String content = request.getParameter("content");
+		
+		HttpSession session = request.getSession();
+		String userid = (String) session.getAttribute("userid");
+	     name = (String) session.getAttribute("name");
 		article.setBoardid(boardid);
 		article.setContent(content);
 		article.setName(name);
@@ -252,9 +252,8 @@ public class BoardController {
 		article.setRegDate(regDate);
 		commentDB.insertComment(article);
 
-		m.addAttribute("display", "block");
-		return "redirect:/view/main";
-		// jsp로 보내지 않고 바로 view 로
+		return userid;
+		
 	}
 
 	@RequestMapping("deletePro")
