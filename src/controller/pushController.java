@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -81,10 +82,12 @@ public class pushController {
 		String sigunguName = null;
 		String dongName = null;
 		String name = null;
+		int boardid = 0;
 		Map<Integer, String> AreaNamemap = new HashMap<Integer, String>();
 		Map<Integer, String> regDatemap = new HashMap<Integer, String>();
 		for (AreaNoticeDTO code : noticeList) {
-			dongCode = code.getdongCode();
+			dongCode = code.getDongCode();
+			boardid = code.getBoardid();
 			sigunguCode = dongCode.substring(0, 5);
 
 			sigungu = areaDB.sigungu(sigunguCode);
@@ -94,9 +97,11 @@ public class pushController {
 			dongName = dong.getName();
 			name = sigunguName + "    " + dongName;
 
-			AreaNamemap.put(code.getBoardid(), name);
-			regDatemap.put(code.getBoardid(), regDate(code.getBoard_regdate()));
+			AreaNamemap.put(boardid, name);
+			regDatemap.put(boardid, regDate(code.getBoard_regdate()));
 		}
+
+		System.out.println(noticeList + "---------->노티스 리스트");
 		mav.addObject("regDatemap", regDatemap);
 		mav.addObject("AreaNamemap", AreaNamemap);
 		mav.addObject("noticeList", noticeList);
@@ -105,27 +110,13 @@ public class pushController {
 		return mav;
 	}
 
-	// bookmark 누르면 AreaNotice table에 관심지역 동코드 userid insert
-	@RequestMapping(value = "insertAreaLike/{dongcode}", produces = "application/text; charset=utf8")
+	@RequestMapping(value = "updateReaded", produces = "application/text; charset=utf8")
 	@ResponseBody
-	public int insertAreaLike(@PathVariable("dongcode") String dongcode, HttpServletRequest request) throws Throwable {
-
+	public int updateReaded(@RequestParam("boardid") int boardid) throws Throwable {
+		System.out.println(boardid+"---------------->");
 		int result = 0;
-		HttpSession session = request.getSession();
-		String userid = (String) session.getAttribute("userid");
-
-		result = areanoticeDB.insertAreaLike(userid, dongcode);
+		result = areanoticeDB.updateReaded(boardid);
 
 		return result;
 	}
-
-	// 게시물 등록 되면 Area_notice 에 boardid, regdate insert
-	@RequestMapping(value = "/insertBoard/{dongcode}", produces = "application/text; charset=utf8")
-	@ResponseBody
-	public int insertBoard(@PathVariable String dongcode, int boardid, String regdate) throws Exception {
-		// ======= AREA_INSERT boardid, regdate=======
-		int result = areanoticeDB.insertBoard(dongcode, boardid, regdate);
-		return result;
-	}
-
 }

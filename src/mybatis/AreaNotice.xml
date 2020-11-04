@@ -4,28 +4,25 @@
 
 <mapper namespace="AreaNotice">
 
-	<!-- Area_Like userid, dongcode insert -->
-	<insert id="insertAreaLike" parameterType="hashmap">
+	
+	<!-- board boardid, regdate insert -->
+	<insert id="insertNotice" parameterType="hashmap">
 		insert into
 		AREA_NOTICE
-		(userid, dongcode)
+		(userid, boardid, board_regdate, dongCode)
 		values
-		(#{userid}, #{dongcode})
-	</insert>
+		(#{userid}, #{boardid}, #{board_regdate}, #{dongCode})
 
-	<!-- board boardid, regdate insert -->
-	<update id="insertBoard" parameterType="hashmap">
-		update area_notice set
-		boardid = #{boardid} , board_regdate= #{board_regdate} where dongcode=
-		#{dongcode};
-	</update>
-    <!-- 읽었을 때 1로 update, 읽음처리-->
+	</insert>
+	<!-- 읽었을 때 1로 update, 읽음처리 -->
 	<update id="updateReaded" parameterType="int">
-		update area_notice set readed = 1 where boardid= #{boardid};
+		update area_notice set
+		readed = 1 where boardid= #{boardid}
 	</update>
-	
-	<select id="selectNotice" parameterType="hashmap" resultType="AreaNotice">
-	   select * from area_notice where userid = #{userid} order by board_regdate desc
+
+	<select id="selectNotice" parameterType="hashmap"
+		resultType="AreaNotice">
+		select userid, dongcode as dongCode, boardid, board_regdate, readed from area_notice where userid = #{userid} order by board_regdate desc
 	</select>
 
 

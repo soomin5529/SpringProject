@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <div class="title-box cf">
 	<div class="close-btn" onclick="closePopPush();">
 		<svg viewBox="0 0 40 40" class="close-icon">
@@ -12,20 +13,20 @@
 </div>
 <ul>
 	<c:forEach var="notice" items="${noticeList}">
-		<li>
+	<c:if test="${notice.readed ==0 }">
+		<li id="openDash" onclick="javascript:openDashBoard(${notice.dongCode}); readed(${notice.boardid});">
+	</c:if>
+	<c:if test="${notice.readed ==1 }">
+		<li class = "readed" id="openDash" onclick="openDashBoard(${notice.dongCode})">
+	</c:if>
 			<div class="msg">
-				<span class="highlight01">${AreaNamemap.value}</span>에 새글이 등록되었습니다.
-			</div>
+			<c:forEach var="AreaName" items="${AreaNamemap}">
+				<c:if test="${AreaName.key eq notice.boardid}">
+				<span class="highlight01">${AreaName.value}</span>에 새글이 등록되었습니다.
+			</c:if></c:forEach></div>
 			<c:forEach var="regDate" items="${regDatemap}">
-							<c:if test="${regDate.key eq noticeList.boardid}">
-			<div class="regdate">10분 전</div></c:if></c:forEach>
+							<c:if test="${regDate.key eq notice.boardid}">
+			<div class="regdate">${regDate.value }</div></c:if></c:forEach>
 		</li>
 	</c:forEach>
-	<li class="readed">
-		<div class="msg">
-			<span class="highlight01">강남구 역삼동</span>에 새글이 등록되었습니다.
-		</div>
-		<div class="regdate">10분 전</div>
-	</li>
 </ul>
-

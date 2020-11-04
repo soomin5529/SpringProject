@@ -371,32 +371,32 @@ function closePopJoin() {
 	join.style.display = "none";
 }
 
+function readed(boardId){
+	var boardid = boardId;
+	$.ajax({
+		type : "post",
+		url : "/SpringTeamProject/push/updateReaded",
+		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+		data : {"boardid" : boardid},
+		success : function(data) {
+			alert("읽었다");
+		}
+	});	
+}
 /* push */
 function openPopPush() {
-	if (!push.firstChild) {
-		push.innerHTML = '<div class="title-box cf">'
-				+ '	<div class="close-btn" onclick="closePopPush();">'
-				+ '		<svg viewBox="0 0 40 40" class="close-icon">'
-				+ '			<line x1="4.9" y1="4.9" x2="35.1" y2="35.1"/>'
-				+ '			<line x1="35.1" y1="4.9" x2="4.9" y2="35.1"/>'
-				+ '		</svg>'
-				+ '	</div>'
-				+ '	<div class="tit">알림</div>'
-				+ '</div>'
-				+ '<ul>'
-				+ '	<li>'
-				+ '		<div class="msg"><span class="highlight01">강남구 역삼동</span>에 새글이 등록되었습니다.</div>'
-				+ '		<div class="regdate">10분 전</div>'
-				+ '	</li>'
-				+ '	<li class="readed">'
-				+ '		<div class="msg"><span class="highlight01">강남구 역삼동</span>에 새글이 등록되었습니다.</div>'
-				+ '		<div class="regdate">10분 전</div>'
-				+ '	</li>'
-				+ '	<li>'
-				+ '		<div class="msg"><span class="highlight01">강남구 역삼동</span>에 새글이 등록되었습니다.</div>'
-				+ '		<div class="regdate">10분 전</div>' + '	</li>' + '</ul>'
-		push.style.display = "block";
+	 var userid = sessionStorage.getItem("userid");
+    if(userid != null){
+		$.ajax({
+		type : "post",
+		url : "/SpringTeamProject/push/noticeForm",
+		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+		success : function(data) {
+			$("#push").html(data);
+		}
+	});	
 	}
+		push.style.display = "block";
 }
 function closePopPush() {
 	while (push.firstChild) {

@@ -32,6 +32,7 @@ import board.BoardDTO;
 import comment.CommentDTO;
 import industry.MainCategoryDTO;
 import service.AreaDAO;
+import service.AreaLikeDAO;
 import service.AreaNoticeDAO;
 import service.BoardDAO;
 import service.BoardLikeDAO;
@@ -42,7 +43,7 @@ import service.MemberDAO;
 @Controller
 @RequestMapping("/board/")
 public class BoardController {
-	public String boardid = "";
+	public int boardid = 0;
 	public String userid = "";
 	public String dong_code = "";
 	// boardid, userid, dong_code 는 view 에서 값 받아야함
@@ -69,6 +70,9 @@ public class BoardController {
 
 	@Autowired
 	AreaNoticeDAO areanoticeDB;
+
+	@Autowired
+	AreaLikeDAO arealikeDB;
 
 	@ModelAttribute
 	public void headProcess(HttpServletRequest request, HttpServletResponse res) {
@@ -217,11 +221,21 @@ public class BoardController {
 		article.setUserid(userid);
 		System.out.println("article====" + article);
 		boardDB.insertArticle(article);
+		// ===============================================================
+		// 최신 boardid 값
+		boardid = boardDB.getnewBoardid(dong_code);
+		System.out.println("boardid 값=========" + boardid);
+		// AreaLike에 있는 userlist
+		List<String> userList = arealikeDB.getUserid(dong_code);
+		for (String user : userList) {
+			System.out.println("user" + user + "dong_code" + dong_code + "boardid" + boardid + "today" + today);
+			areanoticeDB.insertNotice(user, dong_code, boardid, today);
+
+		}
 
 		return "redirect:/view/main";
 		// jsp로 보내지 않고 바로 view 로
 	}
-    
 
 	@RequestMapping(value = "/commentUploadPro", produces = "application/text; charset=utf8")
 	@ResponseBody

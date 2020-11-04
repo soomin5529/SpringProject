@@ -23,52 +23,31 @@ public class AreaNoticeDAO extends AbstractMybatis {
 
 	Map<String, Object> map = new HashMap<String, Object>();
 
-	// arealikeDB 에 있는 user, code insert
-	public int insertAreaLike(String userid, String dongcode) throws Exception {
+	// board 글 등록 시 boardid, regdate insert 및 update
+	public int insertNotice(String userid, String dongcode, int boardid, String regdate) throws Exception {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		int result = 0;
 		try {
 			AreaNoticeDTO article = new AreaNoticeDTO();
-			String statement = namespace + ".insertAreaLike";
+			String statement = namespace + ".insertNotice";
 
 			article.setUserid(userid);
-			article.setdongCode(dongcode);
-
-			System.out.println("insertAreaLike DB?===" + article);
-
-			result = sqlSession.insert(statement, article);
-			sqlSession.commit();
-			System.out.println("관심지역 유저, 동코드 result" + result);
-		} finally {
-			sqlSession.close();
-		}
-		return result;
-	}
-
-	// board 글 등록 시 boardid, regdate insert 및 update
-	public int insertBoard(String dongcode, int boardid, String regdate) throws Exception {
-		SqlSession sqlSession = getSqlSessionFactory().openSession();
-		int result = 0;
-		try {
-			AreaNoticeDTO article = new AreaNoticeDTO();
-			String statement = namespace + ".insertBoard";
-
-			article.setdongCode(dongcode);
+			article.setDongCode(dongcode);
 			article.setBoardid(boardid);
 			article.setBoard_regdate(regdate);
 
-			System.out.println("insertBoard DB?===" + article);
+			System.out.println("insertNotice DB?===" + article);
 
-			result = sqlSession.update(statement, article);
+			result = sqlSession.insert(statement, article);
 			sqlSession.commit();
-			System.out.println("게시물 등록시 boardid,regdate  result" + result);
+			System.out.println("게시물 등록시 boardid,regdate, dongcode insert  result" + result);
 		} finally {
 			sqlSession.close();
 		}
 		return result;
 	}
 
-	// area_notce form
+	// area_notice form
 	public List<AreaNoticeDTO> selectNotice(String userid) throws Exception {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		List<AreaNoticeDTO> noticeList = null;
@@ -87,6 +66,24 @@ public class AreaNoticeDAO extends AbstractMybatis {
 			sqlSession.close();
 		}
 		return noticeList;
+	}
+
+	public int updateReaded(int boardid) throws Exception {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		int result = 0;
+		try {
+			AreaNoticeDTO article = new AreaNoticeDTO();
+			System.out.println(boardid);
+			String statement = namespace + ".updateReaded";
+			article.setBoardid(boardid);
+			System.out.println("updateReaded DB?===" + article);
+
+			result = sqlSession.update(statement, article);
+			sqlSession.commit();
+		} finally {
+			sqlSession.close();
+		}
+		return result;
 	}
 
 }

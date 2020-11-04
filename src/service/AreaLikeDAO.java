@@ -78,5 +78,26 @@ public class AreaLikeDAO extends AbstractMybatis {
 		return areaLike;
 
 	}
+	
+	public List<String> getUserid(String code) throws Exception {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		List<String> areaLike = null;
+		try {
+			map.clear();
+			String statement = namespace + ".getUserid";
+
+			map.put("code", code);
+
+			System.out.println("getUserid article??===" + map);
+			areaLike = sqlSession.selectList(statement, map);
+
+		} finally {
+			sqlSession.commit();
+			sqlSession.close();
+		}
+		System.out.println("areaLike-getuserId 값은--" + areaLike);
+		return areaLike;
+
+	}
 
 }

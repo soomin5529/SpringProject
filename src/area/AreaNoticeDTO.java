@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class AreaNoticeDTO implements Serializable {
 	private String userid;
-	private String dongcode;
+	private String dongCode;
 	private int boardid;
 	private String board_regdate;
 	private int readed;
@@ -17,12 +17,12 @@ public class AreaNoticeDTO implements Serializable {
 		this.userid = userid;
 	}
 
-	public String getdongCode() {
-		return dongcode;
+	public String getDongCode() {
+		return dongCode;
 	}
 
-	public void setdongCode(String dongcode) {
-		this.dongcode = dongcode;
+	public void setDongCode(String dongCode) {
+		this.dongCode = dongCode;
 	}
 
 	public int getBoardid() {
@@ -51,8 +51,8 @@ public class AreaNoticeDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "AreaNoticeDTO [userid=" + userid + ", dongcode=" + dongcode + ", boardid=" + boardid + ", board_regdate="
-				+ board_regdate + ", readed=" + readed + "]";
+		return "AreaNoticeDTO [userid=" + userid + ", dongCode=" + dongCode + ", boardid=" + boardid
+				+ ", board_regdate=" + board_regdate + ", readed=" + readed + "]";
 	}
 
 }

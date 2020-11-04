@@ -16,8 +16,11 @@
 	
 	<select id="selectAreaLike" parameterType="hashmap" resultType="AreaLike">
 	select code from AREA_LIKE where userid = #{userid}
-	
-	
-	
 	</select>
+	
+	<select id="getUserid" parameterType="hashmap" resultType="String">
+	select userid from AREA_LIKE where code = #{code}
+	</select>
+	
+	
 </mapper>
