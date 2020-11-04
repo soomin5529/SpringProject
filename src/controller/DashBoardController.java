@@ -24,7 +24,6 @@ import area.AreaDTO;
 import area.AreaLikeDTO;
 import area.DongDTO;
 import area.SigunguDTO;
-import dashboard.IndustryCountDTO;
 import industry.IndustryDTO;
 import industry.IndustryRankDTO;
 import industry.MainCategoryDTO;
@@ -32,7 +31,6 @@ import service.AreaDAO;
 import service.AreaLikeDAO;
 import service.AreaNoticeDAO;
 import service.BoardLikeDAO;
-import service.DashboardDAO;
 import service.IndustryDAO;
 import service.MemberDAO;
 import service.StoreDAO;
@@ -47,8 +45,6 @@ public class DashBoardController {
 
 	@Autowired
 	StoreDAO storeDB;
-	@Autowired
-	DashboardDAO dashboardDB;
 	@Autowired
 	AreaDAO areaDB;
 	@Autowired

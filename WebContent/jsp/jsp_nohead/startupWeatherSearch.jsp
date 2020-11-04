@@ -22,7 +22,7 @@
 		<table class="tbl">
 			<tr>
 				<th colspan="2">업소수</th>
-				<th colspan="2">연매출 평균</th>
+				<th colspan="2">월매출 평균</th>
 				<th colspan="2">지역별 개폐업률</th>
 				<th colspan="2">평균운영연수</th>
 				<th rowspan="2">인구밀도</th>
