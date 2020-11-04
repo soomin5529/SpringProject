@@ -5,7 +5,7 @@
 <div class="deemed" onclick="closePopCommunityReg()"></div>
 <span class="close-btn" onclick="javascript:closePopCommunityReg();">x</span>
 <div class="pop-box" style="width: 400px; height: 570px;">
-	<form method="post" name="writeform" enctype="multipart/form-data" >
+	<form method="post" name="writeform" enctype="multipart/form-data">
 		<div class="title-box">
 			<input type="hidden" name="dongCode" value="${dongCode}"> <input
 				type="hidden" name="userid" value="${userid }" />
@@ -28,9 +28,8 @@
 						style="display: none;" />
 				</div>
 			</div>
-			<input type="button" onclick="writeBoard()" class="btn-full btn01-reverse" value="등록하기"/>
+			<input type="button" onclick="writeBoard()"
+				class="btn-full btn01-reverse" value="등록하기" />
 		</div>
 	</form>
 </div>
-
-
