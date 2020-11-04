@@ -27,9 +27,14 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		
 		<typeAlias type="board.BoardDTO" alias="Board" />
 		<typeAlias type="board.BoardLikeDTO" alias="BoardLike" />
-		<typeAlias type="dashboard.IndustryCountDTO" alias="IndustryCount" />
 		
 		<typeAlias type="comment.CommentDTO" alias="Comment" />
+		
+		<typeAlias type="startupWeather.IndustryCountDTO" alias="IndustryCount" />
+		<typeAlias type="startupWeather.NewAndFailDTO" alias="NewAndFail" />
+		<typeAlias type="startupWeather.OperateAvgDTO" alias="OperateAvg" />
+		<typeAlias type="startupWeather.PopulationDTO" alias="Population" />
+		<typeAlias type="startupWeather.SalesAvgDTO" alias="SalesAvg" />
 		
 		
 		
@@ -56,5 +61,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="mybatis/Comment.xml" />
 		<mapper resource="mybatis/BoardLike.xml" />
 		<mapper resource="mybatis/Dashboard.xml" />
+		<mapper resource="mybatis/StartupWeather.xml" />
 	</mappers>
 </configuration>

@@ -158,7 +158,6 @@
 		</g>
 		
 		<svg id="areaText" class="area-text">
-			
 			<text transform="matrix(1 0 0 1 293.9902 143.9382)">강원도</text>
 			<text transform="matrix(1 0 0 1 157.9902 218.1052)">경기도</text>
 			<text transform="matrix(1 0 0 1 219.9033 277.1052)">충청북도</text>
@@ -185,62 +184,60 @@
 		<!-- 서울 - 좋음 -->
 		<div class="emoticon-box" id="icSeoul" onclick="goToSeoul();">
 			<div class="txt">서울</div>
-			<svg class="score01" width="40" height="40" viewBox="-1 -1 42 42">
-				<circle class="bg" cx="20" cy="20" r="20"/>
-				<path class="mouth" d="M20,25.3c-1.1,0-2.1-0.2-2.9-0.6c0,0.2,0,0.4,0,0.6c0,2,1.3,3.7,3,3.7s3-1.7,3-3.7c0-0.2,0-0.4,0-0.6
-					C22.1,25.1,21.1,25.3,20,25.3z"/>
-				<ellipse class="cheek" cx="6.7" cy="22.5" rx="1.9" ry="0.8"/>
-				<ellipse class="cheek" cx="33.3" cy="22.5" rx="1.9" ry="0.8"/>
-				<path class="eye" d="M30.8,16.8c0,0-3,0.4-4.3,2.8c0,0,1.8-0.3,4.3,0.4"/>
-				<path class="eye" d="M9.2,16.8c0,0,3,0.4,4.3,2.8c0,0-1.8-0.3-4.3,0.4"/>
+			<svg class="score01" width="80" height="80" viewBox="-1 -1 82 82">
+				<circle class="bg" cx="40" cy="40" r="40"/>
+				<path class="mouth" d="M40,50.7c-2.2,0-4.1-0.4-5.8-1.1c0,0.4-0.1,0.7-0.1,1.1c0,4.1,2.7,7.4,5.9,7.4s5.9-3.3,5.9-7.4
+					c0-0.4,0-0.8-0.1-1.1C44.1,50.3,42.2,50.7,40,50.7z"/>
+				<ellipse class="cheek" cx="13.4" cy="44.9" rx="3.7" ry="1.5"/>
+				<ellipse class="cheek" cx="66.6" cy="44.9" rx="3.7" ry="1.5"/>
+				<path class="eye" d="M61.6,33.7c0,0-6,0.8-8.6,5.6c0,0,3.7-0.5,8.6,0.8"/>
+				<path class="eye" d="M18.4,33.7c0,0,6,0.8,8.6,5.6c0,0-3.7-0.5-8.6,0.8"/>
 			</svg>
 		</div>
 		<!-- 대전 - 양호-->
 		<div class="emoticon-box" id="icDaejeon">
 			<div class="txt">대전</div>
-			<svg class="score02" width="40" height="40" viewBox="-1 -1 42 42">
-				<circle class="bg" cx="20" cy="20" r="20"/>
-				<circle class="eye" cx="11" cy="18.9" r="2.1"/>
-				<circle class="eye" cx="29" cy="18.9" r="2.1"/>
-				<ellipse class="cheek" cx="6.7" cy="22.5" rx="1.9" ry="0.8"/>
-				<ellipse class="cheek" cx="33.3" cy="22.5" rx="1.9" ry="0.8"/>
-				<ellipse class="mouth" cx="20" cy="26.9" rx="1.8" ry="2.2"/>
+			<svg class="score02" width="80" height="80" viewBox="-1 -1 82 82">
+				<circle class="bg" cx="40" cy="40" r="40"/>
+				<circle class="eye" cx="22.1" cy="37.9" r="4.2"/>
+				<circle class="eye" cx="57.9" cy="37.9" r="4.2"/>
+				<ellipse class="cheek" cx="13.4" cy="44.9" rx="3.7" ry="1.5"/>
+				<ellipse class="cheek" cx="66.6" cy="44.9" rx="3.7" ry="1.5"/>
+				<ellipse class="mouth" cx="40" cy="53.8" rx="3.7" ry="4.4"/>
 			</svg>
 		</div>
 		<!-- 광주 - 보통-->
 		<div class="emoticon-box" id="icGwangju">
 			<div class="txt">광주</div>
-			<svg class="score03" width="40" height="40" viewBox="-1 -1 42 42">
-				<circle class="bg" cx="20" cy="20" r="20"/>
-				<path class="eye" d="M13.3,20.3H8.7C8.3,20.3,8,20,8,19.6v-0.7c0-0.4,0.3-0.7,0.7-0.7h4.6c0.4,0,0.7,0.3,0.7,0.7v0.7
-					C14.1,20,13.8,20.3,13.3,20.3z"/>
-				<path class="eye" d="M31.3,20.3h-4.6c-0.4,0-0.7-0.3-0.7-0.7v-0.7c0-0.4,0.3-0.7,0.7-0.7h4.6c0.4,0,0.7,0.3,0.7,0.7v0.7
-					C32,20,31.7,20.3,31.3,20.3z"/>
-				<path class="mouth" d="M16.5,26.5l1.3-0.7c1.4-0.7,3-0.7,4.3,0l1.3,0.7"/>
-				<ellipse class="cheek" cx="6.7" cy="24.1" rx="1.9" ry="0.8"/>
-				<ellipse class="cheek" cx="33.3" cy="24.1" rx="1.9" ry="0.8"/>
+			<svg class="score03" width="80" height="80" viewBox="-1 -1 82 82">
+				<circle class="bg" cx="40" cy="40" r="40"/>
+				<path class="eye" d="M27.4,40.7H16.7c-0.4,0-0.7-0.3-0.7-0.7V37c0-0.4,0.3-0.7,0.7-0.7h10.7c0.4,0,0.7,0.3,0.7,0.7v2.9
+					C28.2,40.3,27.8,40.7,27.4,40.7z"/>
+				<path class="eye" d="M63.3,40.7H52.6c-0.4,0-0.7-0.3-0.7-0.7V37c0-0.4,0.3-0.7,0.7-0.7h10.7c0.4,0,0.7,0.3,0.7,0.7v2.9
+					C64,40.3,63.7,40.7,63.3,40.7z"/>
+				<path class="mouth" d="M33.1,52.9l2.6-1.3c2.7-1.4,5.9-1.4,8.7,0l2.6,1.3"/>
+				<ellipse class="cheek" cx="13.4" cy="48.2" rx="3.7" ry="1.5"/>
+				<ellipse class="cheek" cx="66.6" cy="48.2" rx="3.7" ry="1.5"/>
 			</svg>
 		</div>
 		<!-- 대구 - 나쁨-->
 		<div class="emoticon-box" id="icDaegu">
 			<div class="txt">대구</div>
-			<svg class="score04" width="40" height="40" viewBox="-1 -1 42 42">
-				<circle class="bg" cx="20" cy="20" r="20"/>
-				<path class="eye" d="M26.5,19.4c-0.2,0.1-0.2,0.3-0.1,0.4c0.7,1.2,2.2,1.6,3.5,1s1.9-2.1,1.5-3.4c-0.1-0.2-0.2-0.3-0.4-0.2L26.5,19.4z"/>
-				<path class="eye" d="M13.5,19.4c0.2,0.1,0.2,0.3,0.1,0.4c-0.7,1.2-2.2,1.6-3.5,1s-1.9-2.1-1.5-3.4c0.1-0.2,0.2-0.3,0.4-0.2L13.5,19.4z"/>
-				<polygon class="mouth" points="15,24.4 16.7,25.3 18.3,24.4 20,25.3 21.6,24.4 23.3,25.3 25,24.4 25,28.6 23.3,29.5 21.6,28.6 
-					20,29.5 18.3,28.6 16.7,29.5 15,28.6"/>
+			<svg class="score04" width="80" height="80" viewBox="-1 -1 82 82">
+				<circle class="bg" cx="40" cy="40" r="40"/>
+				<path class="eye" d="M53.1,38.8c-0.3,0.2-0.4,0.6-0.2,0.9c1.5,2.3,4.5,3.3,7.1,2.1s3.8-4.1,2.9-6.7c-0.1-0.3-0.5-0.5-0.8-0.4L53.1,38.8z"/>
+				<path class="eye" d="M26.9,38.8c0.3,0.2,0.4,0.6,0.2,0.9c-1.5,2.3-4.5,3.3-7.1,2.1s-3.8-4.1-2.9-6.7c0.1-0.3,0.5-0.5,0.8-0.4L26.9,38.8z"/>
+				<polygon class="mouth" points="30.1,48.8 33.4,50.7 36.7,48.8 40,50.7 43.3,48.8 46.6,50.7 49.9,48.8 49.9,57.2 46.6,59.1 43.3,57.2 40,59.1 36.7,57.2 33.4,59.1 30.1,57.2 	"/>
 			</svg>
 		</div>
 		 <!-- 부산 - 모름-->
 		<div class="emoticon-box" id="icBusan">
 			<div class="txt">부산</div>
-			<svg class="score05" width="40" height="40" viewBox="-1 -1 42 42">
-				<circle class="bg" cx="20" cy="20" r="20"/>
-				<circle class="eye" cx="11" cy="18.9" r="2.1"/>
-				<circle class="eye" cx="29" cy="18.9" r="2.1"/>
-				<path class="mouth" d="M21.2,26.6h-2.5c-0.9,0-1.4-1.1-0.8-1.8l1.2-1.4c0.4-0.5,1.2-0.5,1.6,0l1.2,1.4
-						C22.7,25.5,22.2,26.6,21.2,26.6z"/>
+			<svg class="score05" width="80" height="80" viewBox="-1 -1 82 82">
+				<circle class="bg" cx="40" cy="40" r="40"/>
+				<circle class="eye" cx="22.1" cy="37.9" r="4.2"/>
+				<circle class="eye" cx="57.9" cy="37.9" r="4.2"/>
+				<path class="mouth" d="M42.5,53.2h-5c-1.8,0-2.8-2.2-1.6-3.6l2.5-2.8c0.8-0.9,2.3-0.9,3.2,0l2.5,2.8C45.3,51,44.3,53.2,42.5,53.2z"/>
 			</svg>
 		</div>
 	</div>

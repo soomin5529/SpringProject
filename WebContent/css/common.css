@@ -14,6 +14,7 @@
 	.btn01-reverse{background-color:var(--main-color); color: #fff;}
 	.btn01:hover {background-color:var(--main-color); color: #fff; transition: 0.3s;}
 	.highlight01 {color:var(--point-color); font-weight:500;}
+	.highlight02 {color:#ff0076; font-weight:500;}
 	.cf:after {content:''; display: block; clear:both;}
 	input[type="text"],input[type="password"], input[type="email"],input[type="date"], input[type="file"] {width:100%; height:32px; font-size:1.4rem; line-height:2rem; padding:5px 10px;  transition: 0.3s;}
 	textarea {width:100%;  font-size:1.4rem; line-height:2rem; padding:5px 10px;}
@@ -95,13 +96,13 @@
 	.map-popup .title-box .close-btn {float:right; margin: 4px 0; width:20px; height:20px; word-break: break-all; cursor:pointer;}
 	.map-popup .title-box .close-btn .close-icon {fill:none; stroke:#333; stroke-width: 3px;}
 	/* sub-page */
-	.content-body {max-width:1200px; margin:0 auto; padding:40px 20px;}
+	.content-body {max-width:1200px; min-width:900px; margin:0 auto; padding:40px 20px;}
 		/* title box */
 		.page-title-box {background-color:var(--main-color); padding:40px 0;}
 		.page-title-box .page-name {max-width:1200px; margin:0 auto 15px; padding:0 15px; font-size:3rem; font-weight:800; color:#fff;}
 		.page-title-box .page-desc {max-width:1200px; margin:0 auto 15px; padding:0 15px; font-size:1.4rem; color:#fff;}
 		/* sub-page : search-lnb */
-		.content-body .search-group {display:inline-block; float:left; width:260px; margin-right:20px;}
+		.content-body .search-group {display:inline-block; float:left; width:260px; margin-right:40px;}
 		.content-body .search-box {padding:15px; border:1px solid #d2d2d2;}
 		.content-body .search-box .input-box {margin-bottom:20px;}
 		.content-body .search-box .input-box .label-box {margin-bottom:10px; font-weight:500; font-size:2rem;}
@@ -116,10 +117,10 @@
 
 /* main */
 .main .map {width:100%; height:calc(100% - 52px); margin-top:52px;}
-.district-marker {text-align:center; background-color:rgb(255 170 43 / 0.9); border:2px solid rgba(255,255,255,0.3); padding:5px; border-radius:5px;}
+.district-marker {width: 80px; height: 80px; padding: 17px 0; border-radius: 50%; text-align:center; background-color:rgb(255 170 43 / 0.9); border:4px solid rgba(255,255,255,0.3);}
 .district-marker p {line-height:20px;}
-.district-marker span {line-height:20px; font-weight:normal;}
-.store-marker {text-align:center; background-color:#4d55b2; padding:2px;}
+.store-marker { text-align:center; color:#fff; font-size:1.2rem; background-color:#2ba96f; padding:5px; border-radius: 5px; border: 3px solid rgba(255,255,255,0.2);}
+.ic_marker {position:relative; top:-4px; width:16px; height:15px; background-image:url('/SpringTeamProject/images/ic_marker.png'); background-repeat:no-repeat;}
 	/* map-pop search */
 	.main .search-group {top:60px; left:0; width:100%; border-bottom:1px solid #ddd; background-color:#fff;}
 	.main .search-group .search-box {padding:10px 15px;}
@@ -127,7 +128,7 @@
 	.main .search-group .search-box .input-box select {width:150px; margin-right:10px; }
 	.main .search-group .search-box .input-box .main { width:70px; float:left;  margin-right:3px; }
 	.main .search-group .search-box .input-box .middle { width:70px; float:left;  margin-right:3px; }
-	.main .search-group .search-box .input-box .small { width:70px; float:left;   }
+	.main .search-group .search-box .input-box .small { width:70px; float:left;}
 	.main .search-group .search-box .input-box select:last-child {margin-right:0px;}
 
 
@@ -218,10 +219,21 @@ li.readed .msg, li.readed .msg .highlight01 {color:#999;}
 
 
 /* startup-keyword */
-.content-body .content {float:left; width:calc(100% - 280px);}
+.content-body .content {float:left; width:calc(100% - 300px);}
 .content-body .content .wordcloud {padding:20px calc((100% - 500px)/2); margin-bottom:20px;}
 .content-body .content .tbl .bar-graph {height:6px; border-radius:3px; background-color:#eee; }
 .content-body .content .tbl .bar-graph div {height:6px; border-radius:3px; background-color:var(--main-color);;}
+
+
+/* startup-weather */
+.search-result-content .tbl th, 
+.search-result-content .tbl td {border-right:1px solid #d2d2d2; border-left:1px solid #d2d2d2;}
+.data {margin-bottom:100px;}
+.data .tit {font-size:3.2rem; font-weight:400; margin-bottom:30px; text-align:center;}
+.data .tit-small {font-size:2rem; margin-bottom:20px; }
+.data .result-box {margin: 0 auto; border-radius:10px; width:300px; height:200px; padding:20px; box-shadow: 0 2px 10px 5px rgb(153 157 197 / 20%)}
+.data .result-box .icon-box {padding:0 calc(50% - 40px);}
+.data .result-box .result-txt {font-size:5rem; font-weight:200; text-align:center;}
 
 /* svg map */
 .svg-map-box {position:relative; padding: 20px calc((100% - 600px)/2);}
@@ -240,12 +252,13 @@ li.readed .msg, li.readed .msg .highlight01 {color:#999;}
 .emoticon-box .txt {font-size:1.4rem; text-align:center; margin-bottom:5px;}
 .emoticon-box:hover .txt {color:#fff;}
 .emoticon-box svg {margin:0 9px;}
+.emoticon-box svg {width:40px; height:40px;}
 .score01 .bg,
 .score02 .bg {fill:#F9CE66;}
 .score03 .bg {fill:#22C4A1;}
 .score04 .bg {fill:#E56255;}
 .score05 .bg {fill:#7DC0F1;}
-.score01 .eye {fill-rule:evenodd;clip-rule:evenodd;fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+.score01 .eye {fill-rule:evenodd;clip-rule:evenodd;fill:none;stroke:#000000; stroke-width:2px; stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 .score02 .eye, 
 .score03 .eye,
 .score04 .eye,
@@ -255,7 +268,11 @@ li.readed .msg, li.readed .msg .highlight01 {color:#999;}
 .score03 .cheek {fill:#1FA384;}
 .score01 .mouth,
 .score02 .mouth,
-.score05 .mouth {fill:#E65866;stroke:#000000;stroke-linejoin:round;stroke-miterlimit:10;}
-.score03 .mouth {fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-.score04 .mouth {fill:#FFFFFF;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+.score05 .mouth {fill:#E65866;stroke:#000000;stroke-width:2px;stroke-linejoin:round;stroke-miterlimit:10;}
+.score03 .mouth {fill:none;stroke:#000000;stroke-width:2px; stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+.score04 .mouth {fill:#FFFFFF;stroke:#000000;stroke-width:2px; stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 
+
+/* 인터렉션 */
+.fadeinslide{margin-top:-100px;max-width:100%; opacity:0;}
+.fadein {opacity: 0;}

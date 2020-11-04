@@ -97,14 +97,14 @@
 	</svg>
 	<div class="emoticon-box" id="icSigungu" onclick="goToFullmap();">
 		<div class="txt">서울</div>
-		<svg class="score01" width="40" height="40" viewBox="-1 -1 42 42">
-			<circle class="bg" cx="20" cy="20" r="20"/>
-			<path class="mouth" d="M20,25.3c-1.1,0-2.1-0.2-2.9-0.6c0,0.2,0,0.4,0,0.6c0,2,1.3,3.7,3,3.7s3-1.7,3-3.7c0-0.2,0-0.4,0-0.6
-				C22.1,25.1,21.1,25.3,20,25.3z"/>
-			<ellipse class="cheek" cx="6.7" cy="22.5" rx="1.9" ry="0.8"/>
-			<ellipse class="cheek" cx="33.3" cy="22.5" rx="1.9" ry="0.8"/>
-			<path class="eye" d="M30.8,16.8c0,0-3,0.4-4.3,2.8c0,0,1.8-0.3,4.3,0.4"/>
-			<path class="eye" d="M9.2,16.8c0,0,3,0.4,4.3,2.8c0,0-1.8-0.3-4.3,0.4"/>
+		<svg class="score01" width="80" height="80" viewBox="-1 -1 82 82">
+			<circle class="bg" cx="40" cy="40" r="40"/>
+			<path class="mouth" d="M40,50.7c-2.2,0-4.1-0.4-5.8-1.1c0,0.4-0.1,0.7-0.1,1.1c0,4.1,2.7,7.4,5.9,7.4s5.9-3.3,5.9-7.4
+				c0-0.4,0-0.8-0.1-1.1C44.1,50.3,42.2,50.7,40,50.7z"/>
+			<ellipse class="cheek" cx="13.4" cy="44.9" rx="3.7" ry="1.5"/>
+			<ellipse class="cheek" cx="66.6" cy="44.9" rx="3.7" ry="1.5"/>
+			<path class="eye" d="M61.6,33.7c0,0-6,0.8-8.6,5.6c0,0,3.7-0.5,8.6,0.8"/>
+			<path class="eye" d="M18.4,33.7c0,0,6,0.8,8.6,5.6c0,0-3.7-0.5-8.6,0.8"/>
 		</svg>
 	</div>
 </div>
