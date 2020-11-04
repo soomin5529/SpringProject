@@ -5,14 +5,7 @@ import java.io.Serializable;
 public class AreaLikeDTO implements Serializable {
 	private String userid;
 	private String  code;
-	private String readed;
 	
-	public String getReaded() {
-		return readed;
-	}
-	public void setReaded(String readed) {
-		this.readed = readed;
-	}
 	public String getUserid() {
 		return userid;
 	}
@@ -27,7 +20,7 @@ public class AreaLikeDTO implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "AreaLikeDTO [userid=" + userid + ", code=" + code + ", readed=" + readed + "]";
+		return "AreaLikeDTO [userid=" + userid + ", code=" + code + "]";
 	}
 	
 	

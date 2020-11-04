@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import area.AreaDTO;
 import area.AreaInMapBoundDTO;
@@ -49,6 +50,7 @@ public class AjaxController {
 	BoardLikeDAO boardlikeDB;
 	@Autowired
 	AreaLikeDAO arealikeDB;
+	
 
 	// produces -> encoding문제 해결/안해주면 한글깨짐
 	@RequestMapping(value = "/areaOption", method = RequestMethod.POST, produces = "application/json; charset=utf8")
@@ -248,4 +250,6 @@ public class AjaxController {
 		}
 		return num;
 	}
+	
+	
 }

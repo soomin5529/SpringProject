@@ -30,6 +30,7 @@ import industry.IndustryRankDTO;
 import industry.MainCategoryDTO;
 import service.AreaDAO;
 import service.AreaLikeDAO;
+import service.AreaNoticeDAO;
 import service.BoardLikeDAO;
 import service.DashboardDAO;
 import service.IndustryDAO;
@@ -54,6 +55,9 @@ public class DashboardController {
 	IndustryDAO industryDB;
 	@Autowired
 	AreaLikeDAO arealikeDB;
+	@Autowired
+	AreaNoticeDAO areanoticeDB;
+	
 
 	@ModelAttribute
 	public void headProcess(HttpServletRequest request, HttpServletResponse res) {
@@ -69,7 +73,6 @@ public class DashboardController {
 		userid = (String) session.getAttribute("userid");
 	}
 
-	
 	@RequestMapping(value = "/douhnutchart", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
 	public List<IndustryRankDTO> drawDouhnutChartOnDashBoard(@RequestBody Map<String, String> dongCode) {
@@ -120,7 +123,7 @@ public class DashboardController {
 		List<StoreDTO> storeList = storeDB.storeListInDongBound(data);
 		return storeList;
 	}
-	
+
 	@RequestMapping(value = "/dong/{dongCode}", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody
 	public ModelAndView openDashBoard(@PathVariable("dongCode") String dongCode) {
@@ -175,10 +178,10 @@ public class DashboardController {
 
 	}
 
-
 	@RequestMapping(value = "boardWriteForm/{dongCode}", produces = "application/text; charset=utf8")
 	@ResponseBody
-	public ModelAndView boardWriteForm(@PathVariable("dongCode") String dongCode, HttpServletRequest request) throws Throwable {
+	public ModelAndView boardWriteForm(@PathVariable("dongCode") String dongCode, HttpServletRequest request)
+			throws Throwable {
 		mv = new ModelAndView();
 		String dongName = "";
 		String sigunguName = "";
@@ -187,8 +190,8 @@ public class DashboardController {
 
 		HttpSession session = request.getSession();
 		String userid = (String) session.getAttribute("userid");
-        String name = (String) session.getAttribute("name"); 
-		
+		String name = (String) session.getAttribute("name");
+
 		String sigunguCode = dongCode.substring(0, 5);
 
 		sigungu = areaDB.sigungu(sigunguCode);
@@ -207,35 +210,5 @@ public class DashboardController {
 
 	}
 
-	@RequestMapping(value = "myArea/{code}", produces = "application/text; charset=utf8")
-	@ResponseBody
-	public ModelAndView myArea(@PathVariable("code") String code ,HttpServletRequest request) throws Throwable {
-		mv = new ModelAndView();
-		
-		HttpSession session = request.getSession();
-		String userid = (String) session.getAttribute("userid");
-		String dongName = "";
-		String sigunguName = "";
-		AreaDTO sigungu = null;
-		AreaDTO dong = null;
-
-		List<Object> areaLike = arealikeDB.selectAreaLike(userid);
-
-		/*
-		 * String sigunguCode = dong.substring(0, 5);
-		 * 
-		 * sigungu = areaDB.sigungu(sigunguCode); dong = areaDB.dong(dong);
-		 * 
-		 * sigunguName = sigungu.getName(); dongName = dong.getName();
-		 */
-
-		mv.addObject("dongName", dongName);
-		mv.addObject("sigunguName", sigunguName);
-		mv.addObject("dongCode", dong);
-		mv.addObject("userid", userid);
-		mv.addObject("name", name);
-		mv.setViewName("jsp_nohead/boardWriteForm");
-		return mv;
-
-	}
+	
 }

@@ -32,6 +32,7 @@ import board.BoardDTO;
 import comment.CommentDTO;
 import industry.MainCategoryDTO;
 import service.AreaDAO;
+import service.AreaNoticeDAO;
 import service.BoardDAO;
 import service.BoardLikeDAO;
 import service.CommentDAO;
@@ -66,6 +67,9 @@ public class BoardController {
 	@Autowired
 	BoardLikeDAO boardlikeDB;
 
+	@Autowired
+	AreaNoticeDAO areanoticeDB;
+
 	@ModelAttribute
 	public void headProcess(HttpServletRequest request, HttpServletResponse res) {
 		try {
@@ -89,20 +93,19 @@ public class BoardController {
 		AreaDTO dongList = areaDB.dong(code);
 		mav.addObject("dong", dongList);
 		String dong_code = "";
-		
+
 		dong_code = dongList.getCode();
-	
+
 		int count = 0;
 		List<BoardDTO> articles = null;
 		// board 개수 count
 		count = boardDB.getBoardCount(dong_code);
-		if(count == 0) {
-			
+		if (count == 0) {
+
 			mav.addObject("count", count);
 			mav.addObject("userid", userid);
 			mav.setViewName("jsp_nohead/boardList");
 		}
-		System.out.println("count 수는------????????" +count);
 		if (count > 0) {
 			// board list 뿌려주기
 			articles = boardDB.getArticles(dong_code);
@@ -122,60 +125,59 @@ public class BoardController {
 		Map<Integer, List<CommentDTO>> map = new HashMap<Integer, List<CommentDTO>>();
 		Map<Integer, Integer> boardLike = new HashMap<Integer, Integer>();
 		Map<Integer, String> regDatemap = new HashMap<Integer, String>();
-         
-		
+
 		// 댓글 list
-		if(count != 0  ) {
-		for (BoardDTO b : articles) {
+		if (count != 0) {
+			for (BoardDTO b : articles) {
 
-			boardid = b.getBoardid();
-			// 날짜 계산 --------------
-			regdate = b.getRegDate();
-			regDatemap.put(boardid, regDate(regdate));
-			// 날짜 계산 --------------
-			cnt = commentDB.getCommentCount(boardid);
-			boardLikecnt = boardlikeDB.getBoardLikeCount(boardid);
-			// 댓글 개수
-			mav.addObject("cnt", cnt);
+				boardid = b.getBoardid();
+				// 날짜 계산 --------------
+				regdate = b.getRegDate();
+				regDatemap.put(boardid, regDate(regdate));
+				// 날짜 계산 --------------
+				cnt = commentDB.getCommentCount(boardid);
+				boardLikecnt = boardlikeDB.getBoardLikeCount(boardid);
+				// 댓글 개수
+				mav.addObject("cnt", cnt);
 
-			// 댓글 list
-			comment = commentDB.getComments(boardid);
+				// 댓글 list
+				comment = commentDB.getComments(boardid);
 
-			map.put(boardid, comment);
-			boardLike.put(boardid, boardLikecnt);
-		}
-		System.out.println("map:" + map);
-		// 댓글 리스트
-		mav.addObject("map", map);
-		// 좋아요 수
-		mav.addObject("boardLike", boardLike);
-		mav.addObject("regDate", regDatemap);
+				map.put(boardid, comment);
+				boardLike.put(boardid, boardLikecnt);
+			}
+			System.out.println("map:" + map);
+			// 댓글 리스트
+			mav.addObject("map", map);
+			// 좋아요 수
+			mav.addObject("boardLike", boardLike);
+			mav.addObject("regDate", regDatemap);
 		}
 		mav.addObject("userid", userid);
 		mav.setViewName("jsp_nohead/boardList");
-		
+
 		return mav;
 	}
 
 	// 날짜 변환 메소드
 	public String regDate(String regdate) throws ParseException {
-		
+
 		String DateDays = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar calendar = Calendar.getInstance();
-        Date date = new Date(calendar.getTimeInMillis());
-        String todayDate = sdf.format(date);
-        long todayTimestamp = sdf.parse(todayDate).getTime();
-        Date date2 = new Date(todayTimestamp);
-        //오늘 날짜
-        String todayDate2 = sdf.format(date2);
-        //등록된 날짜 타임스탬프
+		Date date = new Date(calendar.getTimeInMillis());
+		String todayDate = sdf.format(date);
+		long todayTimestamp = sdf.parse(todayDate).getTime();
+		Date date2 = new Date(todayTimestamp);
+		// 오늘 날짜
+		String todayDate2 = sdf.format(date2);
+		// 등록된 날짜 타임스탬프
 		long nextdayTimestamp = sdf.parse(regdate).getTime();
-		//일수 차 (타임스탬프 기준)
-        long difference = (todayTimestamp- nextdayTimestamp);
-        //일수 차 ( 날짜 기준)
-       long days=  difference/ (24*60*60*1000);
-       System.out.println(days);
+		// 일수 차 (타임스탬프 기준)
+		long difference = (todayTimestamp - nextdayTimestamp);
+		// 일수 차 ( 날짜 기준)
+		long days = difference / (24 * 60 * 60 * 1000);
+		System.out.println(days);
 		if ((days / 30) == 1) {
 			DateDays = "한달 전";
 		} else if ((days / 7) == 1) {
@@ -185,16 +187,15 @@ public class BoardController {
 		} else if (days == 0) {
 			DateDays = "방금 전";
 		} else {
-			DateDays = days +"일 전";
+			DateDays = days + "일 전";
 		}
 
-		return  DateDays;
+		return DateDays;
 	}
 
 	@RequestMapping("writeUploadPro")
 	public String writeUploadPro(MultipartHttpServletRequest multipart, BoardDTO article, Model m) throws Exception {
 		String today = null;
-		
 		String userid = multipart.getParameter("userid");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		today = sdf.format(new java.util.Date());
@@ -214,25 +215,26 @@ public class BoardController {
 		article.setDong_code(dong_code);
 		article.setRegDate(today);
 		article.setUserid(userid);
-		System.out.println("article===="+article);
+		System.out.println("article====" + article);
 		boardDB.insertArticle(article);
-		
-		m.addAttribute("display", "block");
+
 		return "redirect:/view/main";
 		// jsp로 보내지 않고 바로 view 로
 	}
+    
 
 	@RequestMapping(value = "/commentUploadPro", produces = "application/text; charset=utf8")
 	@ResponseBody
-	public String commentUploadPro(String dongcode, int boardid, String content, String name, CommentDTO article, HttpServletRequest request) throws Exception {
+	public String commentUploadPro(String dongcode, int boardid, String content, String name, CommentDTO article,
+			HttpServletRequest request) throws Exception {
 
 		Date today = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
 		String regDate = sdf.format(today);
-		
+
 		HttpSession session = request.getSession();
 		String userid = (String) session.getAttribute("userid");
-	     name = (String) session.getAttribute("name");
+		name = (String) session.getAttribute("name");
 		article.setBoardid(boardid);
 		article.setContent(content);
 		article.setName(name);
@@ -242,13 +244,7 @@ public class BoardController {
 		commentDB.insertComment(article);
 
 		return userid;
-		
+
 	}
 
-	@RequestMapping("deletePro")
-	public String deletePro(String userid, String dong_code, String boardid, Model m) throws Exception {
-		int delete_ok = boardDB.deleteArticle(userid, dong_code, boardid);
-		m.addAttribute("delete_ok", delete_ok);
-		return "board/deletePro";
-	}
 }

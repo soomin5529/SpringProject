@@ -13,8 +13,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
       <typeAlias type="area.AreaDTO" alias="Area" />
       <typeAlias type="area.SelectedAreaDTO" alias="SelectedArea" />
       <typeAlias type="area.AreaInMapBoundDTO" alias="AreaInMapBound" />
-      
       <typeAlias type="store.StoreDTO" alias="Store" />
+      <typeAlias type="area.AreaNoticeDTO" alias="AreaNotice" />
       
       <typeAlias type="industry.MainCategoryDTO"
          alias="MainCategory" />
@@ -57,5 +57,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
       <mapper resource="mybatis/BoardLike.xml" />
       <mapper resource="mybatis/Dashboard.xml" />
        <mapper resource="mybatis/AreaLike.xml" />
+       <mapper resource="mybatis/AreaNotice.xml" />
    </mappers>
 </configuration>
