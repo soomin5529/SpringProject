@@ -133,10 +133,6 @@ public class MainController {
 		return "view/startupKeyword";
 	}
 
-	@RequestMapping("startupWeather")
-	public String startupWeather() throws Throwable {
-		return "view/startupWeather";
-	}
 
 	@RequestMapping("/intro")
 	public String intro() throws Throwable {

@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 <configuration>
 	<typeAliases>
 		<typeAlias type="member.MemberDTO" alias="Member" />
-
+		
 		<typeAlias type="area.SidoDTO" alias="Sido" />
 		<typeAlias type="area.SigunguDTO" alias="Sigungu" />
 		<typeAlias type="area.DongDTO" alias="Dong" />
@@ -28,13 +28,26 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 			alias="IndustryRank" />
 		<typeAlias type="board.BoardDTO" alias="Board" />
 		<typeAlias type="board.BoardLikeDTO" alias="BoardLike" />
-		<typeAlias type="dashboard.IndustryCountDTO"
-			alias="IndustryCount" />
 		<typeAlias type="area.AreaLikeDTO" alias="AreaLike" />
 		<typeAlias type="industry.IndustryRankDTO"
 			alias="IndustryRank" />
 		<typeAlias type="comment.CommentDTO" alias="Comment" />
 
+		<typeAlias type="industry.IndustryRankDTO" alias="IndustryRank" />
+		
+		<typeAlias type="board.BoardDTO" alias="Board" />
+		<typeAlias type="board.BoardLikeDTO" alias="BoardLike" />
+		
+		<typeAlias type="comment.CommentDTO" alias="Comment" />
+		
+		<typeAlias type="startupWeather.IndustryCountDTO" alias="IndustryCount" />
+		<typeAlias type="startupWeather.NewAndFailDTO" alias="NewAndFail" />
+		<typeAlias type="startupWeather.OperateAvgDTO" alias="OperateAvg" />
+		<typeAlias type="startupWeather.PopulationDTO" alias="Population" />
+		<typeAlias type="startupWeather.SalesAvgDTO" alias="SalesAvg" />
+		
+		
+		
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -60,5 +73,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="mybatis/Dashboard.xml" />
 		<mapper resource="mybatis/AreaLike.xml" />
 		<mapper resource="mybatis/AreaNotice.xml" />
+		<mapper resource="mybatis/StartupWeather.xml" />
 	</mappers>
 </configuration>

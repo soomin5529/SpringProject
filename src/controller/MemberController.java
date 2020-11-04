@@ -82,7 +82,7 @@ public class MemberController {
 	public String mypageDeleteForm(MemberDTO dto, Model m) throws Exception {
 		m.addAttribute("userid", userid);
 		m.addAttribute("pwd", pwd);
-		return "mypage/mypageDelete";
+		return "view/mypage/mypageDelete";
 	}
 
 	// 회원탈퇴
@@ -137,6 +137,6 @@ public class MemberController {
 		m.addAttribute("dto", dto);
 		System.out.println(dto);
 
-		return "mypage/mypageModify";
+		return "view/mypage/mypageModify";
 	}
 }

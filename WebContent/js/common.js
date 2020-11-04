@@ -244,9 +244,7 @@ function openPopMyPage() {
 					+ '      <div class="tit">마이페이지</div>'
 					+ '   </div>'
 					+ '   <ul>'
-					+ '      <li onclick="openPopMyPageModify()">내 정보 변경</li>'
-					+ '      <li onclick="openPopPwd()">비밀번호 변경</li>'
-					+ '      <li onclick="openPopUserDelete()">회원탈퇴</li>'
+					+ '      <li onclick="location.href=\'/SpringTeamProject/member/myPageModify\'">내 정보 변경</li>'
 					+ '      <li onclick="javascript:logout(); location.href=\'/SpringTeamProject/member/logout\'; " >로그아웃</li>'
 					+ '   </ul>' + '   <ul>'
 					+'   </ul>';
