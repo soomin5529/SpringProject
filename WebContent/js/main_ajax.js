@@ -1,5 +1,9 @@
 /* 동 선택하면 (셀렉트 박스 or 동 핀 클릭) 대쉬보드 나오게 한다. */
 function openDashBoard(dongCode) {
+	sessionStorage.removeItem("code");
+	sessionStorage.removeItem("categry");
+	sessionStorage.removeItem("categryCode");
+	
 	var code = dongCode;
 	$.ajax({
 		type : "post",
@@ -241,6 +245,27 @@ function writeBoard() {
 	$.ajax({
 		type : 'post',
 		url : '/SpringTeamProject/board/writeUploadPro',
+		enctype : "multipart/form-data",
+		cache: false,
+		processData : false,
+        contentType : false,
+		data : formData,
+		success : function(textStatus) {
+			closePopCommunityReg();
+			openPopCommunity();
+		},error: function (e) {
+			alert("실패")
+		}
+	});
+}
+/* 댓글 쓰기 */
+function writeComment(boardid) {
+	var form = $("#commentform"+boardid)[0];
+	var formData = new FormData(form);
+	
+	$.ajax({
+		type : 'post',
+		url : '/SpringTeamProject/board/commentUploadPro',
 		enctype : "multipart/form-data",
 		cache: false,
 		processData : false,

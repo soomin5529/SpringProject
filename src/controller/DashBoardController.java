@@ -1,8 +1,6 @@
 package controller;
 
 import java.io.UnsupportedEncodingException;
-import java.net.http.HttpRequest;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,20 +19,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import area.AreaDTO;
-import area.AreaLikeDTO;
-import area.DongDTO;
-import area.SigunguDTO;
-import dashboard.IndustryCountDTO;
 import industry.IndustryDTO;
 import industry.IndustryRankDTO;
-import industry.MainCategoryDTO;
 import service.AreaDAO;
 import service.AreaLikeDAO;
-import service.AreaNoticeDAO;
-import service.BoardLikeDAO;
 import service.DashboardDAO;
 import service.IndustryDAO;
-import service.MemberDAO;
 import service.StoreDAO;
 import store.StoreDTO;
 
@@ -55,9 +45,6 @@ public class DashBoardController {
 	IndustryDAO industryDB;
 	@Autowired
 	AreaLikeDAO arealikeDB;
-	@Autowired
-	AreaNoticeDAO areanoticeDB;
-	
 
 	@ModelAttribute
 	public void headProcess(HttpServletRequest request, HttpServletResponse res) {
@@ -124,12 +111,13 @@ public class DashBoardController {
 		return storeList;
 	}
 
-	@RequestMapping(value = "/dong/{dongCode}", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@RequestMapping(value = "dong/{dongCode}", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody
-	public ModelAndView openDashBoard(@PathVariable("dongCode") String dongCode, HttpServletRequest request) throws Exception {
+	public ModelAndView openDashBoard(@PathVariable("dongCode") String dongCode, HttpServletRequest request)
+			throws Exception {
 		System.out.println("***Open DashBoard!***");
 		mv = new ModelAndView();
-		
+
 		// 동 코드로 시군구 코드를 만든다
 		String sigunguCode = dongCode.substring(0, 5);
 		// 행정구역(시군구, 읍면동) 이름
@@ -143,9 +131,9 @@ public class DashBoardController {
 		mv.addObject("dong", dong);
 		mv.addObject("maincategory", maincategory);
 		mv.addObject("userid", userid);
-		
+
 		// 로그인이 되어 있다면, 관심지역 설정을 받아온다(true, false)
-		if(userid!=null) {
+		if (userid != null) {
 			boolean result = arealikeDB.checkAreaLike(userid, dongCode);
 			mv.addObject("checkAreaLike", result);
 		}
@@ -178,28 +166,6 @@ public class DashBoardController {
 		mv.addObject("dongName", dongName);
 		mv.addObject("sigunguName", sigunguName);
 		mv.addObject("dongCode", dongCode);
-		mv.addObject("userid", userid);
-		mv.addObject("name", name);
-		mv.setViewName("jsp_nohead/boardWriteForm");
-		return mv;
-	}
-	
-	@RequestMapping(value = "myArea/{code}", produces = "application/text; charset=utf8")
-	@ResponseBody
-	public ModelAndView myBookMarkArea(@PathVariable("code") String code, HttpServletRequest request) throws Throwable {
-		System.out.println("***나의 관심지역 Open!***");
-		mv = new ModelAndView();
-
-		String dongName = "";
-		String sigunguName = "";
-		AreaDTO sigungu = null;
-		AreaDTO dong = null;
-
-		List<Object> areaLike = arealikeDB.selectAreaLike(userid);
-
-		mv.addObject("dongName", dongName);
-		mv.addObject("sigunguName", sigunguName);
-		mv.addObject("dongCode", dong);
 		mv.addObject("userid", userid);
 		mv.addObject("name", name);
 		mv.setViewName("jsp_nohead/boardWriteForm");

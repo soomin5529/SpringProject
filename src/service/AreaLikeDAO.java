@@ -8,7 +8,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import area.AreaLikeDTO;
-import board.BoardLikeDTO;
 import mybatis.AbstractMybatis;
 
 @Service

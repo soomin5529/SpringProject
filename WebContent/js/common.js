@@ -1,5 +1,10 @@
 /* javascript onload */
 window.onload = function() {
+	if(sessionStorage.getItem('userid') == null){
+		if(myPage != null){
+			location.href = "/SpringTeamProject/member/logout";
+		}
+	}
 	/* header - current menu active */
 	var menu01 = document.getElementById("menu01");
 	var menu02 = document.getElementById("menu02");
@@ -70,9 +75,10 @@ var pwdModify = document.getElementById("pwdModify");
 var userDelete = document.getElementById("userDelete");
 var myArea = document.getElementById("myArea");
 var myCommunity = document.getElementById("myCommunity");
-
-/* dashboard */
+/*
+ dashboard 
 function openPopDashboard() {
+	deleteStoreMarkers();
 	var dashboard = document.getElementById("dashboard");
 	dashboard.style.display = "block";
 	if (community.style.display == "block") {
@@ -82,13 +88,14 @@ function openPopDashboard() {
 }
 
 function closePopDashboard() {
+	deleteStoreMarkers();
 	var dashboard = document.getElementById("dashboard");
 	dashboard.style.display = "none";
 	if (community.style.display == "block") {
 		community.style.left = 0;
 	}
 
-}
+}*/
 function sendToboardList(code) {
 	var selectcode = code;
 	$.ajax({
@@ -103,7 +110,8 @@ function sendToboardList(code) {
 /* community */
 function openPopCommunity() {
 	var community = document.getElementById("community");
-	var idcheck = sessionStorage.getItem("userid");
+	var idcheck = sessionStorage.getItem('userid');
+
 	if (idcheck == null) {
 		openPopLogin("떠들썩은 로그인 후 이용가능합니다!");
 	} else {
@@ -207,7 +215,6 @@ function sendReplyReg() {
 	var selectCode = document.getElementById("dong").value;
 	var boardid = document.getElementById("board_id").value;
 	var content = document.getElementById("content").value;
-	alert(boardid);
 	$.ajax({
 		type : "post",
 		url : "/SpringTeamProject/board/commentUploadPro",
@@ -218,7 +225,6 @@ function sendReplyReg() {
 			'content' : content,
 		},
 		success : function(data) {
-			alert("success");
 		}
 	});
 }
@@ -368,13 +374,12 @@ function readed(boardId){
 		contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 		data : {"boardid" : boardid},
 		success : function(data) {
-			alert("읽었다");
 		}
 	});	
 }
 /* push */
 function openPopPush() {
-	 var userid = sessionStorage.getItem("userid");
+	var userid = sessionStorage.getItem("userid");
     if(userid != null){
 		$.ajax({
 		type : "post",
