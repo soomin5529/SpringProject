@@ -91,7 +91,7 @@ function openPopCommunity() {
 	var community = document.getElementById("community");
 	var idcheck = sessionStorage.getItem('userid');
 
-	if (idcheck == null) {
+	if (myPage == null) {
 		openPopLogin("떠들썩은 로그인 후 이용가능합니다!");
 	} else {
 		community.style.display = "block";

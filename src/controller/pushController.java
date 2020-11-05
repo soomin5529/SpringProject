@@ -54,10 +54,6 @@ public class pushController {
 		// 분 차 (타임스탬프 기준)
 		long minute = (todayTimestamp - nextdayTimestamp) / 60000;
 
-		System.out.println("일수차" + days);
-		System.out.println(("시간차" + hour));
-		System.out.println("분 차" + minute);
-
 		if (minute < 60) {
 			if (minute < 1) {
 				DateDays = "방금 전";

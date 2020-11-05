@@ -198,10 +198,6 @@ public class BoardController {
 		// 분 차 (타임스탬프 기준)
 		long minute = (todayTimestamp - nextdayTimestamp) / 60000;
 
-		System.out.println("일수차" + days);
-		System.out.println(("시간차" + hour));
-		System.out.println("분 차" + minute);
-
 		if (minute < 60) {
 			if (minute < 1) {
 				DateDays = "방금 전";
@@ -285,13 +281,13 @@ public class BoardController {
 	public String commentUploadPro(MultipartHttpServletRequest request, CommentDTO comment) throws Exception {
 		Date today = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
-		String regDate = sdf.format(today);
+		String reg_Date = sdf.format(today);
 
 		comment.setBoardid(Integer.valueOf(request.getParameter("boardid")));
 		comment.setContent(request.getParameter("content"));
 		comment.setName(request.getParameter("name"));
 		comment.setUserid(userid);
-		comment.setRegDate(regDate);
+		comment.setRegDate(reg_Date);
 		commentDB.insertComment(comment);
 
 		return userid;
