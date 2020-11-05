@@ -23,7 +23,6 @@ import industry.IndustryDTO;
 import industry.IndustryRankDTO;
 import service.AreaDAO;
 import service.AreaLikeDAO;
-import service.DashboardDAO;
 import service.IndustryDAO;
 import service.StoreDAO;
 import store.StoreDTO;
@@ -37,8 +36,6 @@ public class DashBoardController {
 
    @Autowired
    StoreDAO storeDB;
-   @Autowired
-   DashboardDAO dashboardDB;
    @Autowired
    AreaDAO areaDB;
    @Autowired

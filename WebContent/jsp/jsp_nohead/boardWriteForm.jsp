@@ -9,7 +9,7 @@
 		<div class="title-box">
 			<input type="hidden" name="dongCode" value="${dongCode}"> <input
 				type="hidden" name="userid" value="${userid }" />
-			<div class="tit">${sigunguName}${dongName}</div>
+			<div class="tit">${sigunguName}  ${dongName}</div>
 		</div>
 		<div class="content-box">
 			<!-- member 테이블에 있는 name 값 : 이름 -->

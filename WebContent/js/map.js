@@ -13,7 +13,7 @@ var map = new naver.maps.Map('map', mapOptions);
 /* 동 선택시 폴리곤으로 영역을 그려준다. */
 var polygon = new naver.maps.Polygon({
 	paths : [],
-	strokeColor : 'black',
+	strokeColor : '#ff2d2d',
 	strokeOpacity : 1,
 	strokeWeight : 2,
 	fillColor : 'red',
@@ -117,10 +117,10 @@ function pinDistrict(district) {
 				icon : {
 					content : [
 							'<button onclick="findAreaToJson(' + code + '); clickPinDistrict(' + code + ')">',
-							'<div style="text-align:center; background-color:#4d55b2; padding:5px;">',
+							'<div class="district-marker">',
 							'<div style="color:white;"> ',
 							'<p>' + name + '</p>',
-							'<span>' + storeNum + '</span>', '</div>',
+							'<p>' + storeNum + '</p>', '</div>',
 							'</div>', '</button>' ].join(''),
 					size : new naver.maps.Size(38, 58),
 					anchor : new naver.maps.Point(19, 58),
@@ -187,10 +187,10 @@ function pinStore(store) {
 				map : map,
 				icon : {
 					content : [
-							'<div style="text-align:center; background-color:#4d55b2; padding:2px;">',
+							'<div class="store-marker">',
 							'<div style="color:white;"> ',
 							'<p>' + name + '</p>', '<span>' + category + '</span>',
-							'</div>', '</div>' ].join(''),
+							'</div>', '</div> <div class="ic_marker"></div>' ].join(''),
 					size : new naver.maps.Size(38, 58),
 					anchor : new naver.maps.Point(19, 58),
 				},

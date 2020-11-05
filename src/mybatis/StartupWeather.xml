@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="StartupWeather">
+	<!-- 소분류업종명 출력  -->
+	<select id="smallcategorySearch" resultType="Industry" parameterType="String">
+		SELECT SMALLCATEGORY_CODE as code,
+		SMALLCATEGORY_NAME as name
+		FROM CATEGORY_SMALL
+		WHERE SMALLCATEGORY_CODE = #{smallcategory_code}
+	</select>
+	
+	<!-- 시군구별 업종소분류별 업소수 -->
+	<select id="getIndustryCount" resultType="IndustryCount" parameterType="hashmap">
+		select * from(
+		select 'sigunguTotal' as code, count(smallcategory_code) as count from store
+		where Sigungu_code = #{guCode}
+		UNION
+		select smallcategory_code, nvl(count(smallcategory_code),0) from store
+		group by sigungu_code, smallcategory_code having Sigungu_code = #{guCode}
+		and smallcategory_code = #{smallCode}) order by 2 desc
+	</select>
+	
+	<!-- 시군구별 업종대분류별 매출평균 -->
+	<select id="getSalesAvg" resultType="SalesAvg" parameterType="hashmap">
+		select distinct sigungu_code as guCode, MAINCATEGORY_CODE as mainCode,
+		round((thsmon_up+thsmon_dw)/2,0) as avgSum,
+		round((thsmon_dw_co+thsmon_up_co)/2,0) as avgCount
+		from Salse where MAINCATEGORY_CODE = #{mainCode} and sigungu_code = #{guCode}
+	</select>
+	
+	<!-- 시군구별 개폐업률 -->
+	<select id="getNewAndFail" resultType="NewAndFail" parameterType="String">
+		select * from
+			(select F.SIGUNGU_name as guName, sig.SIGUNGU_code as guCode, round((N.total/(N.total+F.total))*100,2) as newRate, round((F.total/(N.total+F.total))*100,2) as failRate 
+			from Seoul_failplayer F, Seoul_newplayer N, sigungu sig
+			where f.SIGUNGU_name = n.SIGUNGU_name and f.SIGUNGU_name = sig.SIGUNGU_name)
+		where guCode = #{guCode}
+	</select>
+	
+	<!-- 시군구별 평균 운영연수 -->
+	<!-- 
+	<select id="getOperateAvg" resultType="OperateAvg" parameterType="hashmap">
+	
+	</select>
+	-->
+	
+	<!-- 시군구별 인구밀도 -->
+	<select id="getPopulation" resultType="Population" parameterType="String">
+		select Sigungu_code as code, round((POPULATION/area),0)as density from seoul_pop
+		where sigungu_code=#{guCode}
+	</select>
+</mapper>
