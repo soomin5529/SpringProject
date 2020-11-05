@@ -9,16 +9,13 @@ import org.springframework.stereotype.Service;
 
 import industry.IndustryDTO;
 import industry.IndustryRankDTO;
-import industry.MainCategoryDTO;
-import industry.MiddleCategoryDTO;
-import industry.SmallCategoryDTO;
 import mybatis.AbstractMybatis;
 
 @Service
 public class IndustryDAO extends AbstractMybatis {
 	String namespace = "Industry";
 
-	public List<MainCategoryDTO> category_mainList() {
+	public List<IndustryDTO> category_mainList() {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
 			return sqlSession.selectList(namespace + ".category_mainList");
@@ -48,8 +45,8 @@ public class IndustryDAO extends AbstractMybatis {
 			sqlSession.close();
 		}
 	}
-	
-	public List<IndustryDTO> maincategory(String dongCode){
+
+	public List<IndustryDTO> maincategory(String dongCode) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
 			return sqlSession.selectList(namespace + ".maincategory", dongCode);
@@ -57,8 +54,8 @@ public class IndustryDAO extends AbstractMybatis {
 			sqlSession.close();
 		}
 	}
-	
-	public List<IndustryDTO> middlecategory(Map<String, String> data){
+
+	public List<IndustryDTO> middlecategory(Map<String, String> data) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
 			return sqlSession.selectList(namespace + ".middlecategory", data);
@@ -66,8 +63,8 @@ public class IndustryDAO extends AbstractMybatis {
 			sqlSession.close();
 		}
 	}
-	
-	public List<IndustryDTO> smallcategory(Map<String, String> data){
+
+	public List<IndustryDTO> smallcategory(Map<String, String> data) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
 			return sqlSession.selectList(namespace + ".smallcategory", data);
@@ -75,8 +72,8 @@ public class IndustryDAO extends AbstractMybatis {
 			sqlSession.close();
 		}
 	}
-	
-	public List<IndustryRankDTO> maincategoryRank(String dongCode){
+
+	public List<IndustryRankDTO> maincategoryRank(String dongCode) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
 			return sqlSession.selectList(namespace + ".maincategoryRank", dongCode);
@@ -84,8 +81,8 @@ public class IndustryDAO extends AbstractMybatis {
 			sqlSession.close();
 		}
 	}
-	
-	public List<IndustryRankDTO> middlecategoryRank(String dongCode){
+
+	public List<IndustryRankDTO> middlecategoryRank(String dongCode) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
 			return sqlSession.selectList(namespace + ".middlecategoryRank", dongCode);
@@ -93,8 +90,8 @@ public class IndustryDAO extends AbstractMybatis {
 			sqlSession.close();
 		}
 	}
-	
-	public List<IndustryRankDTO> frenchiseRank(String dongCode){
+
+	public List<IndustryRankDTO> frenchiseRank(String dongCode) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
 			return sqlSession.selectList(namespace + ".frenchiseRank", dongCode);

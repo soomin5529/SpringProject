@@ -2,6 +2,7 @@ package store;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class StoreDTO implements Serializable {
 	private String storeNum;
 	private String storeName;

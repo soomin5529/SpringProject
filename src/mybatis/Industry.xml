@@ -4,7 +4,7 @@
 
 <!-- 연결을 namespace로 한다.(대소문자 구분함) -->
 <mapper namespace="Industry">
-	<select id="category_mainList" resultType="MainCategory">
+	<select id="category_mainList" resultType="Industry">
 		select
 		maincategory_code as code, maincategory_name as name from
 		category_main

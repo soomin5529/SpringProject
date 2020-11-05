@@ -6,48 +6,39 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 <configuration>
 	<typeAliases>
 		<typeAlias type="member.MemberDTO" alias="Member" />
-		
-		<typeAlias type="area.SidoDTO" alias="Sido" />
-		<typeAlias type="area.SigunguDTO" alias="Sigungu" />
-		<typeAlias type="area.DongDTO" alias="Dong" />
+
 		<typeAlias type="area.AreaDTO" alias="Area" />
 		<typeAlias type="area.SelectedAreaDTO" alias="SelectedArea" />
 		<typeAlias type="area.AreaInMapBoundDTO"
 			alias="AreaInMapBound" />
-		<typeAlias type="store.StoreDTO" alias="Store" />
+		<typeAlias type="area.AreaLikeDTO" alias="AreaLike" />
 		<typeAlias type="area.AreaNoticeDTO" alias="AreaNotice" />
 
-		<typeAlias type="industry.MainCategoryDTO"
-			alias="MainCategory" />
-		<typeAlias type="industry.MiddleCategoryDTO"
-			alias="MiddleCategory" />
-		<typeAlias type="industry.SmallCategoryDTO"
-			alias="SmallCategory" />
+		<typeAlias type="store.StoreDTO" alias="Store" />
+
+		<typeAlias type="board.BoardDTO" alias="Board" />
+		<typeAlias type="board.BoardLikeDTO" alias="BoardLike" />
+		<typeAlias type="comment.CommentDTO" alias="Comment" />
+
 		<typeAlias type="industry.IndustryDTO" alias="Industry" />
 		<typeAlias type="industry.IndustryRankDTO"
 			alias="IndustryRank" />
-		<typeAlias type="board.BoardDTO" alias="Board" />
-		<typeAlias type="board.BoardLikeDTO" alias="BoardLike" />
-		<typeAlias type="area.AreaLikeDTO" alias="AreaLike" />
 		<typeAlias type="industry.IndustryRankDTO"
 			alias="IndustryRank" />
-		<typeAlias type="comment.CommentDTO" alias="Comment" />
+		<typeAlias type="industry.IndustryRankDTO"
+			alias="IndustryRank" />
 
-		<typeAlias type="industry.IndustryRankDTO" alias="IndustryRank" />
-		
-		<typeAlias type="board.BoardDTO" alias="Board" />
-		<typeAlias type="board.BoardLikeDTO" alias="BoardLike" />
-		
-		<typeAlias type="comment.CommentDTO" alias="Comment" />
-		
-		<typeAlias type="startupWeather.IndustryCountDTO" alias="IndustryCount" />
-		<typeAlias type="startupWeather.NewAndFailDTO" alias="NewAndFail" />
-		<typeAlias type="startupWeather.OperateAvgDTO" alias="OperateAvg" />
-		<typeAlias type="startupWeather.PopulationDTO" alias="Population" />
-		<typeAlias type="startupWeather.SalesAvgDTO" alias="SalesAvg" />
-		
-		
-		
+		<typeAlias type="startupWeather.IndustryCountDTO"
+			alias="IndustryCount" />
+		<typeAlias type="startupWeather.NewAndFailDTO"
+			alias="NewAndFail" />
+		<typeAlias type="startupWeather.OperateAvgDTO"
+			alias="OperateAvg" />
+		<typeAlias type="startupWeather.PopulationDTO"
+			alias="Population" />
+		<typeAlias type="startupWeather.SalesAvgDTO"
+			alias="SalesAvg" />
+
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">

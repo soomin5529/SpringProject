@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import area.AreaDTO;
-import area.SidoDTO;
 import industry.IndustryDTO;
-import industry.MainCategoryDTO;
 import service.AreaDAO;
 import service.IndustryDAO;
 import service.StartupWeatherDAO;
@@ -41,11 +39,11 @@ public class StartupWeatherController {
 	// main화면 실행 시 시도 selectBox에 값 생성
 	@RequestMapping("startupWeather")
 	public String startupWeather(Model model) throws Exception { // 처음 시도 목록을 받아 지역 시도선택에 뿌려준다.
-		List<SidoDTO> sidoList = areaDB.sidoList();
+		List<AreaDTO> sidoList = areaDB.sidoList();
 		model.addAttribute("sido", sidoList);
 		System.out.println(sidoList);
 
-		List<MainCategoryDTO> MainList = industryDB.category_mainList();
+		List<IndustryDTO> MainList = industryDB.category_mainList();
 		model.addAttribute("main", MainList);
 
 		return "view/startupWeather";
@@ -81,8 +79,8 @@ public class StartupWeatherController {
 	// 레이더차트 출력
 	@RequestMapping(value = "/sendRadarChart", method = RequestMethod.POST, produces = "application/json; charset=utf8")
 	@ResponseBody
-	public HashMap<String,Integer> sendRadarChart(@RequestBody Map<String, String> data) throws Exception {
-		HashMap<String,Integer> pointList = new HashMap<String,Integer>();
+	public HashMap<String, Integer> sendRadarChart(@RequestBody Map<String, String> data) throws Exception {
+		HashMap<String, Integer> pointList = new HashMap<String, Integer>();
 		AreaDTO dong = areaDB.dong(data.get("dongCode"));
 		String guCode = (dong.getCode()).substring(0, 5);
 		IndustryDTO industry = startupWeatherDB.smallcategorySearch(data.get("smallCode"));
@@ -92,19 +90,18 @@ public class StartupWeatherController {
 		SalesAvgDTO salesAvg = startupWeatherDB.getSalesAvg(guCode, mainCode);
 		NewAndFailDTO newAndFailRate = startupWeatherDB.getNewAndFail(guCode);
 		PopulationDTO Population = startupWeatherDB.getPopulation(guCode);
-		int rare; 									// 업소수(희소성)
-		long sales = salesAvg.getAvgSum(); 			// 매출평균(영업력)
+		int rare; // 업소수(희소성)
+		long sales = salesAvg.getAvgSum(); // 매출평균(영업력)
 		long safety = newAndFailRate.getFailRate(); // 개폐업률(안정성)
-		int persistence; 							// 평균영업연수(지속성)
 		long population = Population.getDensity(); // 인구밀도(집객력)
-		
-		//업소수 0인 경우 index 안나오는 경우 해결
-		if(IndustryCount.size() == 2) {
+
+		// 업소수 0인 경우 index 안나오는 경우 해결
+		if (IndustryCount.size() == 2) {
 			rare = IndustryCount.get(1).getCount();
-		}else{
+		} else {
 			rare = 0;
 		}
-		
+
 		// 업소수(희소성)
 		if (rare <= 5) {
 			pointList.put("rare", 20);
@@ -117,7 +114,7 @@ public class StartupWeatherController {
 		} else {
 			pointList.put("rare", 0);
 		}
-		
+
 		// 매출평균(영업력)
 		if (sales >= 3000) {
 			pointList.put("sales", 20);
@@ -130,7 +127,7 @@ public class StartupWeatherController {
 		} else {
 			pointList.put("sales", 0);
 		}
-		
+
 		// 개폐업률(안정성)
 		if (safety <= 10) {
 			pointList.put("safety", 20);
@@ -143,11 +140,11 @@ public class StartupWeatherController {
 		} else {
 			pointList.put("safety", 0);
 		}
-		
-		//평균영업연수(지속성)
+
+		// 평균영업연수(지속성)
 		pointList.put("persistence", 10);
-		
-		//인구밀도(집객력)
+
+		// 인구밀도(집객력)
 		if (population >= 15000) {
 			pointList.put("population", 20);
 		} else if (population >= 11000) {
@@ -159,10 +156,11 @@ public class StartupWeatherController {
 		} else {
 			pointList.put("population", 0);
 		}
-		 
-		int total = pointList.get("rare") + pointList.get("sales") + pointList.get("safety") + pointList.get("persistence") + pointList.get("population");
+
+		int total = pointList.get("rare") + pointList.get("sales") + pointList.get("safety")
+				+ pointList.get("persistence") + pointList.get("population");
 		pointList.put("total", total); // 합계
-		
+
 		System.out.println("pointList" + pointList);
 		return pointList;
 	}

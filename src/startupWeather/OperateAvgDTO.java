@@ -2,6 +2,7 @@ package startupWeather;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class OperateAvgDTO implements Serializable{
 	private String smallCode;
 	private long year;

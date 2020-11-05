@@ -9,10 +9,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
-import area.SidoDTO;
-import area.SigunguDTO;
 import mybatis.AbstractMybatis;
-import board.BoardDTO;
 import comment.CommentDTO;
 
 @Service
@@ -20,10 +17,10 @@ public class CommentDAO extends AbstractMybatis {
 	String namespace = "Comment";
 
 	Map<String, Object> map = new HashMap<String, Object>();
-    //댓글 개수 ${cnt} count
-	
+	// 댓글 개수 ${cnt} count
+
 	public int getCommentCount(int boardid) throws Exception {
-       
+
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
 			map.put("boardid", boardid);
@@ -32,7 +29,7 @@ public class CommentDAO extends AbstractMybatis {
 			sqlSession.close();
 		}
 	}
-	
+
 	// 댓글 list 받기
 	public List<CommentDTO> getComments(int boardid) throws Exception {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
@@ -44,13 +41,14 @@ public class CommentDAO extends AbstractMybatis {
 			sqlSession.close();
 		}
 	}
+
 	// insert
 	public int insertComment(CommentDTO article) throws Exception {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
 			Date today = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
-		    String regDate = sdf.format(today);
+			String regDate = sdf.format(today);
 			map.clear();
 			int number = sqlSession.selectOne(namespace + ".insertComment_new");
 			if (number != 0)
@@ -58,10 +56,10 @@ public class CommentDAO extends AbstractMybatis {
 			else
 				number = 1;
 			String statement = namespace + ".insertComment";
-			
+
 			article.setCommentid(number);
 			article.setRegDate(regDate);
-			
+
 			System.out.println("article은??" + article);
 
 			return sqlSession.insert(statement, article);
@@ -71,7 +69,8 @@ public class CommentDAO extends AbstractMybatis {
 		}
 
 	}
-	//삭제
+
+	// 삭제
 	public int deleteComment(String userid, String commentid) throws Exception {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		map.clear();
@@ -88,8 +87,5 @@ public class CommentDAO extends AbstractMybatis {
 		}
 		return x;
 	}
-	
-	
-	
-	
+
 }

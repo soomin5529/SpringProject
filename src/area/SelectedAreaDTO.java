@@ -3,6 +3,7 @@ package area;
 import java.io.Serializable;
 
 // 동 클래스
+@SuppressWarnings("serial")
 public class SelectedAreaDTO implements Serializable {
 	private String si;
 	private String sig;

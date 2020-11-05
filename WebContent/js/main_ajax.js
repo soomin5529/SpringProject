@@ -1,5 +1,8 @@
 /* 동 선택하면 (셀렉트 박스 or 동 핀 클릭) 대쉬보드 나오게 한다. */
 function openDashBoard(dongCode) {
+	deleteDistrictMarkers();
+	deleteStoreMarkers();
+	
 	sessionStorage.removeItem("code");
 	sessionStorage.removeItem("categry");
 	sessionStorage.removeItem("categryCode");
@@ -16,6 +19,10 @@ function openDashBoard(dongCode) {
 			importantFrenchise(code);
 		}
 	});
+}
+function closeDashBoard(){
+	deleteStoreMarkers();
+	$('#dash-board').empty();
 }
 /* DashBoard에 도넛 차트 */
 function drawDouhnutChart(dongCode) {

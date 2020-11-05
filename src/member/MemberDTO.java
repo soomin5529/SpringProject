@@ -1,8 +1,8 @@
 package member;
 
 import java.io.Serializable;
-import java.sql.Date;
 
+@SuppressWarnings("serial")
 public class MemberDTO implements Serializable {
 	private String userid;
 	private String pwd;

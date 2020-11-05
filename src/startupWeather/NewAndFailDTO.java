@@ -2,6 +2,7 @@ package startupWeather;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class NewAndFailDTO implements Serializable {
 	private String guName;
 	private String guCode;

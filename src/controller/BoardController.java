@@ -20,10 +20,8 @@ import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -50,7 +48,7 @@ public class BoardController {
 	public String userid = "";
 	public String name = "";
 	public String dong_code = "";
-	
+
 	public String remoteId = "";
 	public ModelAndView mv = new ModelAndView();
 
@@ -142,7 +140,6 @@ public class BoardController {
 		int boardid = 0;
 		int cnt = 0;
 		int boardLikecnt = 0;
-		int commentLikecnt = 0;
 		String regdate = null;
 		List<CommentDTO> comment = null;
 		// key 값: Boardid , value 값 : boardid 에 달린 댓글 list
@@ -183,75 +180,74 @@ public class BoardController {
 	}
 
 	// 날짜 변환 메소드
-		public String regDate(String regdate) throws ParseException {
+	public String regDate(String regdate) throws ParseException {
 
-			String DateDays = null;
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
-			Calendar calendar = Calendar.getInstance();
-			Date date = new Date(calendar.getTimeInMillis());
-			String todayDate = sdf.format(date);
-			long todayTimestamp = sdf.parse(todayDate).getTime();
-			Date date2 = new Date(todayTimestamp);
-			// 오늘 날짜
-			String todayDate2 = sdf.format(date2);
-			// 등록된 날짜 타임스탬프
-			long nextdayTimestamp = sdf.parse(regdate).getTime();
-			// 일수 차 (타임스탬프 기준)
-			long days = (todayTimestamp - nextdayTimestamp) / (24 * 60 * 60 * 1000 * 365);
-			// 시간 차 (타임스탬프 기준)
-			long hour = (todayTimestamp - nextdayTimestamp) / (60000 * 60);
-			// 분 차 (타임스탬프 기준)
-			long minute = (todayTimestamp - nextdayTimestamp) / 60000;
+		String DateDays = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
+		Calendar calendar = Calendar.getInstance();
+		Date date = new Date(calendar.getTimeInMillis());
+		String todayDate = sdf.format(date);
+		long todayTimestamp = sdf.parse(todayDate).getTime();
+		// 오늘 날짜
+		// 등록된 날짜 타임스탬프
+		long nextdayTimestamp = sdf.parse(regdate).getTime();
+		// 일수 차 (타임스탬프 기준)
+		long days = (todayTimestamp - nextdayTimestamp) / (24 * 60 * 60 * 1000 * 365);
+		// 시간 차 (타임스탬프 기준)
+		long hour = (todayTimestamp - nextdayTimestamp) / (60000 * 60);
+		// 분 차 (타임스탬프 기준)
+		long minute = (todayTimestamp - nextdayTimestamp) / 60000;
 
-			System.out.println("일수차" + days);
-			System.out.println(("시간차" + hour));
-			System.out.println("분 차" + minute);
+		System.out.println("일수차" + days);
+		System.out.println(("시간차" + hour));
+		System.out.println("분 차" + minute);
 
-			if (minute < 60) {
-				if (minute < 1) {
-					DateDays = "방금 전";
-				} else
-					DateDays = minute + "분 전";
-			} else if (minute >= 60 && hour < 24) {
-				if (hour == 1)
-					DateDays = "한시간 전";
-				if (hour == 2)
-					DateDays = "두시간 전";
-				if (hour == 3)
-					DateDays = "세시간 전";
-				if (hour == 4)
-					DateDays = "네시간 전";
-				if (hour == 5)
-					DateDays = "다섯시간 전";
-				if (hour == 6)
-					DateDays = "여섯시간 전";
-				if (hour == 7)
-					DateDays = "일곱시간 전";
-			} else if (hour >= 24 && days == 0) {
-				DateDays = "하루 전";
-				// 일수 차 ( 날짜 기준)
-			} else if ((days / 30) == 1) {
-				DateDays = "한달 전";
-			} else if ((days / 7) == 1) {
-				DateDays = "일주일 전";
-			} else if ((days / 60) == 1) {
-				DateDays = "두달 전";
-			} else if (days == 0) {
-				DateDays = "7시간 전";
-			} else {
-				DateDays = (days) + "일 전";
-			}
-
-			return DateDays;
+		if (minute < 60) {
+			if (minute < 1) {
+				DateDays = "방금 전";
+			} else
+				DateDays = minute + "분 전";
+		} else if (minute >= 60 && hour < 24) {
+			if (hour == 1)
+				DateDays = "한시간 전";
+			if (hour == 2)
+				DateDays = "두시간 전";
+			if (hour == 3)
+				DateDays = "세시간 전";
+			if (hour == 4)
+				DateDays = "네시간 전";
+			if (hour == 5)
+				DateDays = "다섯시간 전";
+			if (hour == 6)
+				DateDays = "여섯시간 전";
+			if (hour == 7)
+				DateDays = "일곱시간 전";
+		} else if (hour >= 24 && days == 0) {
+			DateDays = "하루 전";
+			// 일수 차 ( 날짜 기준)
+		} else if ((days / 30) == 1) {
+			DateDays = "한달 전";
+		} else if ((days / 7) == 1) {
+			DateDays = "일주일 전";
+		} else if ((days / 60) == 1) {
+			DateDays = "두달 전";
+		} else if (days == 0) {
+			DateDays = "7시간 전";
+		} else {
+			DateDays = (days) + "일 전";
 		}
 
+		return DateDays;
+	}
+
+	@SuppressWarnings("deprecation")
 	@RequestMapping(value = "writeUploadPro", method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	@ResponseBody
 	public void writeUploadPro(MultipartHttpServletRequest multipart, BoardDTO article) throws Exception {
 		String today = null;
 		String userid = multipart.getParameter("userid");
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
 		today = sdf.format(new java.util.Date());
 
 		MultipartFile multi = multipart.getFile("uploadfile");
@@ -275,7 +271,7 @@ public class BoardController {
 		// 최신 boardid 값
 		boardid = boardDB.getnewBoardid(dong_code);
 		System.out.println("boardid 값=========" + boardid);
-		
+
 		// AreaLike에 있는 userlist
 		List<String> userList = arealikeDB.getUserid(dong_code);
 		for (String user : userList) {
@@ -287,20 +283,17 @@ public class BoardController {
 	@RequestMapping(value = "/commentUploadPro", method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	@ResponseBody
 	public String commentUploadPro(MultipartHttpServletRequest request, CommentDTO comment) throws Exception {
-
 		Date today = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
 		String regDate = sdf.format(today);
 
-		HttpSession session = request.getSession();
 		comment.setBoardid(Integer.valueOf(request.getParameter("boardid")));
 		comment.setContent(request.getParameter("content"));
 		comment.setName(request.getParameter("name"));
 		comment.setUserid(userid);
 		comment.setRegDate(regDate);
-		System.out.println(comment + "----------->댓글이요!~~~!!");
 		commentDB.insertComment(comment);
-		
+
 		return userid;
 	}
 

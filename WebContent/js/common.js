@@ -23,7 +23,6 @@ window.onload = function() {
 
 /* jQuery onload */
 $(document).ready(function() {
-
 	/* 화면이 로드되면 시군구를 보여준다 */
 	var bound = mapBound();
 	/* 시군구가 보여지는 줌 레벨 */
@@ -75,27 +74,7 @@ var pwdModify = document.getElementById("pwdModify");
 var userDelete = document.getElementById("userDelete");
 var myArea = document.getElementById("myArea");
 var myCommunity = document.getElementById("myCommunity");
-/*
- dashboard 
-function openPopDashboard() {
-	deleteStoreMarkers();
-	var dashboard = document.getElementById("dashboard");
-	dashboard.style.display = "block";
-	if (community.style.display == "block") {
-		community.style.left = "350px";
-	}
-	drawChart();
-}
 
-function closePopDashboard() {
-	deleteStoreMarkers();
-	var dashboard = document.getElementById("dashboard");
-	dashboard.style.display = "none";
-	if (community.style.display == "block") {
-		community.style.left = 0;
-	}
-
-}*/
 function sendToboardList(code) {
 	var selectcode = code;
 	$.ajax({
@@ -241,7 +220,7 @@ function openPopMyPage() {
 					+ '            <line x1="35.1" y1="4.9" x2="4.9" y2="35.1"/>'
 					+ '         </svg>'
 					+ '      </div>'
-					+ '      <div class="tit">마이페이지</div>'
+					+ '      <div class="tit">안녕하세요' + sessionStorage.getItem('userid') + '님</div>'
 					+ '   </div>'
 					+ '   <ul>'
 					+ '      <li onclick="location.href=\'/SpringTeamProject/member/myPageModify\'">내 정보 변경</li>'

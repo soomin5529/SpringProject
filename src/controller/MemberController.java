@@ -56,16 +56,15 @@ public class MemberController {
 		String pwd = request.getParameter("pwd");
 		// 로그인 세션
 		HttpSession session = request.getSession();
-		String sessionId = session.getId();
-		boolean loginCheck = false;
-
-		loginCheck = memberDB.loginMember(userid, pwd);
+		boolean loginCheck = memberDB.loginMember(userid, pwd);
 		String name = memberDB.nameMember(userid);
-		System.out.println(name);
-		System.out.println(loginCheck + "---------> 로그인상태");
-		System.out.println(name + "----------> name 상태");
+
+		System.out.println("로그인상태--------->" + loginCheck);
+		System.out.println("name상태--------->" + name);
+
 		session.setAttribute("userid", userid);
 		session.setAttribute("name", name);
+
 		return "redirect:/view/main";
 	}
 
@@ -92,14 +91,11 @@ public class MemberController {
 		String userid = (String) session.getAttribute("userid");
 		String pwd = request.getParameter("pwd");
 		boolean result = memberDB.loginMember(userid, pwd);
-		String message = null;
 
 		if (result) { // 성공시
 			memberDB.deleteMember(userid, pwd);
 			session.invalidate();
-			message = "ok";
 		} else { // 실패시
-			message = "fail";
 		}
 		return "redirect:/view/main";
 	}
@@ -114,16 +110,13 @@ public class MemberController {
 		String email = request.getParameter("email");
 		String birthdate = request.getParameter("birthdate");
 		String gender = request.getParameter("gender");
-		String message = null;
 
 		int result = 0;
 		System.out.println(userid + ", " + name + ", " + email + ", " + birthdate + ", " + gender);
 		result = memberDB.updateMember(userid, pwd, name, email, birthdate, gender);
 		System.out.println("========================================" + result);
 		if (result == 1) { // 성공시
-			message = "ok";
 		} else { // 실패시
-			message = "fail";
 		}
 		return "redirect:/view/main";
 	}

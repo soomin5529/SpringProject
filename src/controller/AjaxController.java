@@ -218,19 +218,13 @@ public class AjaxController {
 		String userid = (String) session.getAttribute("userid");
 		String status = data.get("status");
 		int boardid = Integer.valueOf(data.get("boardid"));
-		
-		String resultOption = "";
-		
+
 		int num = 10;
 		if (status.equals("insert")) {
 			num = boardlikeDB.insertBoardLike(boardid, userid);
-			resultOption = "들어감";
-			System.out.println(resultOption);
 		}
 		if (data.get("status").equals("delete")) {
 			num = boardlikeDB.deleteBoardLike(boardid, userid);
-			resultOption = "빼기 성공";
-			System.out.println(resultOption);
 		}
 		int likeNum = 0;
 		if (num == 1) {
