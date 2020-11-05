@@ -20,10 +20,8 @@ import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -45,10 +43,12 @@ import service.MemberDAO;
 @Controller
 @RequestMapping("/board/")
 public class BoardController {
+	// boardid, userid, dong_code 는 view 에서 값 받아야함
 	public int boardid = 0;
 	public String userid = "";
+	public String name = "";
 	public String dong_code = "";
-	// boardid, userid, dong_code 는 view 에서 값 받아야함
+
 	public String remoteId = "";
 	public ModelAndView mv = new ModelAndView();
 
@@ -140,7 +140,6 @@ public class BoardController {
 		int boardid = 0;
 		int cnt = 0;
 		int boardLikecnt = 0;
-		int commentLikecnt = 0;
 		String regdate = null;
 		List<CommentDTO> comment = null;
 		// key 값: Boardid , value 값 : boardid 에 달린 댓글 list
@@ -189,9 +188,7 @@ public class BoardController {
 		Date date = new Date(calendar.getTimeInMillis());
 		String todayDate = sdf.format(date);
 		long todayTimestamp = sdf.parse(todayDate).getTime();
-		Date date2 = new Date(todayTimestamp);
 		// 오늘 날짜
-		String todayDate2 = sdf.format(date2);
 		// 등록된 날짜 타임스탬프
 		long nextdayTimestamp = sdf.parse(regdate).getTime();
 		// 일수 차 (타임스탬프 기준)
@@ -243,6 +240,7 @@ public class BoardController {
 		return DateDays;
 	}
 
+	@SuppressWarnings("deprecation")
 	@RequestMapping(value = "writeUploadPro", method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	@ResponseBody
 	public void writeUploadPro(MultipartHttpServletRequest multipart, BoardDTO article) throws Exception {
@@ -269,40 +267,34 @@ public class BoardController {
 		article.setUserid(userid);
 		int num = boardDB.insertArticle(article);
 		System.out.println(num);
-		// ===============================================================
+
 		// 최신 boardid 값
 		boardid = boardDB.getnewBoardid(dong_code);
 		System.out.println("boardid 값=========" + boardid);
+
 		// AreaLike에 있는 userlist
 		List<String> userList = arealikeDB.getUserid(dong_code);
 		for (String user : userList) {
 			System.out.println("user" + user + "dong_code" + dong_code + "boardid" + boardid + "today" + today);
 			areanoticeDB.insertNotice(user, dong_code, boardid, today);
-
 		}
 	}
 
-	@RequestMapping(value = "/commentUploadPro", produces = "application/text; charset=utf8")
+	@RequestMapping(value = "/commentUploadPro", method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	@ResponseBody
-	public String commentUploadPro(String dongcode, int boardid, String content, String name, CommentDTO article,
-			HttpServletRequest request) throws Exception {
-
+	public String commentUploadPro(MultipartHttpServletRequest request, CommentDTO comment) throws Exception {
 		Date today = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
-		String reg_date = sdf.format(today);
+		String regDate = sdf.format(today);
 
-		HttpSession session = request.getSession();
-		String userid = (String) session.getAttribute("userid");
-		name = (String) session.getAttribute("name");
-		article.setBoardid(boardid);
-		article.setContent(content);
-		article.setName(name);
-		article.setUserid(userid);
-		article.setRegDate(regDate(reg_date));
-		commentDB.insertComment(article);
+		comment.setBoardid(Integer.valueOf(request.getParameter("boardid")));
+		comment.setContent(request.getParameter("content"));
+		comment.setName(request.getParameter("name"));
+		comment.setUserid(userid);
+		comment.setRegDate(regDate);
+		commentDB.insertComment(comment);
 
 		return userid;
-
 	}
 
 	@RequestMapping("deletePro")

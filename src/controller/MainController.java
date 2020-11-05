@@ -4,9 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,10 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import area.AreaDTO;
-import area.SidoDTO;
-import board.BoardDTO;
-import comment.CommentDTO;
-import industry.MainCategoryDTO;
+import industry.IndustryDTO;
 import service.AreaDAO;
 import service.BoardLikeDAO;
 import service.BoardDAO;
@@ -66,28 +61,22 @@ public class MainController {
 	}
 
 	// main화면 실행 시 시도 selectBox에 값 생성
-	@SuppressWarnings("finally")
 	@RequestMapping("/main")
 	public String main(Model model) throws Exception {
 		// 처음 시도 목록을 받아 지역 시도선택에 뿌려준다.
-		List<SidoDTO> sidoList = areaDB.sidoList();
+		List<AreaDTO> sidoList = areaDB.sidoList();
 		model.addAttribute("sido", sidoList);
-		// 
-		List<AreaDTO> sigunguList = areaDB.sigunguList("11");
-		model.addAttribute("sigunguList", sigunguList);
-		System.out.println(sigunguList + "------------> 시군구 리스트");
-
-		List<MainCategoryDTO> MainList = industryDB.category_mainList();
+		// 시군구 리스트
+//		List<AreaDTO> sigunguList = areaDB.sigunguList("11");
+//		model.addAttribute("sigunguList", sigunguList);
+		//
 		model.addAttribute("userid", userid);
-		
+
 		return "view/main";
 
-	
 	}
-
 	// 날짜 변환 메소드
 	public String regDate(String regdate) throws ParseException {
-
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyymmdd");
 		Date today = new Date();
 		Date startDate = null;
@@ -122,17 +111,11 @@ public class MainController {
 	// main화면 실행 시 카테고리 selectBox에 값 생성
 	@RequestMapping("/mainCategory")
 	public String mainCategory(Model model) throws Throwable {
-		List<MainCategoryDTO> MainList = industryDB.category_mainList();
+		List<IndustryDTO> MainList = industryDB.category_mainList();
 		System.out.println(MainList);
 		model.addAttribute("main", MainList);
 		return "view/main";
 	}
-
-	@RequestMapping("startupKeyword")
-	public String startupKeyword() throws Throwable {
-		return "view/startupKeyword";
-	}
-
 
 	@RequestMapping("/intro")
 	public String intro() throws Throwable {

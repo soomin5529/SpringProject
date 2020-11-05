@@ -3,6 +3,7 @@ package area;
 import java.io.Serializable;
 
 // 시군구 클래스
+@SuppressWarnings("serial")
 public class AreaDTO implements Serializable {
 	private String code;
 	private String name;

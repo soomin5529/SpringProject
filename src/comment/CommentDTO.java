@@ -2,6 +2,7 @@ package comment;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class CommentDTO implements Serializable{
 	private String userid;
 	private int boardid;

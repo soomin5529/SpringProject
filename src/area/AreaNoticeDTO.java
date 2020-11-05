@@ -2,6 +2,7 @@ package area;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class AreaNoticeDTO implements Serializable {
 	private String userid;
 	private String dongCode;

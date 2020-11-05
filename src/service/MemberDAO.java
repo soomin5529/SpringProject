@@ -94,7 +94,6 @@ public class MemberDAO extends AbstractMybatis {
 
 	// 로그아웃
 	public boolean logout(HttpSession session) {
-		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		boolean result = false;
 		session.invalidate();
 		return result;
@@ -121,7 +120,7 @@ public class MemberDAO extends AbstractMybatis {
 	}
 
 	// 회원수정
-	public int updateMember(String userid,String pwd,String name,String email,String birthdate,String gender) {
+	public int updateMember(String userid, String pwd, String name, String email, String birthdate, String gender) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		map.clear();
 		int result = 0;
@@ -132,7 +131,7 @@ public class MemberDAO extends AbstractMybatis {
 			map.put("email", email);
 			map.put("birthdate", birthdate.replace("-", ""));
 			map.put("gender", gender);
-			
+
 			result = sqlSession.update(namespace + ".updateMember", map);
 			sqlSession.commit();
 		} finally {
@@ -140,14 +139,14 @@ public class MemberDAO extends AbstractMybatis {
 		}
 		return result;
 	}
-	
-	//회원정보
+
+	// 회원정보
 	public MemberDTO userInfo(String userid) {
 		map.clear();
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
-		String statement = namespace +".userInfo";
+		String statement = namespace + ".userInfo";
 		map.put("userid", userid);
-		return sqlSession.selectOne(statement,userid);
+		return sqlSession.selectOne(statement, userid);
 
 	}
 

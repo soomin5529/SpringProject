@@ -2,6 +2,7 @@ package startupWeather;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class PopulationDTO implements Serializable{
 	private String code;
 	private long density;

@@ -2,6 +2,7 @@ package startupWeather;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class SalesAvgDTO implements Serializable {
 	private String guCode;
 	private String mainCode;

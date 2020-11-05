@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import area.AreaDTO;
 import area.AreaInMapBoundDTO;
 import area.SelectedAreaDTO;
-import area.SidoDTO;
 import mybatis.AbstractMybatis;
 
 @Service
@@ -18,7 +17,7 @@ public class AreaDAO extends AbstractMybatis {
 	String namespace = "Area";
 
 	// 시도 출력-시도가 18개로 되어있으므로, List로 출력한다.
-	public List<SidoDTO> sidoList() {
+	public List<AreaDTO> sidoList() {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
 			return sqlSession.selectList(namespace + ".sidoList");

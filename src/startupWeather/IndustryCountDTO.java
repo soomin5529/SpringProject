@@ -2,6 +2,7 @@ package startupWeather;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class IndustryCountDTO implements Serializable{
 	private String code;
 	private int count;

@@ -5,7 +5,7 @@
 <div class="map-popup dashboard" id="dashboard">
 
 	<div class="title-box cf">
-		<div class="back-btn" onclick="$('#dash-board').empty(); deleteStoreMarkers();">
+		<div class="back-btn" onclick="javascript:closeDashBoard();">
 			<svg viewBox="0 0 40 40" class="back-icon"><path d="M18 35L3 20 18 5" /></svg>
 		</div>
 		<div class="tit">${sigungu.name} ${dong.name}</div>
