@@ -128,12 +128,12 @@ public class AjaxController {
 		// 서울시 읍면동 json 읽어서 좌표찾기
 		ClassLoader classLoader = getClass().getClassLoader();
 		File file = new File(classLoader.getResource("json/seoul_emd.json").getFile());
-		FileReader fr = new FileReader(file);
-		Object seoulEMDObj = new JSONParser().parse(fr);
+		FileReader fr = new FileReader(file); 
+		Object seoulEMDObj = new JSONParser().parse(fr);   
 		JSONObject seoulEMDjsonObj = (JSONObject) seoulEMDObj;
 
 		// geoJson의 동코드와 우리 DB의 코드가 차이가 있어 보정을 해준다.
-		Object key = (Integer.parseInt(areaCode) / 100) + "";
+		Object key = (Integer.parseInt(areaCode) / 100) + ""; //0 두개 빼고 스트링화 
 		String tmpCoordinates = seoulEMDjsonObj.get(key).toString().substring(2,
 				seoulEMDjsonObj.get(key).toString().length() - 2);
 		String[] coordinates = tmpCoordinates.replaceAll("\\[", "").replaceAll("\\],", "/").replaceAll("\\]", "")
